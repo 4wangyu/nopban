@@ -1,8 +1,5 @@
 # nopban
 
-// production
-heroku pg:reset DATABASE_URL
-
 ## Development
 
 ### Set Up PostgreSQL Database
@@ -72,3 +69,6 @@ Log into the Heroku PostgreSQL instance.
 From the root of the project where you have init.sql, run the following command to create your table and entries on Heroku Postgres.
 
 `cat init.sql | heroku pg:psql postgresql-whatever-00000 --app example-node-api`
+
+To reset production database:
+`heroku pg:reset DATABASE_URL`
