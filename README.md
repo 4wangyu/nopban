@@ -1,5 +1,7 @@
 # nopban
 
+[![CircleCI](https://circleci.com/gh/4wangyu/nopban/tree/master.svg?style=svg)](https://circleci.com/gh/4wangyu/nopban/tree/master)
+
 ## Development
 
 ### Set Up PostgreSQL Database
