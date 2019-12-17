@@ -7,14 +7,31 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          name: Restore Yarn Package Cache
+          name: BE/Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Install Dependencies
+          name: BE/Install Dependencies
           command: yarn install --frozen-lockfile
       - save_cache:
-          name: Save Yarn Package Cache
+          name: BE/Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - ~/.cache/yarn/be
+      - checkout:
+          path: ~/project/fe
+      - restore_cache:
+          name: FE/Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: FE/Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: FE/Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn/fe
+      - run:
+          name: FE/Build For React
+          command: yarn build
