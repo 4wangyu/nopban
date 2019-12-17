@@ -6,6 +6,7 @@ jobs:
       - image: circleci/node:10.16.3
     steps:
       - checkout
+
       - restore_cache:
           name: BE/Restore Yarn Package Cache
           keys:
@@ -18,20 +19,19 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn/be
-      - checkout:
-          path: ~/project/fe
+
       - restore_cache:
           name: FE/Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ checksum "fe/yarn.lock" }}
       - run:
           name: FE/Install Dependencies
-          command: yarn install --frozen-lockfile
+          command: cd fe && yarn install --frozen-lockfile
       - save_cache:
           name: FE/Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ checksum "fe/yarn.lock" }}
           paths:
             - ~/.cache/yarn/fe
       - run:
           name: FE/Build For React
-          command: yarn build
+          command: cd fe && yarn build
