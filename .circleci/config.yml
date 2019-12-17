@@ -7,29 +7,29 @@ jobs:
     steps:
       - checkout
 
-      # - restore_cache:
-      #     name: BE/Restore Yarn Package Cache
-      #     keys:
-      #       - yarn-packages-{{ checksum "yarn.lock" }}
+      - restore_cache:
+          name: BE/Restore Yarn Package Cache
+          keys:
+            - be-yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: BE/Install Dependencies
           command: yarn install --frozen-lockfile
       - save_cache:
           name: BE/Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: be-yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn/be
 
       - restore_cache:
           name: FE/Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "fe/yarn.lock" }}
+            - fe-yarn-packages-{{ checksum "fe/yarn.lock" }}
       - run:
           name: FE/Install Dependencies
           command: cd fe && yarn install --frozen-lockfile
       - save_cache:
           name: FE/Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "fe/yarn.lock" }}
+          key: fe-yarn-packages-{{ checksum "fe/yarn.lock" }}
           paths:
             - ~/.cache/yarn/fe
       - run:
