@@ -80,3 +80,6 @@ From the root of the project where you have init.sql, run the following command 
 
 To reset production database:
 `heroku pg:reset DATABASE_URL`
+
+To run knex database migrations:
+`heroku run npx knex migrate:latest`
