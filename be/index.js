@@ -5,9 +5,16 @@ const { pool } = require("./config");
 const path = require("path");
 
 const app = express();
+app.use(bodyParser.json());
 
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, "../fe/build")));
+
+const user = require("./models/user.js");
+
+app.post("/signup", user.signup);
+
+app.post("/signin", user.signin);
 
 const getBooks = (request, response) => {
   pool.query("select * from Book", (error, results) => {

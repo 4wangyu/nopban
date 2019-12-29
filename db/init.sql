@@ -5,6 +5,15 @@ create table Book
   Title varchar(255) not null
 );
 
+CREATE TABLE Users
+(
+  Id SERIAL PRIMARY KEY NOT NULL,
+  Username TEXT,
+  Token TEXT,
+  PwdDigest TEXT,
+  CreatedAt TIMESTAMP
+);
+
 insert into Book
   (Author, Title)
 values
