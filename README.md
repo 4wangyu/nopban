@@ -38,6 +38,12 @@ CREATE DATABASE nopban;
 \c nopban
 ```
 
+Create tables.
+
+```
+\i db/init.sql
+```
+
 Drop database first if there is need to re-create the database.
 
 ```
