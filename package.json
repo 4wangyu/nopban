@@ -2,10 +2,10 @@
   "name": "nopban-be",
   "version": "0.1.0",
   "private": true,
-  "main": "be/index.js",
+  "main": "be/server.js",
   "scripts": {
-    "start": "node be/index.js",
-    "start:dev": "nodemon be/index.js",
+    "start": "node be/server.js",
+    "start:dev": "nodemon be/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "cd fe && yarn && yarn build"
   },
