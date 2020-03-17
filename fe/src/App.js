@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Header from "./components/Header";
 import "./App.css";
 
 class App extends Component {
@@ -6,9 +7,7 @@ class App extends Component {
     books: null
   };
 
-  componentDidMount() {
-    this.fetchBooks();
-  }
+  componentDidMount() {}
 
   fetchBooks = async () => {
     const response = await fetch(`/books`);
@@ -17,22 +16,7 @@ class App extends Component {
   };
 
   render() {
-    const { books } = this.state;
-
-    return (
-      <table>
-        <tbody>
-          {books &&
-            books.map((book, i) => (
-              <tr key={i}>
-                <td>{book.id}</td>
-                <td>{book.author}</td>
-                <td>{book.title}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
-    );
+    return <Header></Header>;
   }
 }
 
