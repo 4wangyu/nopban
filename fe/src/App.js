@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "./components/Header";
+import Movie from "./views/movie/Movie";
 import "./App.css";
 
 class App extends Component {
@@ -16,7 +17,12 @@ class App extends Component {
   };
 
   render() {
-    return <Header></Header>;
+    return (
+      <>
+        <Header></Header>
+        <Movie></Movie>
+      </>
+    );
   }
 }
 

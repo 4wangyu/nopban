@@ -1,0 +1,38 @@
+body {
+  font: 12px Helvetica, Arial, sans-serif;
+}
+
+main {
+  width: 84%;
+  margin: auto;
+}
+
+h1 {
+  font-size: 26px;
+  font-weight: bold;
+  color: #494949;
+  margin: 0;
+  padding: 0 0 15px 0;
+  line-height: 1.1;
+}
+
+.year {
+  color: #888;
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+  font-size: 13px;
+}
+
+img {
+  width: 33%;
+  max-width: 244px;
+  margin-right: 10px;
+}
+
+label {
+  line-height: 150%;
+  color: #666666;
+}
