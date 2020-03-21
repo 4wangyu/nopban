@@ -70,6 +70,21 @@ class Movie extends Component {
             </div>
           </section>
         </div>
+
+        <div className="action">
+          <span className="rating">
+            <label>评价: </label>
+            <button className="gold">&#9733; </button>
+            <button className="gold">&#9733; </button>
+            <button className="gold">&#9733; </button>
+            <button>&#9734; </button>
+            <button>&#9734; </button>
+          </span>
+
+          <span className="remove">
+            <button>删除</button>
+          </span>
+        </div>
       </main>
     );
   }

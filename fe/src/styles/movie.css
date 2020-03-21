@@ -26,13 +26,57 @@ h1 {
   font-size: 13px;
 }
 
+@media only screen and (max-width: 700px) {
+  .content {
+    flex-direction: column;
+  }
+}
+
 img {
-  width: 33%;
-  max-width: 244px;
-  margin-right: 10px;
+  /* width: 33%;
+  max-width: 244px; */
+  margin: 0 10px 10px 0;
+}
+
+label,
+output {
+  line-height: 1.62;
 }
 
 label {
-  line-height: 150%;
   color: #666666;
+}
+
+.action {
+  padding: 20px 0;
+}
+
+.gold {
+  color: gold;
+}
+
+.action button {
+  background: none;
+  cursor: pointer;
+  border: none;
+
+  padding: 0;
+}
+
+.rating {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.rating button {
+  font-size: 16px;
+}
+
+.remove button {
+  font-size: 14px;
+  color: #bbb;
+}
+
+.remove:hover button {
+  color: red;
 }
