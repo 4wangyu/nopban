@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import Header from "./components/Header";
-import Movie from "./views/movie/Movie";
+import Split from "react-split";
+import Home from "./views/Home";
+import Douban from "./views/Douban";
 import "./App.css";
 
 class App extends Component {
   state = {
-    books: null
+    books: null,
   };
 
   componentDidMount() {}
@@ -18,10 +19,10 @@ class App extends Component {
 
   render() {
     return (
-      <>
-        <Header></Header>
-        <Movie></Movie>
-      </>
+      <Split className="app" minSize={400} gutterSize={4}>
+        <Home />
+        <Douban />
+      </Split>
     );
   }
 }

@@ -16,7 +16,10 @@ class Movie extends Component {
         </h1>
 
         <div className="content">
-          <img src="https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2441988159.webp" />
+          <img
+            src="https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2441988159.webp"
+            alt=""
+          />
           <section>
             <div>
               <label>导演: </label>
