@@ -19,7 +19,13 @@ class App extends Component {
 
   render() {
     return (
-      <Split className="app" sizes={[27, 73]} minSize={350} gutterSize={4}>
+      <Split
+        className="app"
+        sizes={[27, 73]}
+        minSize={350}
+        expandToMin={true}
+        gutterSize={4}
+      >
         <Home />
         <Douban />
       </Split>
