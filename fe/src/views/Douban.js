@@ -8,7 +8,7 @@ class Douban extends Component {
         <iframe
           id="douban"
           className="douban"
-          src="http://movie.douban.com"
+          src="https://movie.douban.com"
           sandbox="allow-scripts allow-same-origin allow-popups"
           title="Douban"
         ></iframe>
