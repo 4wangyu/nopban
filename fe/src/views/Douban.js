@@ -6,9 +6,10 @@ class Douban extends Component {
     return (
       <div>
         <iframe
+          id="douban"
           className="douban"
           src="http://movie.douban.com"
-          sandbox=""
+          sandbox="allow-scripts allow-same-origin allow-popups"
           title="Douban"
         ></iframe>
       </div>
