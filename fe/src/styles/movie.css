@@ -1,0 +1,76 @@
+body {
+  font: 12px Helvetica, Arial, sans-serif;
+}
+
+main {
+  width: 84%;
+  margin: auto;
+}
+
+h1 {
+  font-size: 26px;
+  font-weight: bold;
+  color: #494949;
+  margin: 0;
+  padding: 0 0 15px 0;
+  line-height: 1.1;
+}
+
+.year {
+  color: #888;
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+img {
+  width: 200px;
+  margin: 0 10px 10px 0;
+}
+
+label,
+output {
+  line-height: 1.62;
+}
+
+label {
+  color: #666666;
+}
+
+.action {
+  padding: 10px 0 20px;
+}
+
+.gold {
+  color: gold;
+}
+
+.action button {
+  background: none;
+  cursor: pointer;
+  border: none;
+
+  padding: 0;
+}
+
+.rating {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.rating button {
+  font-size: 16px;
+}
+
+.remove button {
+  font-size: 14px;
+  color: #bbb;
+}
+
+.remove:hover button {
+  color: red;
+}

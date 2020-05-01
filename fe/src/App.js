@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+import Split from "react-split";
+import Home from "./views/Home";
+import Douban from "./views/Douban";
 import "./App.css";
 
 class App extends Component {
   state = {
-    books: null
+    books: null,
   };
 
-  componentDidMount() {
-    this.fetchBooks();
-  }
+  componentDidMount() {}
 
   fetchBooks = async () => {
     const response = await fetch(`/books`);
@@ -17,21 +18,17 @@ class App extends Component {
   };
 
   render() {
-    const { books } = this.state;
-
     return (
-      <table>
-        <tbody>
-          {books &&
-            books.map((book, i) => (
-              <tr key={i}>
-                <td>{book.id}</td>
-                <td>{book.author}</td>
-                <td>{book.title}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <Split
+        className="app"
+        sizes={[27, 73]}
+        minSize={350}
+        expandToMin={true}
+        gutterSize={4}
+      >
+        <Home />
+        <Douban />
+      </Split>
     );
   }
 }
