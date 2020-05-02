@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const Input = styled.input`
@@ -31,23 +31,17 @@ const Search = styled.div`
   margin: 20px auto;
 `;
 
-class SearchBar extends Component {
-  state = {};
-
-  componentDidMount() {}
-
-  render() {
-    return (
-      <>
-        <Search>
-          <Input></Input>
-          <Button>
-            <i className="fa fa-search"></i>
-          </Button>
-        </Search>
-      </>
-    );
-  }
-}
+const SearchBar = () => {
+  return (
+    <>
+      <Search>
+        <Input></Input>
+        <Button>
+          <i className="fa fa-search"></i>
+        </Button>
+      </Search>
+    </>
+  );
+};
 
 export default SearchBar;
