@@ -27,20 +27,18 @@ class Header extends Component {
 
   render() {
     return (
-      <>
-        <Nav>
-          <section>
-            <Anchor href="/">首页</Anchor>
-            <Anchor href="/">读书</Anchor>
-            <Anchor href="/">电影</Anchor>
-            <Anchor href="/">音乐</Anchor>
-            <Anchor href="/">作者</Anchor>
-          </section>
-          <section>
-            <Anchor href="/">登录/注册</Anchor>
-          </section>
-        </Nav>
-      </>
+      <Nav>
+        <section>
+          <Anchor href="/">首页</Anchor>
+          <Anchor href="/">读书</Anchor>
+          <Anchor href="/">电影</Anchor>
+          <Anchor href="/">音乐</Anchor>
+          <Anchor href="/">作者</Anchor>
+        </section>
+        <section>
+          <Anchor href="/">登录/注册</Anchor>
+        </section>
+      </Nav>
     );
   }
 }
