@@ -30,19 +30,34 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const ACTIONS = {
+  BOOK: {
+    type: "UPDATE_IFRAME",
+    iframeUrl: "https://book.douban.com",
+  },
+  MOVIE: {
+    type: "UPDATE_IFRAME",
+    iframeUrl: "https://movie.douban.com",
+  },
+  MUSIC: {
+    type: "UPDATE_IFRAME",
+    iframeUrl: "https://music.douban.com",
+  },
+};
+
 const Header = () => {
-  const { context } = React.useContext(AppContext);
+  const { context, dispatch } = React.useContext(AppContext);
 
   return (
     <Nav>
       <section>
-        <Link to="/book">
+        <Link to="/book" onClick={() => dispatch(ACTIONS.BOOK)}>
           <Span>读书</Span>
         </Link>
-        <Link to="/movie">
+        <Link to="/movie" onClick={() => dispatch(ACTIONS.MOVIE)}>
           <Span>电影</Span>
         </Link>
-        <Link to="/music">
+        <Link to="/music" onClick={() => dispatch(ACTIONS.MUSIC)}>
           <Span>音乐</Span>
         </Link>
         <Link to="/author">

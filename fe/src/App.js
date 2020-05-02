@@ -32,6 +32,11 @@ const reducer = (state, action) => {
         user: null,
         token: null,
       };
+    case "UPDATE_IFRAME":
+      return {
+        ...state,
+        iframeUrl: action.iframeUrl,
+      };
     default:
       return state;
   }
