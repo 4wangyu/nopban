@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AppContext } from "../App";
 
@@ -15,7 +16,7 @@ const Nav = styled.nav`
   line-height: 28px;
 `;
 
-const Anchor = styled.a`
+const Span = styled.span`
   color: #d5d5d5;
   padding: 0 12px;
   text-decoration: initial;
@@ -27,16 +28,25 @@ const Header = () => {
   return (
     <Nav>
       <section>
-        <Anchor href="/">读书</Anchor>
-        <Anchor href="/">电影</Anchor>
-        <Anchor href="/">音乐</Anchor>
-        <Anchor href="/">作者</Anchor>
+        <Link to="/book">
+          <Span>读书</Span>
+        </Link>
+        <Link to="/movie">
+          <Span>电影</Span>
+        </Link>
+        <Link to="/music">
+          <Span>音乐</Span>
+        </Link>
+        <Link to="/author">
+          <Span>作者</Span>
+        </Link>
       </section>
+
       <section>
         {context.isAuthenticated ? (
-          <Anchor href="/">{context.user?.name + "的账号"}</Anchor>
+          <Span>{context.user?.name + "的账号"}</Span>
         ) : (
-          <Anchor href="/">登录/注册</Anchor>
+          <Span>登录/注册</Span>
         )}
       </section>
     </Nav>

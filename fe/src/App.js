@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import Split from "react-split";
 import "./App.css";
 import Douban from "./douban/Douban";
@@ -57,17 +58,19 @@ const App = () => {
         dispatch,
       }}
     >
-      <Header></Header>
-      <Split
-        className="app"
-        sizes={[27, 73]}
-        minSize={0}
-        expandToMin={true}
-        gutterSize={4}
-      >
-        <Home />
-        <Douban />
-      </Split>
+      <Router>
+        <Header></Header>
+        <Split
+          className="app"
+          sizes={[27, 73]}
+          minSize={0}
+          expandToMin={true}
+          gutterSize={4}
+        >
+          <Home />
+          <Douban />
+        </Split>
+      </Router>
     </AppContext.Provider>
   );
 };
