@@ -23,6 +23,13 @@ const Span = styled.span`
   text-decoration: initial;
 `;
 
+const Button = styled.button`
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+`;
+
 const Header = () => {
   const { context } = React.useContext(AppContext);
 
@@ -45,7 +52,7 @@ const Header = () => {
 
       <section>
         <Span>{context.iframeUrl}</Span>
-        <button>+</button>
+        <Button>+</Button>
       </section>
 
       <section>
