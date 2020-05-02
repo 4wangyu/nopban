@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AppContext } from "../App";
+import "./header.css";
 
 const Nav = styled.nav`
   position: fixed;
@@ -40,6 +41,11 @@ const Header = () => {
         <Link to="/author">
           <Span>作者</Span>
         </Link>
+      </section>
+
+      <section>
+        <Span>{context.iframeUrl}</Span>
+        <button>+</button>
       </section>
 
       <section>
