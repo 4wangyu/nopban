@@ -5,11 +5,12 @@ import Douban from "./douban/Douban";
 import Header from "./header/Header";
 import Home from "./views/Home";
 
-export const AuthContext = React.createContext();
+export const AppContext = React.createContext();
 const initialState = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   user: null,
   token: null,
+  iframeUrl: "https://book.douban.com",
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -48,11 +49,11 @@ const App = () => {
   //   this.setState({ books });
   // };
 
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [context, dispatch] = React.useReducer(reducer, initialState);
   return (
-    <AuthContext.Provider
+    <AppContext.Provider
       value={{
-        state,
+        context,
         dispatch,
       }}
     >
@@ -67,7 +68,7 @@ const App = () => {
         <Home />
         <Douban />
       </Split>
-    </AuthContext.Provider>
+    </AppContext.Provider>
   );
 };
 
