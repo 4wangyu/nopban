@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
+import { AuthContext } from "../App";
 
 const Nav = styled.nav`
   position: fixed;
@@ -20,27 +21,27 @@ const Anchor = styled.a`
   text-decoration: initial;
 `;
 
-class Header extends Component {
-  state = {};
+const Header = () => {
+  const { state } = React.useContext(AuthContext);
 
-  componentDidMount() {}
-
-  render() {
-    return (
-      <Nav>
-        <section>
-          <Anchor href="/">首页</Anchor>
-          <Anchor href="/">读书</Anchor>
-          <Anchor href="/">电影</Anchor>
-          <Anchor href="/">音乐</Anchor>
-          <Anchor href="/">作者</Anchor>
-        </section>
-        <section>
+  return (
+    <Nav>
+      <section>
+        <Anchor href="/">首页</Anchor>
+        <Anchor href="/">读书</Anchor>
+        <Anchor href="/">电影</Anchor>
+        <Anchor href="/">音乐</Anchor>
+        <Anchor href="/">作者</Anchor>
+      </section>
+      <section>
+        {state.isAuthenticated ? (
+          <Anchor href="/">{state.user?.name + "的账号"}</Anchor>
+        ) : (
           <Anchor href="/">登录/注册</Anchor>
-        </section>
-      </Nav>
-    );
-  }
-}
+        )}
+      </section>
+    </Nav>
+  );
+};
 
 export default Header;
