@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Split from "react-split";
+import Header from "./header/Header";
 import Home from "./views/Home";
 import Douban from "./douban/Douban";
 import "./App.css";
@@ -19,16 +20,19 @@ class App extends Component {
 
   render() {
     return (
-      <Split
-        className="app"
-        sizes={[27, 73]}
-        minSize={350}
-        expandToMin={true}
-        gutterSize={4}
-      >
-        <Home />
-        <Douban />
-      </Split>
+      <>
+        <Header></Header>
+        <Split
+          className="app"
+          sizes={[27, 73]}
+          minSize={0}
+          expandToMin={true}
+          gutterSize={4}
+        >
+          <Home />
+          <Douban />
+        </Split>
+      </>
     );
   }
 }

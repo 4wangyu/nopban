@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import SearchBar from "../components/SearchBar";
 
 const Nav = styled.nav`
+  position: fixed;
+  width: 100%;
   height: 28px;
+  z-index: 1;
   background-color: #545652;
 
   font-size: 12px;
@@ -38,8 +40,6 @@ class Header extends Component {
             <Anchor href="/">登录/注册</Anchor>
           </section>
         </Nav>
-
-        <SearchBar></SearchBar>
       </>
     );
   }
