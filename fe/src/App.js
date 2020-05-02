@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Split from "react-split";
 import Home from "./views/Home";
-import Douban from "./views/Douban";
+import Douban from "./douban/Douban";
 import "./App.css";
 
 class App extends Component {

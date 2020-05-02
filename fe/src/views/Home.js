@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Header from "../components/Header";
+import Header from "../header/Header";
 import Movie from "../views/movie/Movie";
 import "./home.css";
 
