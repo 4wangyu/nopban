@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import { AppContext } from "../App";
 import "./header.css";
@@ -30,7 +30,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const ACTIONS = {
+const UPDATE_IFRAME_ACTION = {
   BOOK: {
     type: "UPDATE_IFRAME",
     iframeUrl: "https://book.douban.com",
@@ -51,13 +51,14 @@ const Header = () => {
   return (
     <Nav>
       <section>
-        <Link to="/book" onClick={() => dispatch(ACTIONS.BOOK)}>
+        <Redirect exact from="/" to="/book" />
+        <Link to="/book" onClick={() => dispatch(UPDATE_IFRAME_ACTION.BOOK)}>
           <Span>读书</Span>
         </Link>
-        <Link to="/movie" onClick={() => dispatch(ACTIONS.MOVIE)}>
+        <Link to="/movie" onClick={() => dispatch(UPDATE_IFRAME_ACTION.MOVIE)}>
           <Span>电影</Span>
         </Link>
-        <Link to="/music" onClick={() => dispatch(ACTIONS.MUSIC)}>
+        <Link to="/music" onClick={() => dispatch(UPDATE_IFRAME_ACTION.MUSIC)}>
           <Span>音乐</Span>
         </Link>
         <Link to="/author">
