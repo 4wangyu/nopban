@@ -5,9 +5,9 @@
   "main": "be/server.js",
   "scripts": {
     "start": "node be/server.js",
-    "start:be": "nodemon be/server.js",
-    "start:fe": "cd fe && yarn start",
-    "build:fe": "cd fe && yarn build",
+    "be": "nodemon be/server.js",
+    "fe": "cd fe && yarn start",
+    "build": "cd fe && yarn build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "npx knex migrate:latest && cd fe && yarn && yarn build"
   },
