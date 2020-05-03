@@ -2,8 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
-const book = require("./models/book");
-const user = require("./models/user");
 
 // Setup express
 const app = express();
@@ -28,15 +26,7 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, "../fe/build")));
 
 // Routes & Handlers
-app.post("/signup", user.signup);
-app.post("/signin", user.signin);
-
-app
-  .route("/books")
-  // GET endpoint
-  .get(book.getBooks)
-  // POST endpoint
-  .post(book.addBook);
+app.use("/api", require("./route"));
 
 // Anything that doesn't match the above, send back the index.html file
 app.get("*", (req, res) => {
