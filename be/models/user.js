@@ -2,6 +2,7 @@ const environment = process.env.NODE_ENV || "development";
 const configuration = require("../../knexfile")[environment];
 const database = require("knex")(configuration);
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const hashPassword = (password) => {

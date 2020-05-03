@@ -1,6 +1,7 @@
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const authorize = (req, res, next) => {
+const checkToken = (req, res, next) => {
   let token = req.headers["authorization"]; // Express headers are auto converted to lowercase
   if (!token) {
     return res.status(401).json({
@@ -22,4 +23,4 @@ const authorize = (req, res, next) => {
   }
 };
 
-module.exports = authorize;
+module.exports = checkToken;

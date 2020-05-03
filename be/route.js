@@ -1,5 +1,6 @@
 const express = require("express"),
   router = express.Router();
+const checkToken = require("./middleware/checkToken");
 
 const book = require("./models/book");
 const user = require("./models/user");
@@ -12,6 +13,6 @@ router
   // GET endpoint
   .get(book.getBooks)
   // POST endpoint
-  .post(book.addBook);
+  .post(checkToken, book.addBook);
 
 module.exports = router;

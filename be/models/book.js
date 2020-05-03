@@ -11,17 +11,22 @@ const getBooks = (request, response) => {
 
 const addBook = (request, response) => {
   const { author, title } = request.body;
-
-  pool.query(
-    "insert into Book (Author, Title) values ($1, $2)",
-    [author, title],
-    (error) => {
-      if (error) {
-        throw error;
+  if (author && title) {
+    pool.query(
+      "insert into Book (Author, Title) values ($1, $2)",
+      [author, title],
+      (error) => {
+        if (error) {
+          console.log(error);
+        }
+        response
+          .status(201)
+          .json({ status: "success", message: "Book added." });
       }
-      response.status(201).json({ status: "success", message: "Book added." });
-    }
-  );
+    );
+  } else {
+    response.status(400).json({ error: "Failed to add book." });
+  }
 };
 
 module.exports = {
