@@ -23,13 +23,6 @@ const Span = styled.span`
   text-decoration: initial;
 `;
 
-const Button = styled.button`
-  background: transparent;
-  border: none;
-  color: white;
-  cursor: pointer;
-`;
-
 const UPDATE_IFRAME_ACTION = {
   BOOK: {
     type: "UPDATE_IFRAME",
@@ -64,11 +57,6 @@ const Header = () => {
         <Link to="/author">
           <Span>作者</Span>
         </Link>
-      </section>
-
-      <section>
-        <Span>{context.iframeUrl}</Span>
-        <Button>+</Button>
       </section>
 
       <section>
