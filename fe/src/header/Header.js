@@ -2,6 +2,7 @@ import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import { AppContext } from "../App";
+import AuthModal from "./modal/AuthModal";
 import "./header.css";
 
 const Nav = styled.nav`
@@ -40,6 +41,7 @@ const UPDATE_IFRAME_ACTION = {
 
 const Header = () => {
   const { context, dispatch } = React.useContext(AppContext);
+  const [modalShow, setModalShow] = React.useState(false);
 
   return (
     <Nav>
@@ -63,7 +65,12 @@ const Header = () => {
         {context.isAuthenticated ? (
           <Span>{context.user?.name + "的账号"}</Span>
         ) : (
-          <Span>登录/注册</Span>
+          <>
+            <button onClick={() => setModalShow(true)}>
+              <Span>登录/注册</Span>
+            </button>
+            <AuthModal show={modalShow} onHide={() => setModalShow(false)} />
+          </>
         )}
       </section>
     </Nav>
