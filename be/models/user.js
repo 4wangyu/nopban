@@ -4,7 +4,7 @@ const database = require("knex")(configuration);
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 
-const hashPassword = password => {
+const hashPassword = (password) => {
   return new Promise((resolve, reject) =>
     bcrypt.hash(password, 10, (err, hash) => {
       err ? reject(err) : resolve(hash);
@@ -12,13 +12,13 @@ const hashPassword = password => {
   );
 };
 
-const createUser = user => {
+const createUser = (user) => {
   return database
     .raw(
       "INSERT INTO Users (Username, PwdDigest, Token, CreatedAt) VALUES (?, ?, ?, ?) RETURNING Id, Username, CreatedAt, Token",
       [user.username, user.pwdDigest, user.token, new Date()]
     )
-    .then(data => data.rows[0]);
+    .then((data) => data.rows[0]);
 };
 
 const createToken = () => {
@@ -33,24 +33,27 @@ const signup = (request, response) => {
   const user = request.body;
 
   hashPassword(user.password)
-    .then(hashedPassword => {
+    .then((hashedPassword) => {
       delete user.password;
       user.pwdDigest = hashedPassword;
     })
     .then(() => createToken())
-    .then(token => (user.token = token))
+    .then((token) => (user.token = token))
     .then(() => createUser(user))
-    .then(user => {
+    .then((user) => {
       delete user.pwdDigest;
       response.status(201).json({ user });
     })
-    .catch(err => console.error(err));
+    .catch((err) => {
+      console.error(err);
+      response.status(400).json({ error: "Unable to sign up." });
+    });
 };
 
-const findUser = userReq => {
+const findUser = (userReq) => {
   return database
     .raw("SELECT * FROM users WHERE username = ?", [userReq.username])
-    .then(data => data.rows[0]);
+    .then((data) => data.rows[0]);
 };
 
 const checkPassword = (reqPassword, foundUser) => {
@@ -73,7 +76,7 @@ const updateUserToken = (token, user) => {
       "UPDATE users SET token = ? WHERE id = ? RETURNING id, username, token",
       [token, user.id]
     )
-    .then(data => data.rows[0]);
+    .then((data) => data.rows[0]);
 };
 
 const signin = (request, response) => {
@@ -81,24 +84,27 @@ const signin = (request, response) => {
   let user;
 
   findUser(userReq)
-    .then(foundUser => {
+    .then((foundUser) => {
       user = foundUser;
       console.log(user);
       console.log(userReq);
 
       return checkPassword(userReq.password, foundUser);
     })
-    .then(res => createToken())
-    .then(token => updateUserToken(token, user))
+    .then((res) => createToken())
+    .then((token) => updateUserToken(token, user))
     .then(() => {
       delete user.pwdDigest;
       response.status(200).json(user);
     })
-    .catch(err => console.error(err));
+    .catch((err) => {
+      console.error(err);
+      response.status(400).json({ error: "Unable to sign in." });
+    });
 };
 
-const authenticate = userReq => {
-  findByToken(userReq.token).then(user => {
+const authenticate = (userReq) => {
+  findByToken(userReq.token).then((user) => {
     if (user.username == userReq.username) {
       return true;
     } else {
@@ -107,13 +113,13 @@ const authenticate = userReq => {
   });
 };
 
-const findByToken = token => {
+const findByToken = (token) => {
   return database
     .raw("SELECT * FROM users WHERE token = ?", [token])
-    .then(data => data.rows[0]);
+    .then((data) => data.rows[0]);
 };
 
 module.exports = {
   signup,
-  signin
+  signin,
 };
