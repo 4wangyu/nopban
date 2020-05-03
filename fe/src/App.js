@@ -82,7 +82,7 @@ const App = () => {
         <Header></Header>
         <Split
           className="app"
-          sizes={[27, 73]}
+          // sizes={[27, 73]}
           minSize={0}
           expandToMin={true}
           gutterSize={4}

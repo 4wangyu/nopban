@@ -2,7 +2,7 @@ const environment = process.env.NODE_ENV || "development";
 const configuration = require("../../knexfile")[environment];
 const database = require("knex")(configuration);
 const bcrypt = require("bcrypt");
-const crypto = require("crypto");
+require("dotenv").config();
 
 const hashPassword = (password) => {
   return new Promise((resolve, reject) =>
@@ -21,10 +21,10 @@ const createUser = (user) => {
     .then((data) => data.rows[0]);
 };
 
-const createToken = () => {
+const createToken = (username) => {
   return new Promise((resolve, reject) => {
-    crypto.randomBytes(16, (err, data) => {
-      err ? reject(err) : resolve(data.toString("base64"));
+    jwt.sign({ username }, process.env.SECRET, (err, token) => {
+      err ? reject(err) : resolve(token);
     });
   });
 };
@@ -37,7 +37,7 @@ const signup = (request, response) => {
       delete user.password;
       user.pwdDigest = hashedPassword;
     })
-    .then(() => createToken())
+    .then(() => createToken(user.username))
     .then((token) => (user.token = token))
     .then(() => createUser(user))
     .then((user) => {
@@ -103,9 +103,15 @@ const signin = (request, response) => {
     });
 };
 
+const findByToken = (token) => {
+  return database
+    .raw("SELECT * FROM users WHERE token = ?", [token])
+    .then((data) => data.rows[0]);
+};
+
 const authenticate = (userReq) => {
   findByToken(userReq.token).then((user) => {
-    if (user.username == userReq.username) {
+    if (user && user.username == userReq.username) {
       return true;
     } else {
       return false;
@@ -113,13 +119,8 @@ const authenticate = (userReq) => {
   });
 };
 
-const findByToken = (token) => {
-  return database
-    .raw("SELECT * FROM users WHERE token = ?", [token])
-    .then((data) => data.rows[0]);
-};
-
 module.exports = {
   signup,
   signin,
+  authenticate,
 };
