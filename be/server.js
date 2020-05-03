@@ -43,6 +43,6 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/../fe/build/index.html"));
 });
 
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3001;
 // Start server
 app.listen(port, () => console.log(`Server is listening on port: ${port}`));
