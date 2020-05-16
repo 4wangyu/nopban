@@ -114,6 +114,10 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
   outline: 0;
+  width: 340px;
+  padding: 12px;
+  overflow: hidden;
+  position: relative;
 }
 
 .modal-backdrop {
@@ -141,15 +145,8 @@
   align-items: flex-start;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: 1rem 1rem;
-  border-bottom: 1px solid #dee2e6;
   border-top-left-radius: calc(0.3rem - 1px);
   border-top-right-radius: calc(0.3rem - 1px);
-}
-
-.modal-header .close {
-  padding: 1rem 1rem;
-  margin: -1rem -1rem -1rem auto;
 }
 
 .modal-title {
@@ -162,25 +159,6 @@
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 1rem;
-}
-
-.modal-footer {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  padding: 0.75rem;
-  border-top: 1px solid #dee2e6;
-  border-bottom-right-radius: calc(0.3rem - 1px);
-  border-bottom-left-radius: calc(0.3rem - 1px);
-}
-
-.modal-footer > * {
-  margin: 0.25rem;
 }
 
 .modal-scrollbar-measure {
@@ -224,4 +202,40 @@
   .modal-xl {
     max-width: 1140px;
   }
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+.tabs {
+  margin-bottom: 20px;
+  color: #9b9b9b;
+  border-bottom: 1px solid #ececec;
+  padding: 0;
+}
+
+.list-item {
+  display: inline-block;
+  width: 50%;
+  font-size: 18px;
+  line-height: 2;
+  text-align: center;
+  cursor: pointer;
+}
+
+.active {
+  border-bottom: 2px solid #494949;
+  color: #333;
+  font-weight: 600;
+}
+
+.close {
+  border: 0;
+  font-size: 13px;
+  color: #b4b4b4;
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
 }

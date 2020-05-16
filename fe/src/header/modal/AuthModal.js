@@ -1,32 +1,41 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
 import "./modal.css";
+import SignIn from "../auth/SignIn";
+import SignUp from "../auth/SignUp";
 
 const AuthModal = (props) => {
+  const [tab, setTab] = React.useState("signin");
+
   return (
     <Modal
       {...props}
-      size="lg"
+      size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
-        </Modal.Title>
+      <Modal.Header>
+        <button className="close" onClick={props.onHide}>
+          X
+        </button>
       </Modal.Header>
       <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
+        <ul className="tabs">
+          <li
+            className={"list-item " + (tab === "signin" ? "active" : "")}
+            onClick={() => setTab("signin")}
+          >
+            登录
+          </li>
+          <li
+            className={"list-item " + (tab === "signup" ? "active" : "")}
+            onClick={() => setTab("signup")}
+          >
+            注册
+          </li>
+        </ul>
+        {tab === "signin" ? <SignIn></SignIn> : <SignUp></SignUp>}
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
     </Modal>
   );
 };
