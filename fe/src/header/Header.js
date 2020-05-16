@@ -56,8 +56,20 @@ const Header = () => {
         <Link to="/music" onClick={() => dispatch(UPDATE_IFRAME_ACTION.MUSIC)}>
           <Span>音乐</Span>
         </Link>
-        <Link to="/author">
+        <Link to="/author" onClick={() => dispatch(UPDATE_IFRAME_ACTION.BOOK)}>
           <Span>作者</Span>
+        </Link>
+        <Link
+          to="/celebrity"
+          onClick={() => dispatch(UPDATE_IFRAME_ACTION.MOVIE)}
+        >
+          <Span>影人</Span>
+        </Link>
+        <Link
+          to="/musician"
+          onClick={() => dispatch(UPDATE_IFRAME_ACTION.MUSIC)}
+        >
+          <Span>音乐人</Span>
         </Link>
       </section>
 

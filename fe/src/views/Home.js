@@ -5,6 +5,8 @@ import Movie from "../views/movie/Movie";
 import "./home.css";
 import Music from "./music/Music";
 import Author from "./author/Author";
+import Celebrity from "./celebrity/Celebrity";
+import Musician from "./musician/Musician";
 
 const Home = () => {
   return (
@@ -21,6 +23,12 @@ const Home = () => {
         </Route>
         <Route path="/author">
           <Author />
+        </Route>
+        <Route path="/celebrity">
+          <Celebrity />
+        </Route>
+        <Route path="/musician">
+          <Musician />
         </Route>
       </Switch>
     </div>
