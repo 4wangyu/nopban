@@ -16,15 +16,15 @@ const hashPassword = (password) => {
 const createUser = (user) => {
   return database
     .raw(
-      "INSERT INTO Users (Username, PwdDigest, Token, CreatedAt) VALUES (?, ?, ?, ?) RETURNING Id, Username, CreatedAt, Token",
-      [user.username, user.pwdDigest, user.token, new Date()]
+      "INSERT INTO Users (Username, Email, PwdDigest, Token, CreatedAt) VALUES (?, ?, ?, ?) RETURNING Id, Username, CreatedAt, Token",
+      [user.username, user.email, user.pwdDigest, user.token, new Date()]
     )
     .then((data) => data.rows[0]);
 };
 
-const createToken = (username) => {
+const createToken = (email) => {
   return new Promise((resolve, reject) => {
-    jwt.sign({ username }, process.env.SECRET, (err, token) => {
+    jwt.sign({ email }, process.env.SECRET, (err, token) => {
       err ? reject(err) : resolve(token);
     });
   });
@@ -38,7 +38,7 @@ const signup = (request, response) => {
       delete user.password;
       user.pwdDigest = hashedPassword;
     })
-    .then(() => createToken(user.username))
+    .then(() => createToken(user.email))
     .then((token) => (user.token = token))
     .then(() => createUser(user))
     .then((user) => {
@@ -53,7 +53,7 @@ const signup = (request, response) => {
 
 const findUser = (userReq) => {
   return database
-    .raw("SELECT * FROM users WHERE username = ?", [userReq.username])
+    .raw("SELECT * FROM users WHERE email = ?", [userReq.email])
     .then((data) => data.rows[0]);
 };
 
@@ -73,10 +73,10 @@ const checkPassword = (reqPassword, foundUser) => {
 
 const updateUserToken = (token, user) => {
   return database
-    .raw(
-      "UPDATE users SET token = ? WHERE id = ? RETURNING id, username, token",
-      [token, user.id]
-    )
+    .raw("UPDATE users SET token = ? WHERE id = ? RETURNING id, email, token", [
+      token,
+      user.id,
+    ])
     .then((data) => data.rows[0]);
 };
 
@@ -112,7 +112,7 @@ const findByToken = (token) => {
 
 const authenticate = (userReq) => {
   findByToken(userReq.token).then((user) => {
-    if (user && user.username == userReq.username) {
+    if (user && user.email == userReq.email) {
       return true;
     } else {
       return false;

@@ -16,7 +16,7 @@ const checkToken = (req, res, next) => {
           error: "Invalid token.",
         });
       } else {
-        req.username = decoded.username;
+        req.email = decoded.email;
         next();
       }
     });
