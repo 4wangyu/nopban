@@ -83,3 +83,9 @@ To reset production database:
 
 To run knex database migrations:
 `heroku run npx knex migrate:latest`
+
+## Debug heroku
+
+### Tailing logs
+
+`heroku logs -t`
