@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Split from "react-split";
-import "./App.css";
+import "./App.scss";
 import Douban from "./douban/Douban";
 import Header from "./header/Header";
 import Home from "./views/Home";
