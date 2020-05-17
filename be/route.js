@@ -1,11 +1,12 @@
 const express = require("express"),
   router = express.Router();
 const checkToken = require("./middleware/checkToken");
+const checkUser = require("./middleware/checkUser");
 
 const book = require("./models/book");
 const user = require("./models/user");
 
-router.post("/signup", user.signup);
+router.post("/signup", checkUser, user.signup);
 router.post("/signin", user.signin);
 
 router

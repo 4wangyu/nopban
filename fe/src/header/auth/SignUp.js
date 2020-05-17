@@ -5,13 +5,29 @@ import "./form.css";
 const SignUp = () => {
   const [error, setError] = React.useState();
   const { handleSubmit, register, errors } = useForm();
-  const onSubmit = (values) => {
-    console.log(values);
-    if (values.password.length < 4) {
-      setError("short password");
-    } else {
-      setError();
-    }
+  const onSubmit = (form) => {
+    fetch("/api/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.log(response);
+          throw new Error(response);
+        }
+      })
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        setError(error);
+        console.error("Error:", error);
+      });
   };
 
   return (

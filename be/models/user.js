@@ -1,6 +1,4 @@
-const environment = process.env.NODE_ENV || "development";
-const configuration = require("../../knexfile")[environment];
-const database = require("knex")(configuration);
+const database = require("../database.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -16,7 +14,7 @@ const hashPassword = (password) => {
 const createUser = (user) => {
   return database
     .raw(
-      "INSERT INTO Users (Username, Email, PwdDigest, Token, CreatedAt) VALUES (?, ?, ?, ?) RETURNING Id, Username, CreatedAt, Token",
+      "INSERT INTO Users (Username, Email, PwdDigest, Token, CreatedAt) VALUES (?, ?, ?, ?, ?) RETURNING Id, Username, Email, CreatedAt, Token",
       [user.username, user.email, user.pwdDigest, user.token, new Date()]
     )
     .then((data) => data.rows[0]);
@@ -104,24 +102,14 @@ const signin = (request, response) => {
     });
 };
 
-const findByToken = (token) => {
+const findByEmail = (email) => {
   return database
-    .raw("SELECT * FROM users WHERE token = ?", [token])
+    .raw("SELECT * FROM users WHERE email = ?", [email])
     .then((data) => data.rows[0]);
-};
-
-const authenticate = (userReq) => {
-  findByToken(userReq.token).then((user) => {
-    if (user && user.email == userReq.email) {
-      return true;
-    } else {
-      return false;
-    }
-  });
 };
 
 module.exports = {
   signup,
   signin,
-  authenticate,
+  findByEmail,
 };

@@ -43,18 +43,6 @@ const reducer = (state, action) => {
 };
 
 const App = () => {
-  // state = {
-  //   books: null,
-  // };
-
-  // componentDidMount() {}
-
-  // fetchBooks = async () => {
-  //   const response = await fetch(`/books`);
-  //   const books = await response.json();
-  //   this.setState({ books });
-  // };
-
   const [context, dispatch] = React.useReducer(reducer, initialState);
   React.useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || null);
