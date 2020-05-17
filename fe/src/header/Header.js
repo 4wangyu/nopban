@@ -44,7 +44,7 @@ const Header = () => {
   const [modalShow, setModalShow] = React.useState(false);
 
   return (
-    <Nav>
+    <Nav className="header">
       <section>
         <Redirect exact from="/" to="/book" />
         <Link to="/book" onClick={() => dispatch(UPDATE_IFRAME_ACTION.BOOK)}>

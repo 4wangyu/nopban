@@ -1,3 +1,8 @@
-a {
+.header a {
   text-decoration: none;
+}
+
+.header span:hover {
+  color: white;
+  cursor: pointer;
 }
