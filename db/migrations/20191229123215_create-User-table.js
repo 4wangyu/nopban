@@ -1,7 +1,8 @@
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
   let createQuery = `CREATE TABLE Users(
     Id SERIAL PRIMARY KEY NOT NULL,
     Username TEXT,
+    Email TEXT,
     Token TEXT,
     PwdDigest TEXT,
     CreatedAt TIMESTAMP
@@ -9,7 +10,7 @@ exports.up = function(knex, Promise) {
   return knex.raw(createQuery);
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   let dropQuery = `DROP TABLE Users`;
   return knex.raw(dropQuery);
 };

@@ -1,13 +1,11 @@
-import React, { Component } from "react";
-import "../../styles/movie.css";
+import React from "react";
+import SearchBar from "../../components/SearchBar";
+import "./movie.css";
 
-class Movie extends Component {
-  state = {};
-
-  componentDidMount() {}
-
-  render() {
-    return (
+const Movie = () => {
+  return (
+    <>
+      <SearchBar></SearchBar>
       <main>
         <h1>
           西西里的美丽传说 Malèna <span className="year">(2000)</span>
@@ -87,8 +85,8 @@ class Movie extends Component {
           </span>
         </div>
       </main>
-    );
-  }
-}
+    </>
+  );
+};
 
 export default Movie;

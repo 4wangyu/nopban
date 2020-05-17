@@ -1,3 +1,6 @@
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+
 create table Book
 (
   Id serial primary key,
@@ -9,6 +12,7 @@ CREATE TABLE Users
 (
   Id SERIAL PRIMARY KEY NOT NULL,
   Username TEXT,
+  Email TEXT,
   Token TEXT,
   PwdDigest TEXT,
   CreatedAt TIMESTAMP

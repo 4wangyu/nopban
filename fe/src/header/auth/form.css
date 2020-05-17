@@ -1,0 +1,39 @@
+.form-row {
+  margin-bottom: 20px;
+}
+
+.action-error {
+  margin-bottom: 15px;
+}
+
+.error {
+  color: red;
+}
+
+form input {
+  width: 100%;
+  font-size: 13px;
+  padding: 10px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  border: 1px solid #e4e6e5;
+}
+
+form input:active,
+form input:focus {
+  outline: none;
+}
+
+form button {
+  height: 36px;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 36px;
+  outline: 0;
+  cursor: pointer;
+  background-color: #41ac52;
+  width: 100%;
+  padding: 0;
+}
