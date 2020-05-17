@@ -35,7 +35,7 @@ const AuthModal = (props) => {
           </li>
         </ul>
         {tab === "signin" ? (
-          <SignIn></SignIn>
+          <SignIn onHide={props.onHide}></SignIn>
         ) : (
           <SignUp toSignIn={() => setTab("signin")}></SignUp>
         )}

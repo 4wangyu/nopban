@@ -93,8 +93,11 @@ const signin = (request, response) => {
     .then((res) => createToken())
     .then((token) => updateUserToken(token, user))
     .then(() => {
-      delete user.pwdDigest;
-      response.status(200).json(user);
+      response.status(200).json({
+        user: user.username,
+        email: user.email,
+        token: user.token,
+      });
     })
     .catch((err) => {
       console.error(err);
