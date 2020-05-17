@@ -34,7 +34,11 @@ const AuthModal = (props) => {
             注册
           </li>
         </ul>
-        {tab === "signin" ? <SignIn></SignIn> : <SignUp></SignUp>}
+        {tab === "signin" ? (
+          <SignIn></SignIn>
+        ) : (
+          <SignUp toSignIn={() => setTab("signin")}></SignUp>
+        )}
       </Modal.Body>
     </Modal>
   );
