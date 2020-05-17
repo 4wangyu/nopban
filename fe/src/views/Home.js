@@ -4,7 +4,7 @@ import Book from "../views/book/Book";
 import Movie from "../views/movie/Movie";
 import Author from "./author/Author";
 import Celebrity from "./celebrity/Celebrity";
-import "./home.css";
+import "./home.scss";
 import Music from "./music/Music";
 import Musician from "./musician/Musician";
 
