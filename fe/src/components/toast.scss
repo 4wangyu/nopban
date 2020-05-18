@@ -1,15 +1,15 @@
 .toast {
-  position: fixed;
-  left: 10px;
-  bottom: 40px;
-  font-size: 14px;
-  border-radius: 4px;
-  color: #414141;
-  max-width: 500px;
   background-color: #efefef;
-  padding: 14px;
   border-left: 4px solid #efefef;
+  border-radius: 4px;
+  bottom: 40px;
   box-shadow: 1px 7px 14px -5px rgba(0, 0, 0, 0.2);
+  color: #414141;
+  font-size: 14px;
+  left: 10px;
+  max-width: 500px;
+  padding: 14px;
+  position: fixed;
 }
 
 .toast.success {
@@ -17,13 +17,13 @@
 }
 
 .toast.error {
-  border-left: 4px solid red;
+  border-left: 4px solid #f00;
 }
 
 .toast .close {
   background: inherit;
-  padding: 0;
   font-size: 16px;
   margin-left: 10px;
+  padding: 0;
   position: initial;
 }

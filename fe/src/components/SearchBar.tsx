@@ -2,32 +2,32 @@ import React from "react";
 import styled from "styled-components";
 
 const Input = styled.input`
-  width: 100%;
   border: 3px solid #8c949e;
-  border-right: none;
-  padding: 5px;
   border-radius: 5px 0 0 5px;
-  outline: none;
+  border-right: 0;
   font-size: 13px;
+  outline: none;
+  padding: 5px;
+  width: 100%;
 `;
 
 const Button = styled.button`
-  width: 40px;
-  height: 36px;
-  border: 1px solid #8c949e;
   background: #8c949e;
-  text-align: center;
-  color: #fff;
+  border: 1px solid #8c949e;
   border-radius: 0 5px 5px 0;
+  color: #fff;
   cursor: pointer;
   font-size: 20px;
+  height: 36px;
+  text-align: center;
+  width: 40px;
 `;
 
 const Search = styled.div`
-  position: relative;
   display: flex;
-  width: 84%;
   margin: 20px auto;
+  position: relative;
+  width: 84%;
 `;
 
 const SearchBar = () => {

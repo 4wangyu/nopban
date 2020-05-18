@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import ToastBox from "../../components/ToastBox";
-import "./form.css";
+import "./form.scss";
 
 const SignUp = (props: any) => {
   const [error, setError] = React.useState();

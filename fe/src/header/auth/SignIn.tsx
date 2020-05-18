@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import ToastBox from "../../components/ToastBox";
 import { AppContext } from "../../App";
-import "./form.css";
+import "./form.scss";
 
 const SignIn = (props: any) => {
   const [error, setError] = React.useState();
