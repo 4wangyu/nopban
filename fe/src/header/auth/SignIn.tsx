@@ -4,13 +4,13 @@ import ToastBox from "../../components/ToastBox";
 import { AppContext } from "../../App";
 import "./form.css";
 
-const SignIn = (props) => {
+const SignIn = (props: any) => {
   const [error, setError] = React.useState();
   const [show, setShow] = React.useState(false);
   const { handleSubmit, register, errors } = useForm();
   const { dispatch } = React.useContext(AppContext);
 
-  const onSubmit = (form) => {
+  const onSubmit = (form: any) => {
     fetch("/api/signin", {
       method: "POST",
       headers: {

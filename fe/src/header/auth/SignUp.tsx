@@ -3,11 +3,11 @@ import { useForm } from "react-hook-form";
 import ToastBox from "../../components/ToastBox";
 import "./form.css";
 
-const SignUp = (props) => {
+const SignUp = (props: any) => {
   const [error, setError] = React.useState();
   const [show, setShow] = React.useState(false);
   const { handleSubmit, register, errors } = useForm();
-  const onSubmit = (form) => {
+  const onSubmit = (form: any) => {
     fetch("/api/signup", {
       method: "POST",
       headers: {
