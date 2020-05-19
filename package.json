@@ -4,12 +4,12 @@
   "private": true,
   "main": "be/server.js",
   "scripts": {
-    "dev:be": "nodemon",
+    "dev": "nodemon",
     "dev:fe": "cd fe && yarn start",
+    "build": "tsc",
     "build:fe": "cd fe && yarn build",
-    "build:be": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "npx knex migrate:latest && tsc && cd fe && yarn && yarn build",
+    "heroku-postbuild": "npx knex migrate:latest && cd fe && yarn --frozen-lockfile && yarn build",
     "start": "node dist/server.js"
   },
   "dependencies": {
