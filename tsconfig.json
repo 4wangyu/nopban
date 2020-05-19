@@ -12,5 +12,5 @@
       "be/*": ["./*"]
     }
   },
-  "include": ["be/**/*", "knexfile.ts"]
+  "include": ["be/**/*"]
 }
