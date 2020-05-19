@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "nodemon",
     "dev:fe": "cd fe && yarn start",
-    "build": "tsc",
+    "build": "tsc && cd fe && yarn --frozen-lockfile && yarn build",
     "build:fe": "cd fe && yarn build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "npx knex migrate:latest && cd fe && yarn --frozen-lockfile && yarn build",
+    "heroku-postbuild": "npx knex migrate:latest",
     "start": "node dist/server.js"
   },
   "dependencies": {
