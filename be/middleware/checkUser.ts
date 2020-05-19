@@ -1,8 +1,8 @@
 const findByEmail = require("../models/user")["findByEmail"];
 
-const checkUser = (req, res, next) => {
+const checkUser = (req: any, res: any, next: any) => {
   const form = req.body;
-  findByEmail(form.email).then((user) => {
+  findByEmail(form.email).then((user: any) => {
     if (user) {
       return res.status(400).json({
         error: "User already exists.",
@@ -13,4 +13,4 @@ const checkUser = (req, res, next) => {
   });
 };
 
-module.exports = checkUser;
+export default checkUser;

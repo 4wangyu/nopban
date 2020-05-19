@@ -1,9 +1,9 @@
-const database = require("../database.js");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import database from "../database";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 require("dotenv").config();
 
-const hashPassword = (password) => {
+const hashPassword = (password: string) => {
   return new Promise((resolve, reject) =>
     bcrypt.hash(password, 10, (err, hash) => {
       err ? reject(err) : resolve(hash);
@@ -11,24 +11,28 @@ const hashPassword = (password) => {
   );
 };
 
-const createUser = (user) => {
+const createUser = (user: any) => {
   return database
     .raw(
       "INSERT INTO Users (Username, Email, PwdDigest, Token, CreatedAt) VALUES (?, ?, ?, ?, ?) RETURNING Id, Username, Email, CreatedAt, Token",
       [user.username, user.email, user.pwdDigest, user.token, new Date()]
     )
-    .then((data) => data.rows[0]);
+    .then((data: any) => data.rows[0]);
 };
 
-const createToken = (email) => {
+const createToken = (email: string) => {
   return new Promise((resolve, reject) => {
-    jwt.sign({ email }, process.env.SECRET, (err, token) => {
-      err ? reject(err) : resolve(token);
-    });
+    jwt.sign(
+      { email },
+      process.env.SECRET as string,
+      (err: any, token: any) => {
+        err ? reject(err) : resolve(token);
+      }
+    );
   });
 };
 
-const signup = (request, response) => {
+const signup = (request: any, response: any) => {
   const user = request.body;
 
   hashPassword(user.password)
@@ -49,13 +53,13 @@ const signup = (request, response) => {
     });
 };
 
-const findUser = (userReq) => {
+const findUser = (userReq: any) => {
   return database
     .raw("SELECT * FROM users WHERE email = ?", [userReq.email])
-    .then((data) => data.rows[0]);
+    .then((data: any) => data.rows[0]);
 };
 
-const checkPassword = (reqPassword, foundUser) => {
+const checkPassword = (reqPassword: any, foundUser: any) => {
   return new Promise((resolve, reject) =>
     bcrypt.compare(reqPassword, foundUser.pwddigest, (err, response) => {
       if (err) {
@@ -69,29 +73,29 @@ const checkPassword = (reqPassword, foundUser) => {
   );
 };
 
-const updateUserToken = (token, user) => {
+const updateUserToken = (token: any, user: any) => {
   return database
     .raw("UPDATE users SET token = ? WHERE id = ? RETURNING id, email, token", [
       token,
       user.id,
     ])
-    .then((data) => data.rows[0]);
+    .then((data: any) => data.rows[0]);
 };
 
-const signin = (request, response) => {
+const signin = (request: any, response: any) => {
   const userReq = request.body;
-  let user;
+  let user: any;
 
   findUser(userReq)
-    .then((foundUser) => {
+    .then((foundUser: any) => {
       user = foundUser;
       console.log(user);
       console.log(userReq);
 
       return checkPassword(userReq.password, foundUser);
     })
-    .then((res) => createToken())
-    .then((token) => updateUserToken(token, user))
+    .then((res: any) => createToken(user.email))
+    .then((token: string) => updateUserToken(token, user))
     .then(() => {
       response.status(200).json({
         user: user.username,
@@ -99,20 +103,16 @@ const signin = (request, response) => {
         token: user.token,
       });
     })
-    .catch((err) => {
+    .catch((err: any) => {
       console.error(err);
       response.status(400).json({ error: "Unable to sign in." });
     });
 };
 
-const findByEmail = (email) => {
+const findByEmail = (email: string) => {
   return database
     .raw("SELECT * FROM users WHERE email = ?", [email])
-    .then((data) => data.rows[0]);
+    .then((data: any) => data.rows[0]);
 };
 
-module.exports = {
-  signup,
-  signin,
-  findByEmail,
-};
+export { signup, signin, findByEmail };
