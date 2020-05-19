@@ -1,6 +1,6 @@
 import React from "react";
 import SearchBar from "../../components/SearchBar";
-import "./movie.css";
+import "./movie.scss";
 
 const Movie = () => {
   return (

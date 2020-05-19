@@ -1,32 +1,44 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import ToastBox from "../../components/ToastBox";
-import "./form.css";
+import { AppContext } from "../../App";
+import "./form.scss";
 
-const SignUp = (props) => {
+const SignIn = (props: any) => {
   const [error, setError] = React.useState();
   const [show, setShow] = React.useState(false);
   const { handleSubmit, register, errors } = useForm();
-  const onSubmit = (form) => {
-    fetch("/api/signup", {
+  const { dispatch } = React.useContext(AppContext);
+
+  const onSubmit = (form: any) => {
+    fetch("/api/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(form),
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
         } else {
-          return response.json().then((data) => {
+          return res.json().then((data) => {
             throw new Error(data.error);
           });
         }
       })
       .then((data) => {
+        const { user, email, token } = data;
         setShow(true);
-        props.toSignIn();
+        dispatch({
+          type: "LOGIN",
+          payload: {
+            user,
+            email,
+            token,
+          },
+        });
+        props.onHide();
       })
       .catch((err) => {
         setError(err.message);
@@ -38,19 +50,6 @@ const SignUp = (props) => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="error action-error">{error}</div>
-
-        <div className="form-row">
-          <input
-            placeholder="用户名"
-            name="username"
-            ref={register({
-              required: "Required.",
-            })}
-          />
-          <div className="error">
-            {errors.username && errors.username.message}
-          </div>
-        </div>
 
         <div className="form-row">
           <input
@@ -80,17 +79,17 @@ const SignUp = (props) => {
           </div>
         </div>
 
-        <button type="submit">注册</button>
+        <button type="submit">登录</button>
       </form>
 
       <ToastBox
         show={show}
         setShow={setShow}
-        message="Signed up successfully!"
+        message="Signed in successfully!"
         type="success"
       ></ToastBox>
     </div>
   );
 };
 
-export default SignUp;
+export default SignIn;

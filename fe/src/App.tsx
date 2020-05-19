@@ -1,12 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Split from "react-split";
-import "./App.css";
+import "./App.scss";
 import Douban from "./douban/Douban";
 import Header from "./header/Header";
 import Home from "./views/Home";
 
-export const AppContext = React.createContext();
+type ContextProps = {
+  context: any;
+  dispatch: any;
+};
+
+export const AppContext = React.createContext<Partial<ContextProps>>({});
 const initialState = {
   isAuthenticated: false,
   user: null,
@@ -14,7 +19,7 @@ const initialState = {
   token: null,
   iframeUrl: "https://book.douban.com",
 };
-const reducer = (state, action) => {
+const reducer = (state: any, action: any) => {
   switch (action.type) {
     case "LOGIN":
       localStorage.setItem("user", JSON.stringify(action.payload.user));
@@ -49,9 +54,9 @@ const reducer = (state, action) => {
 const App = () => {
   const [context, dispatch] = React.useReducer(reducer, initialState);
   React.useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user") || null);
-    const email = JSON.parse(localStorage.getItem("email") || null);
-    const token = JSON.parse(localStorage.getItem("token") || null);
+    const user = JSON.parse(localStorage.getItem("user") as string);
+    const email = JSON.parse(localStorage.getItem("email") as string);
+    const token = JSON.parse(localStorage.getItem("token") as string);
 
     if (user && email && token) {
       dispatch({

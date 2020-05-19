@@ -4,12 +4,13 @@
   "private": true,
   "main": "be/server.js",
   "scripts": {
-    "start": "node be/server.js",
-    "be": "nodemon be/server.js",
-    "fe": "cd fe && yarn start",
-    "build": "cd fe && yarn build",
+    "dev:be": "nodemon",
+    "dev:fe": "cd fe && yarn start",
+    "build:fe": "cd fe && yarn build",
+    "build:be": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "npx knex migrate:latest && cd fe && yarn && yarn build"
+    "heroku-postbuild": "npx knex migrate:latest && tsc && cd fe && yarn && yarn build",
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
@@ -21,6 +22,15 @@
     "pg": "^7.14.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.1"
+    "@types/bcrypt": "^3.0.0",
+    "@types/body-parser": "^1.19.0",
+    "@types/cors": "^2.8.6",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.6",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/node": "^14.0.1",
+    "nodemon": "^2.0.1",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.2"
   }
 }

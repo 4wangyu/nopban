@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Book from "../views/book/Book";
-import Movie from "../views/movie/Movie";
-import "./home.css";
-import Music from "./music/Music";
+import Book from "./book/Book";
+import Movie from "./movie/Movie";
 import Author from "./author/Author";
 import Celebrity from "./celebrity/Celebrity";
+import "./home.scss";
+import Music from "./music/Music";
 import Musician from "./musician/Musician";
 
 const Home = () => {

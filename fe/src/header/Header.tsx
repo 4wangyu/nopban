@@ -3,19 +3,19 @@ import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import { AppContext } from "../App";
 import AuthModal from "./modal/AuthModal";
-import "./header.css";
+import "./header.scss";
 
 const Nav = styled.nav`
-  position: fixed;
-  width: 100%;
-  height: 28px;
-  z-index: 1;
   background-color: #545652;
+  display: flex;
 
   font-size: 12px;
-  display: flex;
+  height: 28px;
   justify-content: space-between;
   line-height: 28px;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 `;
 
 const Span = styled.span`

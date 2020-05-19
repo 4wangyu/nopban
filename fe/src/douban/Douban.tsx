@@ -1,5 +1,5 @@
 import React from "react";
-import "./douban.css";
+import "./douban.scss";
 import { AppContext } from "../App";
 
 const Douban = () => {

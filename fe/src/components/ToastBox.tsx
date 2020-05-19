@@ -1,8 +1,8 @@
 import React from "react";
 import Toast from "react-bootstrap/Toast";
-import "./toast.css";
+import "./toast.scss";
 
-const ToastBox = (props) => {
+const ToastBox = (props: any) => {
   const { show, setShow, message, type } = props;
   return (
     <div>

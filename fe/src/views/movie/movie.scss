@@ -3,17 +3,17 @@ body {
 }
 
 main {
-  width: 84%;
   margin: auto;
+  width: 84%;
 }
 
 h1 {
+  color: #494949;
   font-size: 26px;
   font-weight: bold;
-  color: #494949;
-  margin: 0;
-  padding: 0 0 15px 0;
   line-height: 1.1;
+  margin: 0;
+  padding: 0 0 15px;
 }
 
 .year {
@@ -21,15 +21,15 @@ h1 {
 }
 
 .content {
-  display: flex;
   align-items: flex-start;
+  display: flex;
   flex-direction: column;
   font-size: 13px;
 }
 
 img {
-  width: 200px;
   margin: 0 10px 10px 0;
+  width: 200px;
 }
 
 label,
@@ -38,7 +38,7 @@ output {
 }
 
 label {
-  color: #666666;
+  color: #666;
 }
 
 .action {
@@ -46,20 +46,20 @@ label {
 }
 
 .gold {
-  color: gold;
+  color: #ffd700;
 }
 
 .action button {
   background: none;
+  border: 0;
   cursor: pointer;
-  border: none;
 
   padding: 0;
 }
 
 .rating {
-  margin-right: 10px;
   font-size: 14px;
+  margin-right: 10px;
 }
 
 .rating button {
@@ -67,10 +67,10 @@ label {
 }
 
 .remove button {
-  font-size: 14px;
   color: #bbb;
+  font-size: 14px;
 }
 
 .remove:hover button {
-  color: red;
+  color: #f00;
 }
