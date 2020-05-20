@@ -19,6 +19,9 @@ jobs:
           key: be-yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn/be
+      - run:
+          name: BE/Build Typescript
+          command: yarn build:be
 
       - restore_cache:
           name: FE/Restore Yarn Package Cache
@@ -34,7 +37,7 @@ jobs:
             - ~/.cache/yarn/fe
       - run:
           name: FE/Build For React
-          command: cd fe && yarn build
+          command: yarn build:fe
 
   deploy:
     docker:

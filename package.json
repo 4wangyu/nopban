@@ -2,12 +2,14 @@
   "name": "nopban-be",
   "version": "0.1.0",
   "private": true,
-  "main": "be/server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "be": "nodemon",
-    "fe": "cd fe && yarn start",
+    "dev:be": "nodemon",
+    "dev:fe": "cd fe && yarn start",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx knex migrate:latest && tsc && cd fe && yarn && yarn build",
+    "build:be": "tsc",
+    "build:fe": "cd fe && yarn build",
+    "build": "npx knex migrate:latest && tsc && cd fe && yarn --prod=false && yarn build",
     "start": "node dist/server.js"
   },
   "dependencies": {
@@ -30,5 +32,8 @@
     "nodemon": "^2.0.1",
     "ts-node": "^8.10.1",
     "typescript": "^3.9.2"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }
