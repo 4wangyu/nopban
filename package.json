@@ -8,7 +8,7 @@
     "dev:fe": "cd fe && yarn start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:be": "tsc",
-    "build:fe": "d fe && yarn --prod=false && yarn build",
+    "build:fe": "cd fe && yarn --prod=false && yarn build",
     "build:db": "npx knex migrate:latest",
     "build": "yarn build:db && yarn build:be && yarn build:fe",
     "start": "node dist/server.js"
