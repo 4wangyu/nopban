@@ -5,6 +5,7 @@ import './App.scss';
 import Douban from './douban/Douban';
 import Header from './header/Header';
 import Home from './views/Home';
+import createInterceptor from './http/interceptor';
 
 type ContextProps = {
   context: any;
@@ -68,6 +69,12 @@ const App = () => {
         },
       });
     }
+
+    createInterceptor(() =>
+      dispatch({
+        type: 'LOGOUT',
+      })
+    );
   }, []);
 
   return (
