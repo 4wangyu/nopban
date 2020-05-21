@@ -1,10 +1,10 @@
-const express = require("express"),
+const express = require('express'),
   router = express.Router();
-import checkUser from "./middleware/checkUser";
+import checkUser from './middleware/checkUser';
 
-import * as user from "./models/user";
+import * as user from './models/user';
 
-router.post("/signup", checkUser, user.signup);
-router.post("/signin", user.signin);
+router.post('/signup', checkUser, user.signup);
+router.post('/signin', user.signin);
 
 export default router;
