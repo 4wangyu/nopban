@@ -1,10 +1,10 @@
-import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import Split from "react-split";
-import "./App.scss";
-import Douban from "./douban/Douban";
-import Header from "./header/Header";
-import Home from "./views/Home";
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Split from 'react-split';
+import './App.scss';
+import Douban from './douban/Douban';
+import Header from './header/Header';
+import Home from './views/Home';
 
 type ContextProps = {
   context: any;
@@ -17,14 +17,14 @@ const initialState = {
   user: null,
   email: null,
   token: null,
-  iframeUrl: "https://book.douban.com",
+  iframeUrl: 'https://book.douban.com',
 };
 const reducer = (state: any, action: any) => {
   switch (action.type) {
-    case "LOGIN":
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
-      localStorage.setItem("email", JSON.stringify(action.payload.email));
-      localStorage.setItem("token", JSON.stringify(action.payload.token));
+    case 'LOGIN':
+      localStorage.setItem('user', JSON.stringify(action.payload.user));
+      localStorage.setItem('email', JSON.stringify(action.payload.email));
+      localStorage.setItem('token', JSON.stringify(action.payload.token));
       return {
         ...state,
         isAuthenticated: true,
@@ -32,7 +32,7 @@ const reducer = (state: any, action: any) => {
         email: action.payload.email,
         token: action.payload.token,
       };
-    case "LOGOUT":
+    case 'LOGOUT':
       localStorage.clear();
       return {
         ...state,
@@ -41,7 +41,7 @@ const reducer = (state: any, action: any) => {
         email: null,
         token: null,
       };
-    case "UPDATE_IFRAME":
+    case 'UPDATE_IFRAME':
       return {
         ...state,
         iframeUrl: action.iframeUrl,
@@ -54,13 +54,13 @@ const reducer = (state: any, action: any) => {
 const App = () => {
   const [context, dispatch] = React.useReducer(reducer, initialState);
   React.useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user") as string);
-    const email = JSON.parse(localStorage.getItem("email") as string);
-    const token = JSON.parse(localStorage.getItem("token") as string);
+    const user = JSON.parse(localStorage.getItem('user') as string);
+    const email = JSON.parse(localStorage.getItem('email') as string);
+    const token = JSON.parse(localStorage.getItem('token') as string);
 
     if (user && email && token) {
       dispatch({
-        type: "LOGIN",
+        type: 'LOGIN',
         payload: {
           user,
           email,
