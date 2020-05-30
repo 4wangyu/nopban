@@ -17,11 +17,12 @@ const searchMovie = async (request: Request, response: Response) => {
     );
     fs.writeFileSync('search.html', bodyHTML);
 
-    await page.close();
     response.status(200).json({ html: 'success' });
   } catch (e) {
     console.warn(e);
     response.status(500).json({ error: 'Error in fetching search results' });
+  } finally {
+    await page.close();
   }
 };
 
