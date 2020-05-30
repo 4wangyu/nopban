@@ -1,10 +1,10 @@
-import React from "react";
-import SearchBar from "../../components/SearchBar";
+import React from 'react';
+import SearchBar from '../../components/SearchBar';
 
 const Author = () => {
   return (
     <>
-      <SearchBar></SearchBar>
+      {/* <SearchBar></SearchBar> */}
       <main>
         <h1>王小波</h1>
       </main>

@@ -1,12 +1,20 @@
-import React from "react";
-import SearchBar from "../../components/SearchBar";
-import "./movie.scss";
+import React from 'react';
+import SearchBar from '../../components/SearchBar';
+import './movie.scss';
 
 const Movie = () => {
+  const [result, setResult] = React.useState([]);
+
   return (
     <>
-      <SearchBar></SearchBar>
-      <main>
+      <SearchBar
+        url="api/movie/search?searchkey="
+        callback={setResult}
+      ></SearchBar>
+
+      {JSON.stringify(result)}
+
+      {/* <main>
         <h1>
           西西里的美丽传说 Malèna <span className="year">(2000)</span>
         </h1>
@@ -84,7 +92,7 @@ const Movie = () => {
             <button>删除</button>
           </span>
         </div>
-      </main>
+      </main> */}
     </>
   );
 };

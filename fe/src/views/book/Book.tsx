@@ -1,10 +1,10 @@
-import React from "react";
-import SearchBar from "../../components/SearchBar";
+import React from 'react';
+import SearchBar from '../../components/SearchBar';
 
 const Book = () => {
   return (
     <>
-      <SearchBar></SearchBar>
+      {/* <SearchBar></SearchBar> */}
       <main>
         <h1>黄金时代</h1>
       </main>

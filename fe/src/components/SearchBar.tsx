@@ -1,5 +1,6 @@
-import React from "react";
-import styled from "styled-components";
+import React, { Dispatch, SetStateAction } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
 
 const Input = styled.input`
   border: 3px solid #8c949e;
@@ -30,12 +31,29 @@ const Search = styled.div`
   width: 84%;
 `;
 
-const SearchBar = () => {
+const SearchBar = (props: {
+  url: string;
+  callback: Dispatch<SetStateAction<never[]>>;
+}) => {
+  const [query, setQuery] = React.useState('');
+
+  const search = () => {
+    axios
+      .get(`${props.url}${query}`)
+      .then(function (response) {
+        props.callback(response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <Search>
-        <Input></Input>
-        <Button>
+        <Input value={query} onChange={(e) => setQuery(e.target.value)}></Input>
+        <Button onClick={() => search()}>
           <i className="fa fa-search"></i>
         </Button>
       </Search>
