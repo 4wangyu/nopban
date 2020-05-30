@@ -1,7 +1,7 @@
-import database from "../database";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-require("dotenv").config();
+import database from '../database';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+require('dotenv').config();
 
 const hashPassword = (password: string) => {
   return new Promise((resolve, reject) =>
@@ -14,7 +14,7 @@ const hashPassword = (password: string) => {
 const createUser = (user: any) => {
   return database
     .raw(
-      "INSERT INTO Users (Username, Email, PwdDigest, Token, CreatedAt) VALUES (?, ?, ?, ?, ?) RETURNING Id, Username, Email, CreatedAt, Token",
+      'INSERT INTO Users (Username, Email, PwdDigest, Token, CreatedAt) VALUES (?, ?, ?, ?, ?) RETURNING Id, Username, Email, CreatedAt, Token',
       [user.username, user.email, user.pwdDigest, user.token, new Date()]
     )
     .then((data: any) => data.rows[0]);
@@ -49,13 +49,13 @@ const signup = (request: any, response: any) => {
     })
     .catch((err) => {
       console.error(err);
-      response.status(400).json({ error: "Unable to sign up." });
+      response.status(400).json({ error: 'Unable to sign up.' });
     });
 };
 
 const findUser = (userReq: any) => {
   return database
-    .raw("SELECT * FROM users WHERE email = ?", [userReq.email])
+    .raw('SELECT * FROM users WHERE email = ?', [userReq.email])
     .then((data: any) => data.rows[0]);
 };
 
@@ -67,7 +67,7 @@ const checkPassword = (reqPassword: any, foundUser: any) => {
       } else if (response) {
         resolve(response);
       } else {
-        reject(new Error("Passwords do not match."));
+        reject(new Error('Passwords do not match.'));
       }
     })
   );
@@ -75,7 +75,7 @@ const checkPassword = (reqPassword: any, foundUser: any) => {
 
 const updateUserToken = (token: any, user: any) => {
   return database
-    .raw("UPDATE users SET token = ? WHERE id = ? RETURNING id, email, token", [
+    .raw('UPDATE users SET token = ? WHERE id = ? RETURNING id, email, token', [
       token,
       user.id,
     ])
@@ -94,7 +94,7 @@ const signin = (request: any, response: any) => {
 
       return checkPassword(userReq.password, foundUser);
     })
-    .then((res: any) => createToken(user.email))
+    .then(() => createToken(user.email))
     .then((token: string) => updateUserToken(token, user))
     .then(() => {
       response.status(200).json({
@@ -105,13 +105,13 @@ const signin = (request: any, response: any) => {
     })
     .catch((err: any) => {
       console.error(err);
-      response.status(400).json({ error: "Unable to sign in." });
+      response.status(400).json({ error: 'Unable to sign in.' });
     });
 };
 
 const findByEmail = (email: string) => {
   return database
-    .raw("SELECT * FROM users WHERE email = ?", [email])
+    .raw('SELECT * FROM users WHERE email = ?', [email])
     .then((data: any) => data.rows[0]);
 };
 
