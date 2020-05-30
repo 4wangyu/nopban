@@ -1,6 +1,6 @@
 const express = require('express'),
   router = express.Router();
-import checkUser from './middleware/checkuser';
+import checkUser from './middleware/checkUser';
 import searchMovie from './models/movie';
 
 import * as user from './models/user';
