@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { MovieSearchResult } from '../models/movie.model';
 
 const Input = styled.input`
   border: 3px solid #8c949e;
@@ -33,7 +34,7 @@ const Search = styled.div`
 
 const SearchBar = (props: {
   url: string;
-  callback: Dispatch<SetStateAction<never[]>>;
+  callback: Dispatch<SetStateAction<MovieSearchResult>>;
 }) => {
   const [query, setQuery] = React.useState('');
 
