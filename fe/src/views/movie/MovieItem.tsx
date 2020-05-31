@@ -22,6 +22,7 @@ function MovieItem(props: { movie: MovieSearchItem }) {
   return (
     <div className="movie-item">
       <button
+        className="title"
         onClick={() =>
           dispatch({
             type: 'UPDATE_IFRAME',

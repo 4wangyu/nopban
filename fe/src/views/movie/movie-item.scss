@@ -8,6 +8,11 @@
     text-align: left;
   }
 
+  .title {
+    margin-right: 10px;
+    max-width: 90%;
+  }
+
   p {
     color: #757575;
     font-size: 12px;
@@ -17,7 +22,6 @@
   }
 
   .add {
-    margin-left: 10px;
     visibility: hidden;
 
     i {
