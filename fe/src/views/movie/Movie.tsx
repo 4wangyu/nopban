@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import SearchBar from '../../components/SearchBar';
 import './movie.scss';
 import {
@@ -9,13 +10,31 @@ import {
 import MovieItem from './MovieItem';
 
 const Movie = () => {
-  const [result, setResult] = React.useState<MovieSearchResult>(INIT_DATA);
+  const [result, setResult] = useState<MovieSearchResult>(INIT_DATA);
+  const [searchKey, setSearchKey] = useState<string>('');
+
+  function search(start = 0) {
+    axios
+      .get('api/movie/search', {
+        params: {
+          searchKey,
+          start,
+        },
+      })
+      .then(function (response) {
+        setResult(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   return (
     <>
       <SearchBar
-        url="api/movie/search?searchkey="
-        callback={setResult}
+        searchKey={searchKey}
+        setSearchKey={setSearchKey}
+        onButtonClick={search}
       ></SearchBar>
 
       <main>
@@ -24,7 +43,9 @@ const Movie = () => {
         ))}
         <div className="pagination">
           {result.pagination?.map((pag: MovieSearchPagination, idx: number) => (
-            <button key={idx}>{pag.text}</button>
+            <button onClick={() => search(pag.start)} key={idx}>
+              {pag.text}
+            </button>
           ))}
         </div>
       </main>

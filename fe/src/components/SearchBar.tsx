@@ -1,7 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { MovieSearchResult } from '../models/movie.model';
 
 const Input = styled.input`
   border: 3px solid #8c949e;
@@ -33,28 +31,22 @@ const Search = styled.div`
 `;
 
 const SearchBar = (props: {
-  url: string;
-  callback: Dispatch<SetStateAction<MovieSearchResult>>;
+  searchKey: string;
+  setSearchKey: (s: string) => void;
+  onButtonClick: () => void;
 }) => {
-  const [query, setQuery] = React.useState('');
-
-  const search = () => {
-    axios
-      .get(`${props.url}${query}`)
-      .then(function (response) {
-        props.callback(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
-  };
+  function handleClick() {
+    props.onButtonClick();
+  }
 
   return (
     <>
       <Search>
-        <Input value={query} onChange={(e) => setQuery(e.target.value)}></Input>
-        <Button onClick={() => search()}>
+        <Input
+          value={props.searchKey}
+          onChange={(e) => props.setSearchKey(e.target.value)}
+        ></Input>
+        <Button onClick={handleClick}>
           <i className="fa fa-search"></i>
         </Button>
       </Search>
