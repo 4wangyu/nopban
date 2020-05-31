@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
+import puppet from '../../puppet';
 import fs from 'fs';
-import puppet from '../puppet';
 
 const url = 'https://search.douban.com/movie/subject_search?search_text=';
 
@@ -15,7 +15,7 @@ const searchMovie = async (request: Request, response: Response) => {
     const bodyHTML = await page.evaluate(
       () => document.getElementById('root').innerHTML
     );
-    fs.writeFileSync('search.html', bodyHTML);
+    fs.writeFileSync('s.html', bodyHTML);
 
     response.status(200).json({ html: 'success' });
   } catch (e) {

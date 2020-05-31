@@ -1,4 +1,4 @@
-const findByEmail = require('../models/user')['findByEmail'];
+const findByEmail = require('../modules/user')['findByEmail'];
 
 const checkUser = (req: any, res: any, next: any) => {
   const form = req.body;
