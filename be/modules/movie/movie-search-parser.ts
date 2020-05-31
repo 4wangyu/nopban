@@ -16,7 +16,6 @@ function parseMovieSearch(
 
     if (url.includes('subject')) {
       const title = $(el).find('.title-text').text();
-      const img = $(el).find('img').attr('src');
       const metas = $(el)
         .find('.meta')
         .map((i, e) => $(e).text())
@@ -24,7 +23,6 @@ function parseMovieSearch(
 
       items.push({
         url,
-        img,
         title,
         metas,
       });
