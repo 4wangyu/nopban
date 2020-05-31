@@ -1,8 +1,8 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import ToastBox from "../../components/ToastBox";
-import { AppContext } from "../../App";
-import "./form.scss";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import ToastBox from '../../components/ToastBox';
+import { AppContext } from '../../App';
+import './form.scss';
 
 const SignIn = (props: any) => {
   const [error, setError] = React.useState();
@@ -11,10 +11,10 @@ const SignIn = (props: any) => {
   const { dispatch } = React.useContext(AppContext);
 
   const onSubmit = (form: any) => {
-    fetch("/api/signin", {
-      method: "POST",
+    fetch('/api/signin', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(form),
     })
@@ -31,7 +31,7 @@ const SignIn = (props: any) => {
         const { user, email, token } = data;
         setShow(true);
         dispatch({
-          type: "LOGIN",
+          type: 'LOGIN',
           payload: {
             user,
             email,
@@ -42,7 +42,7 @@ const SignIn = (props: any) => {
       })
       .catch((err) => {
         setError(err.message);
-        console.error("Error:", err.message);
+        console.error('Error:', err.message);
       });
   };
 
@@ -56,10 +56,10 @@ const SignIn = (props: any) => {
             placeholder="邮箱"
             name="email"
             ref={register({
-              required: "Required.",
+              required: 'Required.',
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: "Invalid email address.",
+                message: 'Invalid email address.',
               },
             })}
           />
@@ -71,7 +71,7 @@ const SignIn = (props: any) => {
             placeholder="密码"
             name="password"
             ref={register({
-              required: "Required.",
+              required: 'Required.',
             })}
           />
           <div className="error">
