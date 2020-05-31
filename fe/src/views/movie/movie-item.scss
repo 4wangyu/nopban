@@ -1,11 +1,18 @@
 .movie-item {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
 
   button {
     font-weight: 500;
-    margin-bottom: 4px;
+
     padding: 0;
     text-align: left;
+  }
+
+  div button {
+    margin-bottom: 4px;
   }
 
   p {
@@ -14,5 +21,18 @@
     line-height: 1.5;
     margin: 0;
     padding: 0;
+  }
+
+  .add {
+    margin-left: 10px;
+    visibility: hidden;
+
+    i {
+      margin: 2px;
+    }
+  }
+
+  &:hover .add {
+    visibility: visible;
   }
 }

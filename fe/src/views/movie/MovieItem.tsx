@@ -8,19 +8,24 @@ function MovieItem(props: { movie: MovieSearchItem }) {
 
   return (
     <div className="movie-item">
-      <button
-        onClick={() =>
-          dispatch({
-            type: 'UPDATE_IFRAME',
-            iframeUrl: props.movie.url,
-          })
-        }
-      >
-        {props.movie.title}
+      <div>
+        <button
+          onClick={() =>
+            dispatch({
+              type: 'UPDATE_IFRAME',
+              iframeUrl: props.movie.url,
+            })
+          }
+        >
+          {props.movie.title}
+        </button>
+        {props.movie.metas.map((m, idx) => (
+          <p key={idx}>{m}</p>
+        ))}
+      </div>
+      <button className="add" title="添加">
+        <i className="fa fa-plus"></i>
       </button>
-      {props.movie.metas.map((m, idx) => (
-        <p key={idx}>{m}</p>
-      ))}
     </div>
   );
 }
