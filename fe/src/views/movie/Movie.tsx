@@ -14,9 +14,11 @@ const Movie = () => {
         callback={setResult}
       ></SearchBar>
 
-      {result.items.map((item: MovieSearchItem, idx: number) => (
-        <MovieItem key={idx} movie={item}></MovieItem>
-      ))}
+      <main>
+        {result.items.map((item: MovieSearchItem, idx: number) => (
+          <MovieItem key={idx} movie={item}></MovieItem>
+        ))}
+      </main>
     </>
   );
 };

@@ -1,0 +1,24 @@
+.movie-item {
+  margin-bottom: 20px;
+
+  a {
+    color: #37a;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  p {
+    color: #757575;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+  }
+}
