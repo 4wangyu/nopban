@@ -8,7 +8,7 @@ function MovieItem(props: { movie: MovieSearchItem }) {
 
   return (
     <div className="movie-item">
-      <a
+      <button
         onClick={() =>
           dispatch({
             type: 'UPDATE_IFRAME',
@@ -17,7 +17,7 @@ function MovieItem(props: { movie: MovieSearchItem }) {
         }
       >
         {props.movie.title}
-      </a>
+      </button>
       {props.movie.metas.map((m, idx) => (
         <p key={idx}>{m}</p>
       ))}

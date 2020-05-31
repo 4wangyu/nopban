@@ -1,7 +1,11 @@
 import React from 'react';
 import SearchBar from '../../components/SearchBar';
 import './movie.scss';
-import { MovieSearchResult, MovieSearchItem } from '../../models/movie.model';
+import {
+  MovieSearchResult,
+  MovieSearchItem,
+  MovieSearchPagination,
+} from '../../models/movie.model';
 import MovieItem from './MovieItem';
 
 const Movie = () => {
@@ -15,9 +19,14 @@ const Movie = () => {
       ></SearchBar>
 
       <main>
-        {result.items.map((item: MovieSearchItem, idx: number) => (
+        {result.items?.map((item: MovieSearchItem, idx: number) => (
           <MovieItem key={idx} movie={item}></MovieItem>
         ))}
+        <div className="pagination">
+          {result.pagination?.map((pag: MovieSearchPagination, idx: number) => (
+            <button key={idx}>{pag.text}</button>
+          ))}
+        </div>
       </main>
     </>
   );

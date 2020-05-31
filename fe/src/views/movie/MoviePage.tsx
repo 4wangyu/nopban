@@ -1,8 +1,9 @@
 import React from 'react';
+import './movie-page.scss';
 
 function MoviePage() {
   return (
-    <main>
+    <div className="movie-page">
       <h1>
         西西里的美丽传说 Malèna <span className="year">(2000)</span>
       </h1>
@@ -79,7 +80,7 @@ function MoviePage() {
           <button>删除</button>
         </span>
       </div>
-    </main>
+    </div>
   );
 }
 

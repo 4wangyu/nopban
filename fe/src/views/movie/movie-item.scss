@@ -1,16 +1,22 @@
 .movie-item {
   margin-bottom: 20px;
 
-  a {
+  button {
+    border: 0;
     color: #37a;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 4px;
+    padding: 0;
 
     &:hover {
       text-decoration: underline;
+    }
+
+    &:focus {
+      outline: 0;
     }
   }
 
