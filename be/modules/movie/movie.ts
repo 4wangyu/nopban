@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import puppet from '../../puppet';
-import fs from 'fs';
+import parseMovieSearch from './movie-search-parser';
 
 const url = 'https://search.douban.com/movie/subject_search?search_text=';
 
@@ -15,9 +15,9 @@ const searchMovie = async (request: Request, response: Response) => {
     const bodyHTML = await page.evaluate(
       () => document.getElementById('root').innerHTML
     );
-    fs.writeFileSync('s.html', bodyHTML);
+    const resuls = parseMovieSearch(bodyHTML);
 
-    response.status(200).json({ html: 'success' });
+    response.status(200).json(resuls);
   } catch (e) {
     console.warn(e);
     response.status(500).json({ error: 'Error in fetching search results' });
