@@ -33,8 +33,11 @@ async function puppet() {
     'imageset',
   ];
   page.on('request', (request) => {
-    if (block_ressources.indexOf(request.resourceType()) > 0) request.abort();
-    else request.continue();
+    if (block_ressources.indexOf(request.resourceType()) > 0) {
+      request.abort();
+    } else {
+      request.continue();
+    }
   });
 
   return page;
