@@ -8,10 +8,11 @@ import {
   MovieSearchPagination,
 } from '../../models/movie.model';
 import MovieItem from './MovieItem';
+import { scrollToTop } from '../../lib/util';
 
 const Movie = () => {
   const [result, setResult] = useState<MovieSearchResult>(INIT_DATA);
-  const [searchKey, setSearchKey] = useState<string>('');
+  const [searchKey, setSearchKey] = useState<string>('movie');
 
   function search(start = 0) {
     axios
@@ -23,6 +24,7 @@ const Movie = () => {
       })
       .then(function (response) {
         setResult(response.data);
+        scrollToTop();
       })
       .catch(function (error) {
         console.log(error);
