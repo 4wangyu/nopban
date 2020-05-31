@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 const html = fs.readFileSync('s.html');
 const $ = cheerio.load(html, { normalizeWhitespace: true });
 
-const results = [];
+const items = [];
 $('.item-root').each((i, el) => {
   const url = $(el).find('.title-text').attr('href');
 
@@ -16,7 +16,7 @@ $('.item-root').each((i, el) => {
       .map((i, e) => $(e).text())
       .get();
 
-    results.push({
+    items.push({
       url,
       img,
       title,
@@ -24,4 +24,15 @@ $('.item-root').each((i, el) => {
     });
   }
 });
-console.log(results);
+console.log(items);
+
+const pagination = [];
+$('.paginator a').each((i, el) => {
+  const url = $(el).attr('href');
+  if (url) {
+    const start = url.split('=').reverse()[0];
+    const text = $(el).text();
+    pagination.push({ start, text });
+  }
+});
+console.log(pagination);
