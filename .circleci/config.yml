@@ -13,7 +13,7 @@ jobs:
             - be-yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: BE/Install Dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install
       - save_cache:
           name: BE/Save Yarn Package Cache
           key: be-yarn-packages-{{ checksum "yarn.lock" }}
@@ -29,7 +29,7 @@ jobs:
             - fe-yarn-packages-{{ checksum "fe/yarn.lock" }}
       - run:
           name: FE/Install Dependencies
-          command: cd fe && yarn install --frozen-lockfile
+          command: cd fe && yarn install
       - save_cache:
           name: FE/Save Yarn Package Cache
           key: fe-yarn-packages-{{ checksum "fe/yarn.lock" }}
