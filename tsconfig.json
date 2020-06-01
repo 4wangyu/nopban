@@ -12,5 +12,5 @@
       "be/*": ["./*"]
     }
   },
-  "include": ["be/**/*", "fe/src/models/*"]
+  "include": ["be/**/*"]
 }
