@@ -2,7 +2,7 @@ import cheerio from 'cheerio';
 import {
   MovieSearchItem,
   MovieSearchPagination,
-} from '../../../fe/src/models/movie.model';
+} from '../../models/movie.model';
 
 function parseMovieSearch(
   html: string
