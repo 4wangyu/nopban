@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const Input = styled.input`
   border: 3px solid #8c949e;
@@ -30,12 +30,23 @@ const Search = styled.div`
   width: 84%;
 `;
 
-const SearchBar = () => {
+const SearchBar = (props: {
+  searchKey: string;
+  setSearchKey: (s: string) => void;
+  onButtonClick: () => void;
+}) => {
+  function handleClick() {
+    props.onButtonClick();
+  }
+
   return (
     <>
       <Search>
-        <Input></Input>
-        <Button>
+        <Input
+          value={props.searchKey}
+          onChange={(e) => props.setSearchKey(e.target.value)}
+        ></Input>
+        <Button onClick={handleClick}>
           <i className="fa fa-search"></i>
         </Button>
       </Search>

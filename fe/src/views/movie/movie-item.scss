@@ -1,0 +1,35 @@
+.movie-item {
+  margin-bottom: 20px;
+
+  button {
+    font-weight: 500;
+    margin-bottom: 4px;
+    padding: 0;
+    text-align: left;
+  }
+
+  .title {
+    margin-right: 10px;
+    max-width: calc(100% - 26px);
+  }
+
+  p {
+    color: #757575;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+  }
+
+  .add {
+    visibility: hidden;
+
+    i {
+      margin: 2px;
+    }
+  }
+
+  &:hover .add {
+    visibility: visible;
+  }
+}

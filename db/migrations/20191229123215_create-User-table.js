@@ -11,6 +11,6 @@ exports.up = function (knex, Promise) {
 };
 
 exports.down = function (knex, Promise) {
-  let dropQuery = `DROP TABLE Users`;
+  let dropQuery = 'DROP TABLE Users';
   return knex.raw(dropQuery);
 };

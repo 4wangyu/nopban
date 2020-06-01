@@ -1,0 +1,71 @@
+.movie-page {
+  h1 {
+    color: #494949;
+    font-size: 26px;
+    font-weight: bold;
+    line-height: 1.1;
+    margin: 0;
+    padding: 0 0 15px;
+  }
+
+  .year {
+    color: #888;
+  }
+
+  .content {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+  }
+
+  img {
+    margin: 0 10px 10px 0;
+    width: 200px;
+  }
+
+  label,
+  output {
+    line-height: 1.62;
+  }
+
+  label {
+    color: #666;
+  }
+
+  .action {
+    padding: 10px 0 20px;
+
+    button {
+      background: none;
+      border: 0;
+      cursor: pointer;
+
+      padding: 0;
+    }
+  }
+
+  .gold {
+    color: #ffd700;
+  }
+
+  .rating {
+    font-size: 14px;
+    margin-right: 10px;
+
+    button {
+      font-size: 16px;
+    }
+  }
+
+  .remove {
+    button {
+      color: #bbb;
+      font-size: 14px;
+    }
+
+    &:hover button {
+      color: #f00;
+    }
+  }
+}

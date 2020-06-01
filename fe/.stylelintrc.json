@@ -2,5 +2,18 @@
   "extends": [
     "stylelint-config-sass-guidelines",
     "stylelint-prettier/recommended"
-  ]
+  ],
+  "rules": {
+    "max-nesting-depth": [
+      3,
+      { "ignore": ["blockless-at-rules", "pseudo-classes"] }
+    ],
+    "indentation": 2,
+    "string-quotes": "single",
+    "no-duplicate-selectors": true,
+    "color-hex-case": "lower",
+    "color-hex-length": "short",
+    "declaration-colon-space-before": "never",
+    "declaration-colon-space-after": "always"
+  }
 }
