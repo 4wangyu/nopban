@@ -5,7 +5,7 @@ export interface MovieSearchItem {
 }
 
 export interface MovieSearchPagination {
-  start: number;
+  start: number | null;
   text: string;
 }
 

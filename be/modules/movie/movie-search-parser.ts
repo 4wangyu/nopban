@@ -33,11 +33,10 @@ function parseMovieSearch(
   const pagination: MovieSearchPagination[] = [];
   $('.paginator a').each((i, el) => {
     const url = $(el).attr('href');
-    if (url) {
-      const start = +url.split('=').reverse()[0];
-      const text = $(el).text();
-      pagination.push({ start, text });
-    }
+    const start = url ? +url.split('=').reverse()[0] : null;
+
+    const text = $(el).text();
+    pagination.push({ start, text });
   });
 
   return { items, pagination };

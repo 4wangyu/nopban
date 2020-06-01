@@ -45,7 +45,11 @@ const Movie = () => {
         ))}
         <div className="pagination">
           {result.pagination?.map((pag: MovieSearchPagination, idx: number) => (
-            <button onClick={() => search(pag.start)} key={idx}>
+            <button
+              disabled={pag.start === null}
+              onClick={() => search(pag.start as number)}
+              key={idx}
+            >
               {pag.text}
             </button>
           ))}
@@ -60,146 +64,127 @@ export default Movie;
 const INIT_DATA = {
   items: [
     {
-      url: 'https://movie.douban.com/subject/1292365/',
-      img:
-        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2513253791.webp',
-      title: '活着‎ (1994)',
+      url: 'https://movie.douban.com/subject/3318306/',
+      title: '电影43 Movie 43‎ (2013)',
       metas: [
-        '中国大陆 / 中国香港 / 剧情 / 历史 / 家庭 / 人生 / Lifetimes / 132分钟',
-        '张艺谋 / 葛优 / 巩俐 / 姜武 / 牛犇 / 郭涛 / 张璐 / 倪大红 / 肖聪',
+        '美国 / 喜剧 / 丧星玩转荷里活(港) / 激爱543(台) / 94分钟',
+        '伊丽莎白·班克斯 / 史蒂文·布里尔 / 拉斯提·坎蒂耶夫  / 斯蒂芬·卡尔 / 詹姆斯·达菲 / 格里芬·邓恩 / 彼得·法雷里 / 帕特里克·福斯贝里 / 詹姆斯·古恩 / 鲍勃·奥登科克 / 布莱特·拉特纳 / 艾玛·斯通 / 杰瑞米·艾伦·怀特 / 科洛·莫瑞兹 / 休·杰克曼 / 杰拉德·巴特勒 / 乔什·杜哈明 / 安娜·法瑞丝',
       ],
     },
     {
-      url: 'https://movie.douban.com/subject/26874505/',
-      img:
-        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2544912792.webp',
-      title: '人生果实 人生フルーツ‎ (2017)',
+      url: 'https://movie.douban.com/subject/30376846/',
+      title: 'M.O.V.I.E‎ (2013)',
+      metas: ['法国 / 5分钟', 'Gérard Cairaschi'],
+    },
+    {
+      url: 'https://movie.douban.com/subject/5165044/',
+      title: '(Movie...)‎ (2009)',
+      metas: ['美国 / 短片 / 剧情', 'Jacob East'],
+    },
+    {
+      url: 'https://movie.douban.com/subject/5192906/',
+      title: 'Movie‎ (2007)',
+      metas: ['捷克 / Republic of Macedonia / 剧情 / 84分钟', '伊沃·塔季科夫'],
+    },
+    {
+      url: 'https://movie.douban.com/subject/34453655/',
+      title: 'The Little Kids: Movie‎ (2020)',
       metas: [
-        '日本 / 纪录片 / 积存时间的生活(台) / 人生水果 / 91分钟',
-        '伏原健之 / 津端修一 / 津端英子 / 树木希林',
+        '美国 / 儿童 / 动作',
+        '李·昂克里奇 / 黛比·德里贝里 / 塔拉·斯特朗 / Kate Soucie / 弗兰·布里尔',
       ],
     },
     {
-      url: 'https://movie.douban.com/subject/1299042/',
-      img:
-        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1133142456.webp',
-      title: '人生‎ (1984)',
+      url: 'https://movie.douban.com/subject/30372377/',
+      title: '续命之徒：绝命毒师电影 El Camino: A Breaking Bad Movie‎ (2019)',
       metas: [
-        '中国大陆 / 剧情 / 爱情 / Life / 125分钟',
-        '吴天明 / 周里京 / 吴玉芳 / 高保成 / 乔建华 / 李小力',
+        '美国 / 剧情 / 犯罪 / 惊悚 / 绝命毒师电影：续命之徒 / 格林布莱尔 / 122分钟',
+        '文斯·吉里根 / 亚伦·保尔 / 乔纳森·班克斯 / 马特·琼斯 / 查尔斯·贝克 / 托德·特里 / 朱莉·珀尔 / 格雷戈里·史蒂文·索里兹 / 拉里·哈金',
       ],
     },
     {
-      url: 'https://movie.douban.com/subject/2142533/',
-      img:
-        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2170218518.webp',
-      title: '人生 ライフ‎ (2007)',
+      url: 'https://movie.douban.com/subject/26282448/',
+      title: '火影忍者剧场版：博人传 BORUTO -NARUTO THE MOVIE-‎ (2015)',
       metas: [
-        '日本 / 剧情 / Life / Raifu / 36分钟',
-        '谷村政树 / 加藤裕将 / 北乃绮 / 福田沙纪 / 细田善彦 / 大泽茜 / 星井七濑 / 末永遥 / 中村静香 / 夏目铃',
+        '日本 / 动作 / 动画 / 冒险 / 火影忍者剧场版：幕留人(港) / 火影忍者剧场版：博人 / 96分钟',
+        '山下宏幸 / 三瓶由布子 / 菊池心 / 木岛隆一 / 竹内顺子 / 中村千绘 / 杉山纪彰 / 早见沙织 / 水树奈奈',
       ],
     },
     {
-      url: 'https://movie.douban.com/subject/1306914/',
-      img:
-        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2187053539.webp',
-      title: '人生 Life‎ (1999)',
+      url: 'https://movie.douban.com/subject/27119724/',
+      title: '小丑 Joker‎ (2019)',
       metas: [
-        '美国 / 喜剧 / 犯罪 / 剧情 / 傲笑江湖 / 终身监禁 / 108分钟',
-        '泰德·戴米 / 艾迪·墨菲 / 马丁·劳伦斯 / 奥巴·巴巴图德',
+        '美国 / 加拿大 / 剧情 / 犯罪 / 惊悚 / 小丑起源电影：罗密欧 / Romeo / 122分钟',
+        '托德·菲利普斯 / 华金·菲尼克斯 / 罗伯特·德尼罗 / 马克·马龙 / 莎姬·贝兹 / 谢伊·惠格姆 / 弗兰西丝·康罗伊 / 布莱恩·考伦 / 布莱恩·泰里·亨利',
       ],
     },
     {
-      url: 'https://movie.douban.com/subject/25853123/',
-      img:
-        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2175881833.webp',
-      title: '人生Best Ten 人生ベストテン‎ (2013)',
+      url: 'https://movie.douban.com/subject/26628382/',
+      title: '小羊肖恩2：末日农场 A Shaun the Sheep Movie: Farmageddon‎ (2019)',
       metas: [
-        '日本 / 剧情 / 爱情 / 动画 / 短片 / 成年女性的动画时间：人生Best Ten / 25分钟',
-        '三浦阳 / 中谷美纪 / 神谷浩史',
+        '英国 / 法国 / 美国 / 喜剧 / 科幻 / 动画 / 冒险 / 小羊肖恩2 / 笑笑羊大电影2：外星人来了！(台) / 87分钟',
+        '威尔·比彻 / 理查德·费兰 / 贾斯汀·弗莱彻 / 约翰·斯帕克斯 / 克里斯·莫雷尔 / 安迪·尼曼 / 戴维·霍尔特 / 凯特·哈伯 / 阿玛莉亚·维塔莱 / 乔·萨格',
       ],
     },
     {
-      url: 'https://movie.douban.com/subject/25772497/',
-      img:
-        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2190898813.webp',
-      title: '人生 人生相談テレビアニメーション「人生」‎ (2014)',
+      url: 'https://movie.douban.com/subject/11808948/',
+      title: '海绵宝宝 The SpongeBob Movie: Sponge Out of Water‎ (2015)',
       metas: [
-        '日本 / 剧情 / 动画 / Jinsei',
-        '川口敬一郎 / 内匠靖明 / 新田日和 / 丰田萌绘 / 诹访彩花 / 大西沙织 / 前田玲奈 / 森久保祥太郎 / 内田真礼',
+        '美国 / 喜剧 / 动画 / 冒险 / 海绵宝宝：海陆大出击(台) / 海绵宝宝历险记：海绵出水 / 93分钟',
+        '保罗·提比特 / 迈克·米切尔 / 安东尼奥·班德拉斯 / 艾瑞克·鲍扎 / 蒂姆·康威 / 埃迪·狄森 / 罗伯·鲍森 / 凯文·迈克尔·理查德森 / 艾普尔·斯图瓦特 / 克里·萨莫',
       ],
     },
     {
-      url: 'https://movie.douban.com/subject/25847342/',
-      img:
-        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2175300125.webp',
-      title: '人生‎ (2014)',
+      url: 'https://movie.douban.com/subject/27602116/',
+      title:
+        '我的英雄学院：两位英雄 僕のヒーローアカデミア THE MOVIE ～2人の英雄～‎ (2018)',
       metas: [
-        '中国大陆 / 剧情',
-        '杨阳 / 王雨 / 缪婷茹 / 彭杨 / 苏小刚 / 苏廷石 / 黄精一',
+        '日本 / 动作 / 动画 / 我的英雄学院剧场版：2人的英雄 / Boku no Hero Academia the Movie / 96分钟',
+        '长崎健司 / 山下大辉 / 三宅健太 / 志田未来 / 生濑胜久 / 冈本信彦 / 佐仓绫音 / 石川界人 / 梶裕贵',
       ],
     },
     {
-      url: 'https://movie.douban.com/subject/26897885/',
-      img:
-        'https://img9.doubanio.com/f/movie/30c6263b6db26d055cbbe73fe653e29014142ea3/pics/movie/movie_default_large.png',
-      title: '系统 BIOS‎ (2020)',
+      url: 'https://movie.douban.com/subject/24397586/',
+      title: '小羊肖恩 Shaun the Sheep Movie‎ (2015)',
       metas: [
-        '英国 / 美国 / 科幻 / 人生',
-        '米格尔·萨普什尼克 / 汤姆·汉克斯 / 卡赖伯·兰德里·琼斯 / 萨米拉·威利',
+        '英国 / 法国 / 喜剧 / 动画 / 冒险 / 小羊肖恩大电影 / 超级无敌羊咩咩大电影之咩最劲(港) / 85分钟',
+        '马克·伯顿 / 理查德·斯塔扎克 / 贾斯汀·弗莱彻 / 约翰·斯帕克斯 / 欧米德·吉亚李利 / 理查德·韦伯 / 凯特·哈伯 / 安迪·尼曼 / 西蒙·格林诺 / 艾玛·泰特',
       ],
     },
     {
-      url: 'https://movie.douban.com/subject/2295847/',
-      img:
-        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2543019971.webp',
-      title: '人生‎ (1934)',
-      metas: ['中国大陆 / 剧情 / Life', '费穆 / 阮玲玉 / 郑君里 / 林楚楚'],
-    },
-    {
-      url: 'https://movie.douban.com/subject/6960905/',
-      img:
-        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1596061326.webp',
-      title: '多彩人生 人生、いろどり‎ (2012)',
+      url: 'https://movie.douban.com/subject/1299981/',
+      title: '惊声尖笑 Scary Movie‎ (2000)',
       metas: [
-        "日本 / 剧情 / It's a Beautiful Life - Irodor / 112分钟",
-        '御法川修 / 吉行和子 / 富司纯子 / 中尾美枝 / 平冈祐太 / 村川绘梨 / 户次重幸',
+        '美国 / 喜剧 / 恐怖电影 / 搞乜鬼夺命杂作 / 88分钟',
+        '基伦·埃弗瑞·韦恩斯 / 安娜·法瑞丝 / 乔恩·亚伯拉罕斯 / 马龙·韦恩斯 / 戴夫·谢里登 / 莎诺·伊丽莎白 / 洛奇林·莫罗 / 肖恩·韦恩斯 / 雷吉娜·赫尔',
       ],
     },
     {
-      url: 'https://movie.douban.com/subject/3893862/',
-      img:
-        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p1176180817.webp',
-      title: '第一排的人生 かぶりつき人生‎ (1968)',
+      url: 'https://movie.douban.com/subject/26863060/',
+      title: '愤怒的小鸟2 The Angry Birds Movie 2‎ (2019)',
       metas: [
-        '日本 / Kaburitsuki jinsei / Life of a Striptease Lover',
-        '神代辰巳 / 殿岡ハツ江 / 丹羽志津 / 玉村駿太郎',
+        '芬兰 / 美国 / 喜剧 / 动画 / 冒险 / 愤怒鸟大电影2(港) / 愤怒鸟玩电影2(台) / 96分钟',
+        '图鲁普·范·奥尔曼 / 杰森·苏戴奇斯 / 比尔·哈德尔 / 乔什·加德 / 丹尼·麦克布莱德 / 彼特·丁拉基 / 妮琪·米娜 / 斯特林·K·布朗 / 莱斯莉·琼斯',
       ],
     },
     {
-      url: 'https://movie.douban.com/subject/1988012/',
-      img: 'https://img9.doubanio.com/view/subject/l/public/s2850369.jpg',
-      title: '玫瑰人生 フレーフレー人生!‎ (2001)',
+      url: 'https://movie.douban.com/subject/26145033/',
+      title: '乐高蝙蝠侠大电影 The Lego Batman Movie‎ (2017)',
       metas: [
-        '日本 / 玫瑰人生',
-        '森一弘 / 富塚博司 / 松下由樹 / 赤井英和 / 鈴木紗理奈 / 森公美子 / 宮崎あおい',
+        '美国 / 喜剧 / 动作 / 动画 / 冒险 / Lego蝙蝠侠英雄传(港) / 乐高蝙蝠侠电影(台) / 105分钟',
+        '克里斯·麦凯 / 威尔·阿奈特 / 罗莎里奥·道森 / 拉尔夫·费因斯 / 迈克尔·塞拉 / 扎克·加利凡纳基斯 / 珍妮·斯蕾特 / 苏珊·本尼特 / 玛丽亚·凯莉',
       ],
-    },
-    {
-      url: 'https://movie.douban.com/subject/6939519/',
-      img: 'https://img9.doubanio.com/view/subject/l/public/s24514575.jpg',
-      title: 'もうひとつの人生‎ (1995)',
-      metas: ['日本 / 纪录片 / Another Life / 101分钟', '小池征人'],
-    },
-    {
-      url: 'https://movie.douban.com/subject/25775596/',
-      img:
-        'https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2164930574.webp',
-      title: '人生游戏 人生ごっこ‎ (2013)',
-      metas: ['日本 / 48分钟', '金井紘 / 森岡龍 / 新川優愛 / 池田鉄洋'],
     },
   ],
   pagination: [
+    {
+      start: null,
+      text: '<前页',
+    },
+    {
+      start: null,
+      text: '1',
+    },
     {
       start: 15,
       text: '2',
