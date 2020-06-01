@@ -9,7 +9,7 @@ function MovieItem(props: { movie: MovieSearchItem }) {
 
   function addMovie() {
     axios
-      .post('api/movie/', { url: props.movie.url })
+      .post('api/movie/add', { url: props.movie.url })
       .then(function (res) {
         //success toast
         console.log('success', res);
