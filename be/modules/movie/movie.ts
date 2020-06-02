@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import puppet from '../../puppet';
 import parseMovieSearch from './movie-search-parser';
+import fs from 'fs';
 
 const searchMovie = async (request: Request, response: Response) => {
   const searchKey = encodeURI(request.query.searchKey as string);
@@ -26,4 +27,24 @@ const searchMovie = async (request: Request, response: Response) => {
   }
 };
 
-export default searchMovie;
+const addMovie = async (request: Request, response: Response) => {
+  const url = request.body.url;
+  console.log(url);
+
+  const page = await puppet();
+
+  try {
+    await page.goto(url);
+    await page.waitForSelector('#root');
+    const html = await page.content();
+    fs.writeFileSync('movie.html', html);
+    response.status(200).json();
+  } catch (e) {
+    console.warn(e);
+    response.status(500).json({ error: 'Error adding movie' });
+  } finally {
+    await page.close();
+  }
+};
+
+export { searchMovie, addMovie };
