@@ -9,7 +9,10 @@ let browser: Browser;
 async function puppet() {
   // Launch new instance of browser to reuse it across requests.
   if (!browser) {
-    browser = await puppeteer.launch({ headless: true });
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
   }
   const page = await browser.newPage();
 
