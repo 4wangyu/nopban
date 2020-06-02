@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import puppet from '../../puppet';
-import parseMovieSearch from './movie-search-parser';
 import fs from 'fs';
+import { parseMovieSearch } from './movie-parser';
 
 const searchMovie = async (request: Request, response: Response) => {
   const searchKey = encodeURI(request.query.searchKey as string);
