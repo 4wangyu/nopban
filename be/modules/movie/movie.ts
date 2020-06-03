@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import puppet from '../../puppet';
-import fs from 'fs';
-import { parseMovieSearch } from './movie-parser';
+
+import { parseMovieSearch, parseMovie } from './movie-parser';
+import { insertMovie } from './movie.repo';
+import { Movie } from 'be/be/models/movie.model';
 
 const searchMovie = async (request: Request, response: Response) => {
   const searchKey = encodeURI(request.query.searchKey as string);
@@ -12,9 +14,9 @@ const searchMovie = async (request: Request, response: Response) => {
 
   try {
     await page.goto(url);
-    await page.waitForSelector('#root');
+    await page.waitForSelector('#wrapper');
     const bodyHTML = await page.evaluate(
-      () => document.getElementById('root').innerHTML
+      () => document.getElementById('wrapper').innerHTML
     );
     const resuls = parseMovieSearch(bodyHTML);
 
@@ -28,17 +30,22 @@ const searchMovie = async (request: Request, response: Response) => {
 };
 
 const addMovie = async (request: Request, response: Response) => {
-  const url = request.body.url;
+  const url = request.body.url as string;
   console.log(url);
+  const uuid = url.split('/').reverse()[1];
 
   const page = await puppet();
 
   try {
     await page.goto(url);
-    await page.waitForSelector('#root');
-    const html = await page.content();
-    fs.writeFileSync('movie.html', html);
-    response.status(200).json();
+    await page.waitForSelector('#wrapper');
+    const bodyHTML = await page.evaluate(
+      () => document.getElementById('wrapper').innerHTML
+    );
+    const movie = await parseMovie(bodyHTML);
+    const result = await insertMovie({ uuid, ...movie } as Movie);
+
+    response.status(200).json(result);
   } catch (e) {
     console.warn(e);
     response.status(500).json({ error: 'Error adding movie' });

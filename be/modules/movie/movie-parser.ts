@@ -45,7 +45,7 @@ function parseMovieSearch(
   return { items, pagination };
 }
 
-async function parseMovie(html: string): Promise<Movie> {
+async function parseMovie(html: string): Promise<Partial<Movie>> {
   const $ = cheerio.load(html);
 
   const title = $('h1 span:first-child').text();

@@ -20,6 +20,7 @@ export interface NameLinkModel {
 }
 
 export interface Movie {
+  uuid: string;
   title: string;
   year: number;
   poster: string;

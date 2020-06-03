@@ -1,11 +1,11 @@
 exports.up = function (knex) {
-  const createQuery = `CREATE TABLE Movie(
-    Id SERIAL PRIMARY KEY NOT NULL,
-    UUID VARCHAR(8),
-    Title VARCHAR(100),
-    Year SMALLINT,
-    Poster TEXT,
-    Directors JSON,
+  const createQuery = `CREATE TABLE movie(
+    id SERIAL PRIMARY KEY NOT NULL,
+    uuid VARCHAR(8),
+    title VARCHAR(100),
+    year SMALLINT,
+    poster TEXT,
+    directors JSON,
     playwriters JSON,
     actors JSON,
     genres VARCHAR(10)[],
@@ -18,12 +18,12 @@ exports.up = function (knex) {
     runtime VARCHAR(20),
     aliases VARCHAR(100)[],
     imdb VARCHAR(100),
-    CreatedAt TIMESTAMP
+    createdat TIMESTAMP
   )`;
   return knex.raw(createQuery);
 };
 
 exports.down = function (knex) {
-  const dropQuery = 'DROP TABLE Movie';
+  const dropQuery = 'DROP TABLE movie';
   return knex.raw(dropQuery);
 };
