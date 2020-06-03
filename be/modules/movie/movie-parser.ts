@@ -84,7 +84,7 @@ async function parseMovie(html: string): Promise<Partial<Movie>> {
     genres.push(genre);
   });
 
-  const website = $('span:contains("官方网站")').next().attr('href');
+  const website = $('span:contains("官方网站")').next().attr('href') || null;
 
   const countries = $('span:contains("制片国家")')
     .get(0)

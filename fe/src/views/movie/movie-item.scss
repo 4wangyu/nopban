@@ -1,5 +1,16 @@
 .movie-item {
+  display: flex;
   margin-bottom: 20px;
+
+  img {
+    margin-right: 15px;
+    max-height: 72px;
+    width: 48px;
+  }
+
+  .info {
+    flex: 1;
+  }
 
   button {
     font-weight: 500;

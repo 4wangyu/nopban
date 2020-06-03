@@ -44,6 +44,7 @@ const addMovie = async (request: Request, response: Response) => {
       () => document.getElementById('wrapper').innerHTML
     );
     const movie = await parseMovie(bodyHTML);
+
     const partMovie = await insertMovie({ uuid, ...movie } as Movie);
     const result = formatMovieSearchItem(partMovie);
 
