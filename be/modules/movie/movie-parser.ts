@@ -111,10 +111,10 @@ async function parseMovie(html: string): Promise<Partial<Movie>> {
 
   const runtime = $('span[property="v:runtime"]').text();
 
-  const aliases = $('span:contains("又名")')
-    .get(0)
-    .nextSibling.data.split('/')
-    .map((a: string) => a.trim());
+  const aliasesEl = $('span:contains("又名")').get(0);
+  const aliases = aliasesEl
+    ? aliasesEl.nextSibling.data.split('/').map((a: string) => a.trim())
+    : [];
 
   const imdb = $('a:contains("tt")').attr('href');
 
