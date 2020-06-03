@@ -1,5 +1,5 @@
 import database from '../../database';
-import { Movie } from 'be/be/models/movie.model';
+import { Movie } from '../../models/movie.model';
 
 async function insertMovie(movie: Movie): Promise<Partial<Movie>> {
   const data = await database.raw(
@@ -7,7 +7,7 @@ async function insertMovie(movie: Movie): Promise<Partial<Movie>> {
         genres, website, countries, languages, releaseDates, 
         episodes, episodeRuntime, runtime, aliases, imdb, createdat) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
-      RETURNING uuid, title, year, countries, genres, episodeRuntime, runtime, directors, actors`,
+      RETURNING uuid, title, year, poster, countries, genres, episodeRuntime, runtime, directors, actors`,
     [
       movie.uuid,
       movie.title,

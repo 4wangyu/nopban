@@ -3,7 +3,8 @@ import puppet from '../../puppet';
 
 import { parseMovieSearch, parseMovie } from './movie-parser';
 import { insertMovie } from './movie.repo';
-import { Movie } from 'be/be/models/movie.model';
+import { Movie } from '../../models/movie.model';
+import { formatMovieSearchItem } from './movie.util';
 
 const searchMovie = async (request: Request, response: Response) => {
   const searchKey = encodeURI(request.query.searchKey as string);
@@ -43,7 +44,8 @@ const addMovie = async (request: Request, response: Response) => {
       () => document.getElementById('wrapper').innerHTML
     );
     const movie = await parseMovie(bodyHTML);
-    const result = await insertMovie({ uuid, ...movie } as Movie);
+    const partMovie = await insertMovie({ uuid, ...movie } as Movie);
+    const result = formatMovieSearchItem(partMovie);
 
     response.status(200).json(result);
   } catch (e) {

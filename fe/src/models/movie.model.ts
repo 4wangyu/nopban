@@ -2,6 +2,8 @@ export interface MovieSearchItem {
   url: string;
   title: string;
   metas: string[];
+  poster?: string;
+  saved: boolean;
 }
 
 export interface MovieSearchPagination {

@@ -1,16 +1,17 @@
-import React from 'react';
 import axios from 'axios';
-import { MovieSearchItem } from '../../models/movie.model';
+import React, { useContext } from 'react';
 import { AppContext } from '../../App';
+import { MovieSearchItem } from '../../models/movie.model';
 import './movie-item.scss';
 
 function MovieItem(props: { movie: MovieSearchItem }) {
-  const { dispatch } = React.useContext(AppContext);
+  const { dispatch } = useContext(AppContext);
 
   function addMovie() {
     axios
       .post('api/movie/add', { url: props.movie.url })
       .then(function (res) {
+        props.movie = res.data;
         //success toast
         console.log('success', res);
       })

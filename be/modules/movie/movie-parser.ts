@@ -28,6 +28,7 @@ function parseMovieSearch(
         url,
         title,
         metas,
+        saved: false,
       });
     }
   });
