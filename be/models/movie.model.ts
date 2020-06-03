@@ -31,6 +31,9 @@ export interface Movie {
   countries: string[];
   languages: string[];
   releaseDates: string[];
+  episodes: number;
+  episodeRuntime: string;
+  runtime: string;
   aliases: string[];
   imdb: string;
 }

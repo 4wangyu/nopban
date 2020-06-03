@@ -100,6 +100,16 @@ async function parseMovie(html: string): Promise<Movie> {
     releaseDates.push($(e).attr('content'));
   });
 
+  const episodesEl = $('span:contains("集数")').get(0);
+  const episodes = episodesEl ? +episodesEl.nextSibling.data.trim() : null;
+
+  const episodeRuntimeEl = $('span:contains("单集片长")').get(0);
+  const episodeRuntime = episodeRuntimeEl
+    ? episodeRuntimeEl.nextSibling.data.trim()
+    : null;
+
+  const runtime = $('span[property="v:runtime"]').text();
+
   const aliases = $('span:contains("又名")')
     .get(0)
     .nextSibling.data.split('/')
@@ -119,6 +129,9 @@ async function parseMovie(html: string): Promise<Movie> {
     countries,
     languages,
     releaseDates,
+    episodes,
+    episodeRuntime,
+    runtime,
     aliases,
     imdb,
   };
