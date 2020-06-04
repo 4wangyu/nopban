@@ -1,18 +1,21 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { AppContext } from '../../App';
 import { MovieSearchItem } from '../../models/movie.model';
 import './movie-item.scss';
 
-function MovieItem(props: { movie: MovieSearchItem }) {
+function MovieItem(props: {
+  idx: number;
+  movie: MovieSearchItem;
+  refreshResult: (idx: number, movie: MovieSearchItem) => void;
+}) {
   const { dispatch } = useContext(AppContext);
-  const [savedMovie, setSavedMovie] = useState<Partial<MovieSearchItem>>();
 
   function addMovie() {
     axios
       .post('api/movie/add', { url: props.movie.url })
       .then(function (res) {
-        setSavedMovie(res.data);
+        props.refreshResult(props.idx, res.data);
         //success toast
         console.log('success', res);
       })
@@ -22,7 +25,7 @@ function MovieItem(props: { movie: MovieSearchItem }) {
   }
 
   function gotoMovie(m: Partial<MovieSearchItem>) {
-    if (movie.saved) {
+    if (m.saved) {
       // navigate to movie page
     } else {
       dispatch({
@@ -32,24 +35,26 @@ function MovieItem(props: { movie: MovieSearchItem }) {
     }
   }
 
-  const movie = savedMovie || props.movie;
   return (
     <div className="movie-item">
-      {movie.saved && (
-        <img src={'data:image;base64,' + movie.poster} alt={movie.title}></img>
+      {props.movie.saved && (
+        <img
+          src={'data:image;base64,' + props.movie.poster}
+          alt={props.movie.title}
+        ></img>
       )}
 
       <div className="info">
-        <button className="title" onClick={() => gotoMovie(movie)}>
-          {movie.title}
+        <button className="title" onClick={() => gotoMovie(props.movie)}>
+          {props.movie.title}
         </button>
-        {movie.saved || (
+        {props.movie.saved || (
           <button className="add" title="添加" onClick={addMovie}>
             <i className="fa fa-plus"></i>
           </button>
         )}
 
-        {movie.metas?.map((m, idx) => (
+        {props.movie.metas?.map((m, idx) => (
           <p key={idx}>{m}</p>
         ))}
       </div>

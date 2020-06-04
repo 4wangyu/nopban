@@ -31,6 +31,12 @@ const Movie = () => {
       });
   }
 
+  function refreshResult(idx: number, movie: MovieSearchItem) {
+    const list = [...result.items];
+    list[idx] = movie;
+    setResult({ items: list, pagination: result.pagination });
+  }
+
   return (
     <>
       <SearchBar
@@ -41,7 +47,12 @@ const Movie = () => {
 
       <main>
         {result.items?.map((item: MovieSearchItem, idx: number) => (
-          <MovieItem key={idx} movie={item}></MovieItem>
+          <MovieItem
+            key={idx}
+            idx={idx}
+            movie={item}
+            refreshResult={refreshResult}
+          ></MovieItem>
         ))}
         <div className="pagination">
           {result.pagination?.map((pag: MovieSearchPagination, idx: number) => (
