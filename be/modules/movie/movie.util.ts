@@ -11,8 +11,8 @@ function formatMovieSearchItem(movie: Partial<Movie>): MovieSearchItem {
   metas.push(
     arrToStr(
       getName(movie.directors)
-        .slice(0, 5)
-        .concat(getName(movie.actors).slice(0, 5))
+        .slice(0, 2)
+        .concat(getName(movie.actors).slice(0, 8))
     )
   );
 

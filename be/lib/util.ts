@@ -12,7 +12,7 @@ async function getBase64(url: string): Promise<string> {
 
 function arrToStr(strs: string[]): string {
   if (strs && strs.length) {
-    return strs.join(' / ');
+    return strs.filter((s) => !!s).join(' / ');
   } else {
     return '';
   }
