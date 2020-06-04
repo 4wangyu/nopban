@@ -1,8 +1,21 @@
 import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from 'express';
 require('dotenv').config();
 
-const checkToken = (req: any, res: any, next: any) => {
-  let token = req.headers['authorization']; // Express headers are auto converted to lowercase
+function getToken(req: Request): string {
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.split(' ')[0] === 'Bearer'
+  ) {
+    return req.headers.authorization.split(' ')[1];
+  } else {
+    return null;
+  }
+}
+
+const checkToken = (req: Request, res: Response, next: NextFunction) => {
+  let token = getToken(req);
+
   if (!token) {
     return res.status(401).json({
       error: 'Not authorized.',
@@ -19,7 +32,7 @@ const checkToken = (req: any, res: any, next: any) => {
             error: 'Invalid token.',
           });
         } else {
-          req.email = decoded.email;
+          req.body.email = decoded.email;
           next();
         }
       }

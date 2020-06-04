@@ -9,11 +9,17 @@ function MovieItem(props: {
   movie: MovieSearchItem;
   refreshResult: (idx: number, movie: MovieSearchItem) => void;
 }) {
-  const { dispatch } = useContext(AppContext);
+  const { context, dispatch } = useContext(AppContext);
 
   function addMovie() {
-    axios
-      .post('api/movie/add', { url: props.movie.url })
+    axios({
+      method: 'post',
+      url: 'api/movie/add',
+      data: { url: props.movie.url },
+      headers: {
+        Authorization: 'Bearer ' + context.token,
+      },
+    })
       .then(function (res) {
         props.refreshResult(props.idx, res.data);
         //success toast
