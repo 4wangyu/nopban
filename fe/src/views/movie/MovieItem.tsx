@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { AppContext } from '../../App';
 import { MovieSearchItem } from '../../models/movie.model';
 import './movie-item.scss';
+import { useRouteMatch, Link } from 'react-router-dom';
 
 function MovieItem(props: {
   idx: number;
@@ -10,18 +11,20 @@ function MovieItem(props: {
   refreshResult: (idx: number, movie: MovieSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AppContext);
+  const { url } = useRouteMatch();
+  const { idx, movie, refreshResult } = props;
 
   function addMovie() {
     axios({
       method: 'post',
       url: 'api/movie/add',
-      data: { url: props.movie.url },
+      data: { url: movie.url },
       headers: {
         Authorization: 'Bearer ' + context.token,
       },
     })
       .then(function (res) {
-        props.refreshResult(props.idx, res.data);
+        refreshResult(idx, res.data);
         //success toast
         console.log('success', res);
       })
@@ -43,25 +46,26 @@ function MovieItem(props: {
 
   return (
     <div className="movie-item">
-      {props.movie.saved && (
-        <img
-          src={'data:image;base64,' + props.movie.poster}
-          alt={props.movie.title}
-        ></img>
+      {movie.saved && (
+        <img src={'data:image;base64,' + movie.poster} alt={movie.title}></img>
       )}
 
       <div className="info">
-        <button className="title" onClick={() => gotoMovie(props.movie)}>
-          {props.movie.title}
-        </button>
-        {props.movie.saved || (
+        {movie.saved ? (
+          <Link to={`${url}/${movie.url}`}>{movie.title}</Link>
+        ) : (
+          <button className="title" onClick={() => gotoMovie(movie)}>
+            {movie.title}
+          </button>
+        )}
+        {movie.saved || (
           <button className="add" title="添加" onClick={addMovie}>
             <i className="fa fa-plus"></i>
           </button>
         )}
 
-        {props.movie.metas?.map((m, idx) => (
-          <p key={idx}>{m}</p>
+        {movie.metas?.map((m, i) => (
+          <p key={i}>{m}</p>
         ))}
       </div>
     </div>

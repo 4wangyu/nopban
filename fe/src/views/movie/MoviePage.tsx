@@ -3,7 +3,7 @@ import './movie-page.scss';
 import { useParams } from 'react-router-dom';
 
 function MoviePage() {
-  let { movieId } = useParams();
+  const { movieId } = useParams();
 
   return (
     <div className="movie-page">
