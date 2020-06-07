@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './movie-page.scss';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { Movie } from '../../models/movie.model';
 
 function MoviePage() {
   const { movieId } = useParams();
+  const [movie, setMovie] = useState<Movie>();
+
+  useEffect(() => {
+    axios
+      .get(`/api/movie/${movieId}`)
+      .then((res) => {
+        setMovie(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [movieId]);
 
   return (
     <div className="movie-page">

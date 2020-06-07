@@ -22,6 +22,7 @@ export interface NameLinkModel {
 }
 
 export interface Movie {
+  id?: number;
   uuid: string;
   title: string;
   year: number;
@@ -39,4 +40,5 @@ export interface Movie {
   runtime: string;
   aliases: string[];
   imdb: string;
+  createdat?: Date;
 }

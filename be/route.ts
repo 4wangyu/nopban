@@ -11,5 +11,6 @@ router.post('/signin', user.signin);
 
 router.get('/movie/search', movie.searchMovie);
 router.post('/movie/add', checkToken, movie.addMovie);
+router.get('/movie/:movieId', movie.getMovie);
 
 export default router;

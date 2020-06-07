@@ -77,4 +77,17 @@ const addMovie = async (request: Request, response: Response) => {
   }
 };
 
-export { searchMovie, addMovie };
+async function getMovie(req: Request, res: Response) {
+  const movieId = req.params.movieId;
+  try {
+    const movie = await selectMovieByUuid(movieId);
+    delete movie.id;
+    delete movie.createdat;
+    res.status(200).json(movie);
+  } catch (e) {
+    console.warn(e);
+    res.status(500).json({ error: 'Error finding movie' });
+  }
+}
+
+export { searchMovie, addMovie, getMovie };
