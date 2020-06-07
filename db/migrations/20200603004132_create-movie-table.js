@@ -1,7 +1,7 @@
 exports.up = function (knex) {
   const createQuery = `CREATE TABLE movie(
     id SERIAL PRIMARY KEY NOT NULL,
-    uuid VARCHAR(8),
+    uuid VARCHAR(10),
     title VARCHAR(100),
     year SMALLINT,
     poster TEXT,
@@ -10,12 +10,12 @@ exports.up = function (knex) {
     actors JSON,
     genres VARCHAR(10)[],
     website VARCHAR(100),
-    countries VARCHAR(20)[],
-    languages VARCHAR(20)[],
-    releaseDates VARCHAR(20)[],
+    countries VARCHAR(40)[],
+    languages VARCHAR(40)[],
+    releaseDates VARCHAR(40)[],
     episodes SMALLINT,
-    episodeRuntime VARCHAR(20),
-    runtime VARCHAR(20),
+    episodeRuntime VARCHAR(50),
+    runtime VARCHAR(50),
     aliases VARCHAR(100)[],
     imdb VARCHAR(100),
     createdat TIMESTAMP
