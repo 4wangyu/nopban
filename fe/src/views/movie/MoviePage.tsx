@@ -3,6 +3,7 @@ import './movie-page.scss';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Movie } from '../../models/movie.model';
+import { arrToStr, getName, getImdbIdFromUrl } from '../../lib/util';
 
 function MoviePage() {
   const { movieId } = useParams();
@@ -21,65 +22,69 @@ function MoviePage() {
 
   return (
     <div className="movie-page">
-      {movieId}
       <h1>
-        西西里的美丽传说 Malèna <span className="year">(2000)</span>
+        {movie?.title} <span className="year">({movie?.year})</span>
       </h1>
 
       <div className="content">
         <img
-          src="https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2441988159.webp"
-          alt=""
-        />
+          src={'data:image;base64,' + movie?.poster}
+          alt={movie?.title}
+        ></img>
         <section>
           <div>
             <label>导演: </label>
-            <output>朱塞佩·托纳多雷</output>
+            <output>{arrToStr(getName(movie?.directors))}</output>
           </div>
           <div>
             <label>编剧: </label>
-            <output>朱塞佩·托纳多雷 / 卢恰诺·温琴佐尼</output>
+            <output>{arrToStr(getName(movie?.playwriters))}</output>
           </div>
           <div>
             <label>主演: </label>
-            <output>
-              莫妮卡·贝鲁奇 / 朱塞佩·苏尔法罗 / Luciano Federico /
-              玛蒂尔德·皮亚纳 / Pietro Notarianni / Gaetano Aronica / Gilberto
-              Idonea / Angelo Pellegrino / Gabriella Di Luzio / Pippo
-              Provvidenti / 埃丽萨·莫鲁奇 / 奥罗拉·夸特罗基 / 露琪亚·萨多 /
-              瓦尼·布拉马蒂 / Salvatore Martino / 安东内洛·普利西 / Noam
-              Morgensztern
-            </output>
+            <output>{arrToStr(getName(movie?.actors))}</output>
           </div>
           <div>
             <label>类型: </label>
-            <output>剧情 / 情色 / 战争</output>
+            <output>{arrToStr(movie?.genres)}</output>
           </div>
           <div>
             <label>制片国家/地区: </label>
-            <output>意大利 / 美国</output>
+            <output>{arrToStr(movie?.countries)}</output>
           </div>
           <div>
             <label>语言: </label>
-            <output>意大利语 / 英语 / 拉丁语 / 古希腊语</output>
+            <output>{arrToStr(movie?.languages)}</output>
           </div>
-          <div>
-            <label>上映日期: </label>
-            <output>2000-10-27(意大利)</output>
-          </div>
-          <div>
-            <label>片长: </label>
-            <output>
-              109 分钟 / USA: 92 分钟(heavily cut) / Turkey: 84 分钟(TV version)
-            </output>
-          </div>
+          {movie?.releasedates?.length && (
+            <div>
+              <label>上映日期: </label>
+              <output>{arrToStr(movie?.releasedates)}</output>
+            </div>
+          )}
+          {movie?.runtime && (
+            <div>
+              <label>片长: </label>
+              <output>{movie.runtime}</output>
+            </div>
+          )}
+          {movie?.episoderuntime && (
+            <div>
+              <label>单集片长: </label>
+              <output>{movie.episoderuntime}</output>
+            </div>
+          )}
           <div>
             <label>又名: </label>
-            <output>真爱伴我行(台) / 玛莲娜 / 玛琳娜</output>
+            <output>{arrToStr(movie?.aliases)}</output>
           </div>
           <div>
             <label>IMDb链接: </label>
-            <output>tt0213847</output>
+            <output>
+              <a href={movie?.imdb} target="_blank" rel="noopener noreferrer">
+                {getImdbIdFromUrl(movie?.imdb)}
+              </a>
+            </output>
           </div>
         </section>
       </div>

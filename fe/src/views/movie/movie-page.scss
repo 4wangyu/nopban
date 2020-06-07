@@ -33,6 +33,17 @@
     color: #666;
   }
 
+  a {
+    color: #37a;
+    font-size: 13px;
+    text-decoration: none;
+
+    &:hover {
+      background-color: #37a;
+      color: #fff;
+    }
+  }
+
   .action {
     padding: 10px 0 20px;
 
