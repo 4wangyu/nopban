@@ -9,10 +9,13 @@ import {
 } from '../../models/movie.model';
 import MovieItem from './MovieItem';
 import { scrollToTop } from '../../lib/util';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import MoviePage from './MoviePage';
 
 const Movie = () => {
   const [result, setResult] = useState<MovieSearchResult>(INIT_DATA);
   const [searchKey, setSearchKey] = useState<string>('movie');
+  let { path } = useRouteMatch();
 
   function search(start = 0) {
     axios
@@ -46,25 +49,37 @@ const Movie = () => {
       ></SearchBar>
 
       <main>
-        {result.items?.map((item: MovieSearchItem, idx: number) => (
-          <MovieItem
-            key={idx}
-            idx={idx}
-            movie={item}
-            refreshResult={refreshResult}
-          ></MovieItem>
-        ))}
-        <div className="pagination">
-          {result.pagination?.map((pag: MovieSearchPagination, idx: number) => (
-            <button
-              disabled={pag.start === null}
-              onClick={() => search(pag.start as number)}
-              key={idx}
-            >
-              {pag.text}
-            </button>
-          ))}
-        </div>
+        <Switch>
+          <Route exact path={path}>
+            {result.items?.map((item: MovieSearchItem, idx: number) => (
+              <MovieItem
+                key={idx}
+                idx={idx}
+                movie={item}
+                refreshResult={refreshResult}
+              ></MovieItem>
+            ))}
+            <div className="pagination">
+              {result.pagination?.map(
+                (pag: MovieSearchPagination, idx: number) => (
+                  <button
+                    disabled={pag.start === null}
+                    onClick={() => search(pag.start as number)}
+                    key={idx}
+                  >
+                    {pag.text}
+                  </button>
+                )
+              )}
+            </div>
+          </Route>
+        </Switch>
+
+        <Switch>
+          <Route path={`${path}/:movieId`}>
+            <MoviePage></MoviePage>
+          </Route>
+        </Switch>
       </main>
     </>
   );

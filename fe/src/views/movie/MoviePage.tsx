@@ -1,9 +1,13 @@
 import React from 'react';
 import './movie-page.scss';
+import { useParams } from 'react-router-dom';
 
 function MoviePage() {
+  let { movieId } = useParams();
+
   return (
     <div className="movie-page">
+      {movieId}
       <h1>
         西西里的美丽传说 Malèna <span className="year">(2000)</span>
       </h1>
