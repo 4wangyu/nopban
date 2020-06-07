@@ -2,9 +2,10 @@ import { Request, Response } from 'express';
 import puppet from '../../puppet';
 
 import { parseMovieSearch, parseMovie } from './movie-parser';
-import { insertMovie } from './movie.repo';
+import { insertMovie, selectMovieByUuid } from './movie.repo';
 import { Movie } from '../../models/movie.model';
 import { formatMovieSearchItem } from './movie.util';
+import { getUuidFromUrl } from '../../lib/util';
 
 const searchMovie = async (request: Request, response: Response) => {
   const searchKey = encodeURI(request.query.searchKey as string);
@@ -19,9 +20,23 @@ const searchMovie = async (request: Request, response: Response) => {
     const bodyHTML = await page.evaluate(
       () => document.getElementById('wrapper').innerHTML
     );
-    const resuls = parseMovieSearch(bodyHTML);
+    const results = parseMovieSearch(bodyHTML);
 
-    response.status(200).json(resuls);
+    // Return movie from db if item exists
+    const items = [];
+    for (let m of results.items) {
+      const uuid = getUuidFromUrl(m.url);
+      const movie = await selectMovieByUuid(uuid);
+
+      if (movie) {
+        items.push(formatMovieSearchItem(movie));
+      } else {
+        items.push(m);
+      }
+    }
+    results.items = items;
+
+    response.status(200).json(results);
   } catch (e) {
     console.warn(e);
     response.status(500).json({ error: 'Error in fetching search results' });
@@ -32,8 +47,7 @@ const searchMovie = async (request: Request, response: Response) => {
 
 const addMovie = async (request: Request, response: Response) => {
   const url = request.body.url as string;
-  console.log(url);
-  const uuid = url.split('/').reverse()[1];
+  const uuid = getUuidFromUrl(url);
 
   const page = await puppet();
 

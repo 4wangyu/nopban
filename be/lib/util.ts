@@ -22,4 +22,8 @@ function getName(os: NameLinkModel[]): string[] {
   return os.map((o) => o.name);
 }
 
-export { getBase64, arrToStr, getName };
+function getUuidFromUrl(url: string): string {
+  return url.split('/').reverse()[1];
+}
+
+export { getBase64, arrToStr, getName, getUuidFromUrl };

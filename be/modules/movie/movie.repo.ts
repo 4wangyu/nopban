@@ -33,4 +33,9 @@ async function insertMovie(movie: Movie): Promise<Partial<Movie>> {
   return data.rows[0];
 }
 
-export { insertMovie };
+async function selectMovieByUuid(uuid: string): Promise<Movie> {
+  const data = await database.raw('SELECT * FROM Movie WHERE uuid = ?', [uuid]);
+  return data.rows[0];
+}
+
+export { insertMovie, selectMovieByUuid };
