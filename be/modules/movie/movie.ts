@@ -49,6 +49,11 @@ const addMovie = async (request: Request, response: Response) => {
   const url = request.body.url as string;
   const uuid = getUuidFromUrl(url);
 
+  const movie = await selectMovieByUuid(uuid);
+  if (movie) {
+    response.status(400).json({ error: 'Movie exists' });
+  }
+
   const page = await puppet();
 
   try {
