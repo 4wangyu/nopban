@@ -33,15 +33,11 @@ function MovieItem(props: {
       });
   }
 
-  function gotoMovie(m: Partial<MovieSearchItem>) {
-    if (m.saved) {
-      // navigate to movie page
-    } else {
-      dispatch({
-        type: 'UPDATE_IFRAME',
-        iframeUrl: m.url,
-      });
-    }
+  function gotoMovie(url: string) {
+    dispatch({
+      type: 'UPDATE_IFRAME',
+      iframeUrl: url,
+    });
   }
 
   return (
@@ -54,7 +50,7 @@ function MovieItem(props: {
         {movie.saved ? (
           <Link to={`${url}/${movie.url}`}>{movie.title}</Link>
         ) : (
-          <button className="title" onClick={() => gotoMovie(movie)}>
+          <button className="title" onClick={() => gotoMovie(movie.url)}>
             {movie.title}
           </button>
         )}

@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import './movie-page.scss';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { AppContext } from '../../App';
+import { arrToStr, getImdbIdFromUrl, getName } from '../../lib/util';
 import { Movie } from '../../models/movie.model';
-import { arrToStr, getName, getImdbIdFromUrl } from '../../lib/util';
+import './movie-page.scss';
+import { MOVIE_URL } from '../../lib/constant';
 
 function MoviePage() {
   const { movieId } = useParams();
   const [movie, setMovie] = useState<Movie>();
+  const { dispatch } = useContext(AppContext);
+
+  function loadMoiveUrl(url: string) {
+    dispatch({
+      type: 'UPDATE_IFRAME',
+      iframeUrl: MOVIE_URL + url,
+    });
+  }
 
   useEffect(() => {
     axios
@@ -34,15 +44,39 @@ function MoviePage() {
         <section>
           <div>
             <label>导演: </label>
-            <output>{arrToStr(getName(movie?.directors))}</output>
+            <output>
+              {movie?.directors
+                ?.map<React.ReactNode>((o, i) => (
+                  <button key={i} onClick={() => loadMoiveUrl(o.link)}>
+                    {o.name}
+                  </button>
+                ))
+                .reduce((prev, curr) => [prev, ' / ', curr])}
+            </output>
           </div>
           <div>
             <label>编剧: </label>
-            <output>{arrToStr(getName(movie?.playwriters))}</output>
+            <output>
+              {movie?.playwriters
+                ?.map<React.ReactNode>((o, i) => (
+                  <button key={i} onClick={() => loadMoiveUrl(o.link)}>
+                    {o.name}
+                  </button>
+                ))
+                .reduce((prev, curr) => [prev, ' / ', curr])}
+            </output>
           </div>
           <div>
             <label>主演: </label>
-            <output>{arrToStr(getName(movie?.actors))}</output>
+            <output>
+              {movie?.actors
+                ?.map<React.ReactNode>((o, i) => (
+                  <button key={i} onClick={() => loadMoiveUrl(o.link)}>
+                    {o.name}
+                  </button>
+                ))
+                .reduce((prev, curr) => [prev, ' / ', curr])}
+            </output>
           </div>
           <div>
             <label>类型: </label>

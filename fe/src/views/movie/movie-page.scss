@@ -33,9 +33,13 @@
     color: #666;
   }
 
+  button,
   a {
+    border: 0;
     color: #37a;
+    cursor: pointer;
     font-size: 13px;
+    padding: 0;
     text-decoration: none;
 
     &:hover {
