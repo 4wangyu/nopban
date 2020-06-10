@@ -4,8 +4,9 @@
     "stylelint-prettier/recommended"
   ],
   "rules": {
+    "selector-max-compound-selectors": 4,
     "max-nesting-depth": [
-      3,
+      4,
       { "ignore": ["blockless-at-rules", "pseudo-classes"] }
     ],
     "indentation": 2,
@@ -15,5 +16,6 @@
     "color-hex-length": "short",
     "declaration-colon-space-before": "never",
     "declaration-colon-space-after": "always"
-  }
+  },
+  "ignoreFiles": ["**/modal.scss"]
 }
