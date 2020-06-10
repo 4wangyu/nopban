@@ -12,6 +12,7 @@ function MoviePage() {
   const [movie, setMovie] = useState<Movie>();
   const [rating, setRating] = useState<number>();
   const { context, dispatch } = useContext(AppContext);
+  const email = context?.email;
 
   function loadMoiveUrl(url: string) {
     dispatch({
@@ -32,10 +33,10 @@ function MoviePage() {
   }, [movieId]);
 
   useEffect(() => {
-    if (context?.email) {
+    if (email) {
       axios
         .get(`/api/movie/rating`, {
-          params: { movieUuid: movieId, email: context.email },
+          params: { movieUuid: movieId, email: email },
         })
         .then((res) => {
           setRating(res.data?.rating);
@@ -44,7 +45,7 @@ function MoviePage() {
           console.error(err);
         });
     }
-  }, [movieId, context]);
+  }, [movieId, email]);
 
   return (
     <div className="movie-page">

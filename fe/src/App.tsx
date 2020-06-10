@@ -6,21 +6,16 @@ import Douban from './douban/Douban';
 import Header from './header/Header';
 import Home from './views/Home';
 import createInterceptor from './http/interceptor';
-import { GlobalContext } from './models/model';
+import { GlobalContext, ContextProps } from './models/model';
 
-type ContextProps = {
-  context: GlobalContext;
-  dispatch: any;
-};
-
-export const AppContext = React.createContext<Partial<ContextProps>>({});
-const initialState = {
+const initialState: GlobalContext = {
   isAuthenticated: false,
-  user: null,
-  email: null,
-  token: null,
+  user: undefined,
+  email: undefined,
+  token: undefined,
   iframeUrl: 'https://book.douban.com',
 };
+
 const reducer = (state: any, action: any) => {
   switch (action.type) {
     case 'LOGIN':
@@ -52,6 +47,8 @@ const reducer = (state: any, action: any) => {
       return state;
   }
 };
+
+export const AppContext = React.createContext<Partial<ContextProps>>({});
 
 const App = () => {
   const [context, dispatch] = React.useReducer(reducer, initialState);
