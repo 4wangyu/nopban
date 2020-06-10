@@ -53,7 +53,7 @@ function MovieItem(props: {
             {movie.title}
           </button>
         )}
-        {movie.saved || (
+        {context?.isAuthenticated && !movie.saved && (
           <button className="add" title="添加" onClick={addMovie}>
             <i className="fa fa-plus"></i>
           </button>
