@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { AppContext } from '../App';
-import AuthModal from './modal/AuthModal';
 import './header.scss';
+import AuthModal from './modal/AuthModal';
 
 const Nav = styled.nav`
   background-color: #545652;
@@ -46,7 +46,6 @@ const Header = () => {
   return (
     <Nav className="header">
       <section>
-        <Redirect exact from="/" to="/movie" />
         <Link to="/book" onClick={() => dispatch(UPDATE_IFRAME_ACTION.BOOK)}>
           <Span>读书</Span>
         </Link>
@@ -74,8 +73,8 @@ const Header = () => {
       </section>
 
       <section>
-        {context.isAuthenticated ? (
-          <Span>{context.user + '的账号'}</Span>
+        {context?.isAuthenticated ? (
+          <Span>{context?.user + '的账号'}</Span>
         ) : (
           <>
             <button onClick={() => setModalShow(true)}>

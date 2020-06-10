@@ -1,6 +1,18 @@
 import { Request, Response } from 'express';
 import puppet from '../../puppet';
-import parseMovieSearch from './movie-search-parser';
+
+import { parseMovieSearch, parseMovie } from './movie-parser';
+import {
+  insertMovie,
+  selectMovieByUuid,
+  selectMovieRating,
+  insertMovieRating,
+  updateMovieRating,
+  deleteMovieRating,
+} from './movie.repo';
+import { Movie } from '../../models/movie.model';
+import { formatMovieSearchItem } from './movie.util';
+import { getUuidFromUrl } from '../../lib/util';
 
 const searchMovie = async (request: Request, response: Response) => {
   const searchKey = encodeURI(request.query.searchKey as string);
@@ -11,13 +23,27 @@ const searchMovie = async (request: Request, response: Response) => {
 
   try {
     await page.goto(url);
-    await page.waitForSelector('#root');
+    await page.waitForSelector('#wrapper');
     const bodyHTML = await page.evaluate(
-      () => document.getElementById('root').innerHTML
+      () => document.getElementById('wrapper').innerHTML
     );
-    const resuls = parseMovieSearch(bodyHTML);
+    const results = parseMovieSearch(bodyHTML);
 
-    response.status(200).json(resuls);
+    // Return movie from db if item exists
+    const items = [];
+    for (let m of results.items) {
+      const uuid = getUuidFromUrl(m.url);
+      const movie = await selectMovieByUuid(uuid);
+
+      if (movie) {
+        items.push(formatMovieSearchItem(movie));
+      } else {
+        items.push(m);
+      }
+    }
+    results.items = items;
+
+    response.status(200).json(results);
   } catch (e) {
     console.warn(e);
     response.status(500).json({ error: 'Error in fetching search results' });
@@ -26,4 +52,110 @@ const searchMovie = async (request: Request, response: Response) => {
   }
 };
 
-export default searchMovie;
+const addMovie = async (request: Request, response: Response) => {
+  const url = request.body.url as string;
+  const uuid = getUuidFromUrl(url);
+
+  const movie = await selectMovieByUuid(uuid);
+  if (movie) {
+    response.status(400).json({ error: 'Movie exists' });
+    return;
+  }
+
+  const page = await puppet();
+
+  try {
+    await page.goto(url);
+    await page.waitForSelector('#wrapper');
+    const bodyHTML = await page.evaluate(
+      () => document.getElementById('wrapper').innerHTML
+    );
+    const movie = await parseMovie(bodyHTML);
+
+    const partMovie = await insertMovie({ uuid, ...movie } as Movie);
+    const result = formatMovieSearchItem(partMovie);
+
+    response.status(200).json(result);
+  } catch (e) {
+    console.warn(e);
+    response.status(500).json({ error: 'Error adding movie' });
+  } finally {
+    await page.close();
+  }
+};
+
+async function getMovie(req: Request, res: Response) {
+  const movieId = req.params.movieId;
+  try {
+    const movie = await selectMovieByUuid(movieId);
+    if (movie) {
+      delete movie.id;
+      delete movie.createdat;
+      res.status(200).json(movie);
+    } else {
+      res.status(400).json({
+        error: 'Movie does not exist',
+      });
+    }
+  } catch (e) {
+    console.warn(e);
+    res.status(500).json({ error: 'Error finding movie' });
+  }
+}
+
+async function getMovieRating(req: Request, res: Response) {
+  const movieUuid = req.query.movieUuid as string;
+  const email = req.body.email as string;
+
+  try {
+    const rating = (await selectMovieRating(movieUuid, email)) || {
+      rating: null,
+    };
+    res.status(200).json(rating);
+  } catch (e) {
+    console.warn(e);
+    res.status(500).json({ error: 'Error fetching movie rating' });
+  }
+}
+
+async function rateMovie(req: Request, res: Response) {
+  const prevRating = req.body.prevRating as number;
+  const nextRating = req.body.nextRating as number;
+  const movieUuid = req.body.movieUuid as string;
+  const email = req.body.email as string;
+
+  try {
+    if (prevRating) {
+      const rating = await updateMovieRating(movieUuid, email, nextRating);
+      res.status(200).json(rating);
+    } else {
+      const rating = await insertMovieRating(movieUuid, email, nextRating);
+      res.status(200).json(rating);
+    }
+  } catch (e) {
+    console.warn(e);
+    res.status(500).json({ error: 'Error rating movie' });
+  }
+}
+
+async function removeMovieRating(req: Request, res: Response) {
+  const movieUuid = req.body.movieUuid as string;
+  const email = req.body.email as string;
+
+  try {
+    const result = await deleteMovieRating(movieUuid, email);
+    res.status(200).json({ success: result });
+  } catch (e) {
+    console.warn(e);
+    res.status(500).json({ error: 'Error removing movie rating' });
+  }
+}
+
+export {
+  searchMovie,
+  addMovie,
+  getMovie,
+  getMovieRating,
+  rateMovie,
+  removeMovieRating,
+};

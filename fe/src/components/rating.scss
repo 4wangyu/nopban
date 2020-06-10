@@ -1,0 +1,33 @@
+.action {
+  font-size: 14px;
+  padding: 10px 0 20px;
+
+  button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+
+    padding: 0;
+  }
+}
+
+.gold {
+  color: #ffd700;
+}
+
+.rating button {
+  font-size: 16px;
+}
+
+.remove {
+  margin-left: 10px;
+
+  button {
+    color: #bbb;
+    font-size: 14px;
+  }
+
+  &:hover button {
+    color: #f00;
+  }
+}
