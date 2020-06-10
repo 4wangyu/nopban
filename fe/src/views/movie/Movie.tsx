@@ -9,17 +9,18 @@ import {
 } from '../../models/movie.model';
 import MovieItem from './MovieItem';
 import { scrollToTop } from '../../lib/util';
-import { Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
 import MoviePage from './MoviePage';
 
 const Movie = () => {
   const [result, setResult] = useState<MovieSearchResult>(INIT_DATA);
   const [searchKey, setSearchKey] = useState<string>('movie');
   let { path } = useRouteMatch();
+  const history = useHistory();
 
   function search(start = 0) {
     axios
-      .get('api/movie/search', {
+      .get('/api/movie/search', {
         params: {
           searchKey,
           start,
@@ -27,6 +28,7 @@ const Movie = () => {
       })
       .then(function (response) {
         setResult(response.data);
+        history.push('/movie');
         scrollToTop();
       })
       .catch(function (error) {
