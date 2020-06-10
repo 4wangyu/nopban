@@ -55,7 +55,7 @@ function MoviePage() {
     console.log(r);
     axios({
       method: 'post',
-      url: 'api/movie/rating',
+      url: '/api/movie/rating',
       data: { prevRating: rating, nextRating: r, movieUuid: movieId },
       headers: {
         Authorization: 'Bearer ' + context?.token,

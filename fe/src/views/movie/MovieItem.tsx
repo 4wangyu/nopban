@@ -17,7 +17,7 @@ function MovieItem(props: {
   function addMovie() {
     axios({
       method: 'post',
-      url: 'api/movie/object',
+      url: '/api/movie/object',
       data: { url: movie.url },
       headers: {
         Authorization: 'Bearer ' + context?.token,

@@ -107,8 +107,10 @@ async function getMovieRating(req: Request, res: Response) {
   const email = req.body.email as string;
 
   try {
-    const rating = (await selectMovieRating(movieUuid, email)) || null;
-    res.status(200).json({ rating });
+    const rating = (await selectMovieRating(movieUuid, email)) || {
+      rating: null,
+    };
+    res.status(200).json(rating);
   } catch (e) {
     console.warn(e);
     res.status(500).json({ error: 'Error fetching movie rating' });
@@ -121,15 +123,13 @@ async function rateMovie(req: Request, res: Response) {
   const movieUuid = req.body.movieUuid as string;
   const email = req.body.email as string;
 
-  console.log({ prevRating, nextRating, movieUuid, email });
-
   try {
     if (prevRating) {
-      const rating = await insertMovieRating(movieUuid, email, nextRating);
-      res.status(200).json({ rating });
-    } else {
       const rating = await updateMovieRating(movieUuid, email, nextRating);
-      res.status(200).json({ rating });
+      res.status(200).json(rating);
+    } else {
+      const rating = await insertMovieRating(movieUuid, email, nextRating);
+      res.status(200).json(rating);
     }
   } catch (e) {
     console.warn(e);
