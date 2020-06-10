@@ -10,7 +10,8 @@ import './movie-page.scss';
 function MoviePage() {
   const { movieId } = useParams();
   const [movie, setMovie] = useState<Movie>();
-  const { dispatch } = useContext(AppContext);
+  const [rating, setRating] = useState<number>();
+  const { context, dispatch } = useContext(AppContext);
 
   function loadMoiveUrl(url: string) {
     dispatch({
@@ -29,6 +30,21 @@ function MoviePage() {
         console.error(err);
       });
   }, [movieId]);
+
+  useEffect(() => {
+    if (context.email) {
+      axios
+        .get(`/api/movie/rating`, {
+          params: { movieUuid: movieId, email: context.email },
+        })
+        .then((res) => {
+          setRating(res.data?.rating);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [movieId, context.email]);
 
   return (
     <div className="movie-page">
@@ -123,20 +139,23 @@ function MoviePage() {
         </section>
       </div>
 
-      <div className="action">
-        <span className="rating">
-          <label>评价: </label>
-          <button className="gold">&#9733; </button>
-          <button className="gold">&#9733; </button>
-          <button className="gold">&#9733; </button>
-          <button>&#9734; </button>
-          <button>&#9734; </button>
-        </span>
+      {rating && (
+        <div className="action">
+          {rating}
+          <span className="rating">
+            <label>评价: </label>
+            <button className="gold">&#9733; </button>
+            <button className="gold">&#9733; </button>
+            <button className="gold">&#9733; </button>
+            <button>&#9734; </button>
+            <button>&#9734; </button>
+          </span>
 
-        <span className="remove">
-          <button>删除</button>
-        </span>
-      </div>
+          <span className="remove">
+            <button>删除</button>
+          </span>
+        </div>
+      )}
     </div>
   );
 }

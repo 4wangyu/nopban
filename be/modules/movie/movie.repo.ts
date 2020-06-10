@@ -38,4 +38,16 @@ async function selectMovieByUuid(uuid: string): Promise<Movie> {
   return data.rows[0];
 }
 
-export { insertMovie, selectMovieByUuid };
+async function selectMovieRating(uuid: string, email: string): Promise<number> {
+  const data = await database.raw(
+    `SELECT um.rating FROM user_movie um
+    INNER JOIN users ON users.id = um.user_id
+    INNER JOIN movie ON movie.id = um.movie_id
+    WHERE users.email = ?
+    AND movie.uuid = ?`,
+    [email, uuid]
+  );
+  return data.rows[0];
+}
+
+export { insertMovie, selectMovieByUuid, selectMovieRating };

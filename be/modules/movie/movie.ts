@@ -2,7 +2,11 @@ import { Request, Response } from 'express';
 import puppet from '../../puppet';
 
 import { parseMovieSearch, parseMovie } from './movie-parser';
-import { insertMovie, selectMovieByUuid } from './movie.repo';
+import {
+  insertMovie,
+  selectMovieByUuid,
+  selectMovieRating,
+} from './movie.repo';
 import { Movie } from '../../models/movie.model';
 import { formatMovieSearchItem } from './movie.util';
 import { getUuidFromUrl } from '../../lib/util';
@@ -90,4 +94,17 @@ async function getMovie(req: Request, res: Response) {
   }
 }
 
-export { searchMovie, addMovie, getMovie };
+async function getMovieRating(req: Request, res: Response) {
+  const movieUuid = req.query.movieUuid as string;
+  const email = req.query.email as string;
+
+  try {
+    const rating = (await selectMovieRating(movieUuid, email)) || null;
+    res.status(200).json({ rating });
+  } catch (e) {
+    console.warn(e);
+    res.status(500).json({ error: 'Error fetching movie rating' });
+  }
+}
+
+export { searchMovie, addMovie, getMovie, getMovieRating };
