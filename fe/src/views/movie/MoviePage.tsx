@@ -63,7 +63,6 @@ function MoviePage() {
       .then(function (res) {
         setRating(res.data.rating);
         //success toast
-        console.log('success', res);
       })
       .catch(function (err) {
         console.error(err);
@@ -82,7 +81,6 @@ function MoviePage() {
       .then(function (res) {
         setRating(undefined);
         //success toast
-        console.log('success', res);
       })
       .catch(function (err) {
         console.error(err);

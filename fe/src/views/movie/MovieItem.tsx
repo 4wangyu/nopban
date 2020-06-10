@@ -26,7 +26,6 @@ function MovieItem(props: {
       .then(function (res) {
         refreshResult(idx, res.data);
         //success toast
-        console.log('success', res);
       })
       .catch(function (err) {
         console.error(err);
