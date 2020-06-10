@@ -6,6 +6,8 @@ import {
   insertMovie,
   selectMovieByUuid,
   selectMovieRating,
+  insertMovieRating,
+  updateMovieRating,
 } from './movie.repo';
 import { Movie } from '../../models/movie.model';
 import { formatMovieSearchItem } from './movie.util';
@@ -102,7 +104,7 @@ async function getMovie(req: Request, res: Response) {
 
 async function getMovieRating(req: Request, res: Response) {
   const movieUuid = req.query.movieUuid as string;
-  const email = req.query.email as string;
+  const email = req.body.email as string;
 
   try {
     const rating = (await selectMovieRating(movieUuid, email)) || null;
@@ -113,4 +115,26 @@ async function getMovieRating(req: Request, res: Response) {
   }
 }
 
-export { searchMovie, addMovie, getMovie, getMovieRating };
+async function rateMovie(req: Request, res: Response) {
+  const prevRating = req.body.prevRating as number;
+  const nextRating = req.body.nextRating as number;
+  const movieUuid = req.body.movieUuid as string;
+  const email = req.body.email as string;
+
+  console.log({ prevRating, nextRating, movieUuid, email });
+
+  try {
+    if (prevRating) {
+      const rating = await insertMovieRating(movieUuid, email, nextRating);
+      res.status(200).json({ rating });
+    } else {
+      const rating = await updateMovieRating(movieUuid, email, nextRating);
+      res.status(200).json({ rating });
+    }
+  } catch (e) {
+    console.warn(e);
+    res.status(500).json({ error: 'Error rating movie' });
+  }
+}
+
+export { searchMovie, addMovie, getMovie, getMovieRating, rateMovie };

@@ -10,8 +10,11 @@ router.post('/signup', checkUser, user.signup);
 router.post('/signin', user.signin);
 
 router.get('/movie/search', movie.searchMovie);
-router.post('/movie/add', checkToken, movie.addMovie);
-router.get('/movie/rating', movie.getMovieRating);
-router.get('/movie/:movieId', movie.getMovie);
+
+router.post('/movie/object', checkToken, movie.addMovie);
+router.get('/movie/object/:movieId', movie.getMovie);
+
+router.get('/movie/rating', checkToken, movie.getMovieRating);
+router.post('/movie/rating', checkToken, movie.rateMovie);
 
 export default router;

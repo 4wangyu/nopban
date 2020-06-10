@@ -13,11 +13,11 @@ function MoviePage() {
   const [movie, setMovie] = useState<Movie>();
   const [rating, setRating] = useState<number>();
   const { context, dispatch } = useContext(AppContext);
-  const email = context?.email;
+  const token = context?.token;
 
   useEffect(() => {
     axios
-      .get(`/api/movie/${movieId}`)
+      .get(`/api/movie/object/${movieId}`)
       .then((res) => {
         setMovie(res.data);
       })
@@ -27,10 +27,13 @@ function MoviePage() {
   }, [movieId]);
 
   useEffect(() => {
-    if (email) {
+    if (token) {
       axios
         .get(`/api/movie/rating`, {
-          params: { movieUuid: movieId, email: email },
+          params: { movieUuid: movieId },
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
         })
         .then((res) => {
           setRating(res.data?.rating);
@@ -39,7 +42,7 @@ function MoviePage() {
           console.error(err);
         });
     }
-  }, [movieId, email]);
+  }, [movieId, token]);
 
   function loadMoiveUrl(url: string) {
     dispatch({
@@ -50,6 +53,22 @@ function MoviePage() {
 
   function rate(r: number) {
     console.log(r);
+    axios({
+      method: 'post',
+      url: 'api/movie/rating',
+      data: { prevRating: rating, nextRating: r, movieUuid: movieId },
+      headers: {
+        Authorization: 'Bearer ' + context?.token,
+      },
+    })
+      .then(function (res) {
+        setRating(res.data.rating);
+        //success toast
+        console.log('success', res);
+      })
+      .catch(function (err) {
+        console.error(err);
+      });
   }
 
   return (

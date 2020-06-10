@@ -50,4 +50,31 @@ async function selectMovieRating(uuid: string, email: string): Promise<number> {
   return data.rows[0];
 }
 
-export { insertMovie, selectMovieByUuid, selectMovieRating };
+async function insertMovieRating(
+  uuid: string,
+  email: string,
+  rating: number
+): Promise<number> {
+  return;
+}
+
+async function updateMovieRating(
+  uuid: string,
+  email: string,
+  rating: number
+): Promise<number> {
+  return;
+}
+
+async function deleteMovieRating(uuid: string, email: string): Promise<number> {
+  return;
+}
+
+export {
+  insertMovie,
+  selectMovieByUuid,
+  selectMovieRating,
+  insertMovieRating,
+  updateMovieRating,
+  deleteMovieRating,
+};
