@@ -167,10 +167,14 @@ function MoviePage() {
                   <output>{movie.episoderuntime}</output>
                 </div>
               )}
-              <div>
-                <label>又名: </label>
-                <output>{arrToStr(movie?.aliases)}</output>
-              </div>
+              {movie?.aliases.length ? (
+                <div>
+                  <label>又名: </label>
+                  <output>{arrToStr(movie?.aliases)}</output>
+                </div>
+              ) : (
+                <></>
+              )}
               <div>
                 <label>豆瓣链接: </label>
                 <output>
