@@ -6,6 +6,7 @@ import { MOVIE_URL } from '../../lib/constant';
 import { arrToStr, getImdbIdFromUrl } from '../../lib/util';
 import { Movie } from '../../models/movie.model';
 import './movie-page.scss';
+import Rating from '../../components/Rating';
 
 function MoviePage() {
   const { movieId } = useParams();
@@ -13,13 +14,6 @@ function MoviePage() {
   const [rating, setRating] = useState<number>();
   const { context, dispatch } = useContext(AppContext);
   const email = context?.email;
-
-  function loadMoiveUrl(url: string) {
-    dispatch({
-      type: 'UPDATE_IFRAME',
-      iframeUrl: MOVIE_URL + url,
-    });
-  }
 
   useEffect(() => {
     axios
@@ -46,6 +40,17 @@ function MoviePage() {
         });
     }
   }, [movieId, email]);
+
+  function loadMoiveUrl(url: string) {
+    dispatch({
+      type: 'UPDATE_IFRAME',
+      iframeUrl: MOVIE_URL + url,
+    });
+  }
+
+  function rate(r: number) {
+    console.log(r);
+  }
 
   return (
     <div className="movie-page">
@@ -149,21 +154,7 @@ function MoviePage() {
       )}
 
       {context?.isAuthenticated && (
-        <div className="action">
-          {rating}
-          <span className="rating">
-            <label>评价: </label>
-            <button className="gold">&#9733; </button>
-            <button className="gold">&#9733; </button>
-            <button className="gold">&#9733; </button>
-            <button>&#9734; </button>
-            <button>&#9734; </button>
-          </span>
-
-          <span className="remove">
-            <button>删除</button>
-          </span>
-        </div>
+        <Rating rating={rating} rate={rate}></Rating>
       )}
     </div>
   );
