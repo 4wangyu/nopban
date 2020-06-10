@@ -77,8 +77,20 @@ async function updateMovieRating(
   uuid: string,
   email: string,
   rating: number
-): Promise<number> {
-  return;
+): Promise<{ rating: number }> {
+  const date = new Date();
+
+  const data = await database.raw(
+    `UPDATE user_movie um
+    SET rating = ?, updatedat = ?
+    WHERE um.user_id = (SELECT id FROM users WHERE users.email = ?)
+    AND um.movie_id = (SELECT id FROM movie WHERE movie.uuid = ?)
+    RETURNING rating
+    `,
+    [rating, date, email, uuid]
+  );
+
+  return data.rows[0];
 }
 
 async function deleteMovieRating(uuid: string, email: string): Promise<number> {
