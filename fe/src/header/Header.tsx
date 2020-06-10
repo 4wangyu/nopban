@@ -73,8 +73,8 @@ const Header = () => {
       </section>
 
       <section>
-        {context.isAuthenticated ? (
-          <Span>{context.user + '的账号'}</Span>
+        {context?.isAuthenticated ? (
+          <Span>{context?.user + '的账号'}</Span>
         ) : (
           <>
             <button onClick={() => setModalShow(true)}>

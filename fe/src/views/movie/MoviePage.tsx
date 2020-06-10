@@ -32,7 +32,7 @@ function MoviePage() {
   }, [movieId]);
 
   useEffect(() => {
-    if (context.email) {
+    if (context?.email) {
       axios
         .get(`/api/movie/rating`, {
           params: { movieUuid: movieId, email: context.email },
@@ -44,7 +44,7 @@ function MoviePage() {
           console.error(err);
         });
     }
-  }, [movieId, context.email]);
+  }, [movieId, context]);
 
   return (
     <div className="movie-page">
@@ -147,7 +147,7 @@ function MoviePage() {
         </>
       )}
 
-      {rating && (
+      {context?.isAuthenticated && (
         <div className="action">
           {rating}
           <span className="rating">

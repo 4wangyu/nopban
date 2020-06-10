@@ -1,6 +1,6 @@
-import React from "react";
-import "./douban.scss";
-import { AppContext } from "../App";
+import React from 'react';
+import './douban.scss';
+import { AppContext } from '../App';
 
 const Douban = () => {
   const { context } = React.useContext(AppContext);
@@ -10,7 +10,7 @@ const Douban = () => {
       <iframe
         id="douban"
         className="douban"
-        src={context.iframeUrl}
+        src={context?.iframeUrl}
         sandbox="allow-scripts allow-same-origin allow-popups"
         title="Douban"
       ></iframe>

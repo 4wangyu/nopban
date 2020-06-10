@@ -6,9 +6,10 @@ import Douban from './douban/Douban';
 import Header from './header/Header';
 import Home from './views/Home';
 import createInterceptor from './http/interceptor';
+import { GlobalContext } from './models/model';
 
 type ContextProps = {
-  context: any;
+  context: GlobalContext;
   dispatch: any;
 };
 

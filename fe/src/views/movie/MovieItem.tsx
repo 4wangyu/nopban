@@ -20,7 +20,7 @@ function MovieItem(props: {
       url: 'api/movie/add',
       data: { url: movie.url },
       headers: {
-        Authorization: 'Bearer ' + context.token,
+        Authorization: 'Bearer ' + context?.token,
       },
     })
       .then(function (res) {
