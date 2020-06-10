@@ -44,6 +44,10 @@ const Header = () => {
   const { context, dispatch } = React.useContext(AppContext);
   const [modalShow, setModalShow] = React.useState(false);
 
+  function logout() {
+    dispatch({ type: 'LOGOUT' });
+  }
+
   return (
     <Nav className="header">
       <section>
@@ -86,7 +90,7 @@ const Header = () => {
                 <Link to="/mine">个人主页</Link>
               </div>
               <div>
-                <button>退出</button>
+                <button onClick={logout}>退出</button>
               </div>
             </Dropdown.Menu>
           </Dropdown>
