@@ -16,5 +16,6 @@
     "color-hex-length": "short",
     "declaration-colon-space-before": "never",
     "declaration-colon-space-after": "always"
-  }
+  },
+  "ignoreFiles": ["**/modal.scss"]
 }
