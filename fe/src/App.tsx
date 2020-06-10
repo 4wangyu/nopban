@@ -75,6 +75,9 @@ const App = () => {
     );
   }, []);
 
+  let sizes: number[] | string | null = localStorage.getItem('split-sizes');
+  sizes = sizes ? JSON.parse(sizes) : [0, 100];
+
   return (
     <AppContext.Provider
       value={{
@@ -86,10 +89,13 @@ const App = () => {
         <Header></Header>
         <Split
           className="app"
-          // sizes={[27, 73]}
+          sizes={sizes}
           minSize={0}
           expandToMin={true}
           gutterSize={4}
+          onDragEnd={function (sizes: number[]) {
+            localStorage.setItem('split-sizes', JSON.stringify(sizes));
+          }}
         >
           <Home />
           <Douban />
