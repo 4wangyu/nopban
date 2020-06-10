@@ -174,6 +174,14 @@ function MoviePage() {
                 <output>{arrToStr(movie?.aliases)}</output>
               </div>
               <div>
+                <label>豆瓣链接: </label>
+                <output>
+                  <button onClick={() => loadMoiveUrl('/subject/' + movieId)}>
+                    {movieId}
+                  </button>
+                </output>
+              </div>
+              <div>
                 <label>IMDb链接: </label>
                 <output>
                   <a
