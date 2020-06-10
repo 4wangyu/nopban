@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Dropdown from 'react-bootstrap/Dropdown';
 import { AppContext } from '../App';
 import './header.scss';
 import AuthModal from './modal/AuthModal';
@@ -74,7 +75,21 @@ const Header = () => {
 
       <section>
         {context?.isAuthenticated ? (
-          <Span>{context?.user + '的账号'}</Span>
+          <Dropdown>
+            <Dropdown.Toggle id="dropdown-basic">
+              {context?.user + '的账号'}
+              <span className="icon-arrow-down">&#9662;</span>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <div>
+                <Link to="/mine">个人主页</Link>
+              </div>
+              <div>
+                <button>退出</button>
+              </div>
+            </Dropdown.Menu>
+          </Dropdown>
         ) : (
           <>
             <button onClick={() => setModalShow(true)}>
