@@ -85,9 +85,15 @@ async function getMovie(req: Request, res: Response) {
   const movieId = req.params.movieId;
   try {
     const movie = await selectMovieByUuid(movieId);
-    delete movie.id;
-    delete movie.createdat;
-    res.status(200).json(movie);
+    if (movie) {
+      delete movie.id;
+      delete movie.createdat;
+      res.status(200).json(movie);
+    } else {
+      res.status(400).json({
+        error: 'Movie does not exist',
+      });
+    }
   } catch (e) {
     console.warn(e);
     res.status(500).json({ error: 'Error finding movie' });
