@@ -16,5 +16,6 @@ router.get('/movie/object/:movieId', movie.getMovie);
 
 router.get('/movie/rating', checkToken, movie.getMovieRating);
 router.post('/movie/rating', checkToken, movie.rateMovie);
+router.delete('/movie/rating', checkToken, movie.removeMovieRating);
 
 export default router;

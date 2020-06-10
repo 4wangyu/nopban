@@ -52,7 +52,6 @@ function MoviePage() {
   }
 
   function rate(r: number) {
-    console.log(r);
     axios({
       method: 'post',
       url: '/api/movie/rating',
@@ -63,6 +62,25 @@ function MoviePage() {
     })
       .then(function (res) {
         setRating(res.data.rating);
+        //success toast
+        console.log('success', res);
+      })
+      .catch(function (err) {
+        console.error(err);
+      });
+  }
+
+  function deleteRating() {
+    axios({
+      method: 'delete',
+      url: '/api/movie/rating',
+      data: { movieUuid: movieId },
+      headers: {
+        Authorization: 'Bearer ' + context?.token,
+      },
+    })
+      .then(function (res) {
+        setRating(undefined);
         //success toast
         console.log('success', res);
       })
@@ -173,7 +191,11 @@ function MoviePage() {
       )}
 
       {context?.isAuthenticated && (
-        <Rating rating={rating} rate={rate}></Rating>
+        <Rating
+          rating={rating}
+          rate={rate}
+          deleteRating={deleteRating}
+        ></Rating>
       )}
     </div>
   );

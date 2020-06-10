@@ -8,6 +8,7 @@ import {
   selectMovieRating,
   insertMovieRating,
   updateMovieRating,
+  deleteMovieRating,
 } from './movie.repo';
 import { Movie } from '../../models/movie.model';
 import { formatMovieSearchItem } from './movie.util';
@@ -137,4 +138,24 @@ async function rateMovie(req: Request, res: Response) {
   }
 }
 
-export { searchMovie, addMovie, getMovie, getMovieRating, rateMovie };
+async function removeMovieRating(req: Request, res: Response) {
+  const movieUuid = req.body.movieUuid as string;
+  const email = req.body.email as string;
+
+  try {
+    const result = await deleteMovieRating(movieUuid, email);
+    res.status(200).json({ success: result });
+  } catch (e) {
+    console.warn(e);
+    res.status(500).json({ error: 'Error removing movie rating' });
+  }
+}
+
+export {
+  searchMovie,
+  addMovie,
+  getMovie,
+  getMovieRating,
+  rateMovie,
+  removeMovieRating,
+};

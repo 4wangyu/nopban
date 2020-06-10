@@ -93,8 +93,19 @@ async function updateMovieRating(
   return data.rows[0];
 }
 
-async function deleteMovieRating(uuid: string, email: string): Promise<number> {
-  return;
+async function deleteMovieRating(
+  uuid: string,
+  email: string
+): Promise<boolean> {
+  await database.raw(
+    `DELETE FROM user_movie um
+    WHERE um.user_id = (SELECT id FROM users WHERE users.email = ?)
+    AND um.movie_id = (SELECT id FROM movie WHERE movie.uuid = ?)
+    `,
+    [email, uuid]
+  );
+
+  return true;
 }
 
 export {

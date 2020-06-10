@@ -23,8 +23,9 @@ function RatingStar(props: {
 function Rating(props: {
   rating: number | undefined;
   rate: (r: number) => void;
+  deleteRating: () => void;
 }) {
-  const { rating, rate } = props;
+  const { rating, rate, deleteRating } = props;
   const [hoverRating, setHoverRating] = useState<number>(0);
   const ratingShown = hoverRating || rating || 0;
 
@@ -64,9 +65,11 @@ function Rating(props: {
         ></RatingStar>
       </span>
 
-      <span className="remove">
-        <button>删除</button>
-      </span>
+      {rating && (
+        <span className="remove">
+          <button onClick={deleteRating}>删除</button>
+        </span>
+      )}
     </div>
   );
 }
