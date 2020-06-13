@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { AppContext } from '../App';
 import './header.scss';
 import AuthModal from './modal/AuthModal';
+import { AuthContext } from '../store/AuthProvider';
 
 const Nav = styled.nav`
   background-color: #545652;
@@ -41,7 +41,7 @@ const UPDATE_IFRAME_ACTION = {
 };
 
 const Header = () => {
-  const { context, dispatch } = React.useContext(AppContext);
+  const { context, dispatch } = React.useContext(AuthContext);
   const [modalShow, setModalShow] = React.useState(false);
 
   function logout() {

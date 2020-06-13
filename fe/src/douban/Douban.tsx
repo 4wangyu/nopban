@@ -1,9 +1,9 @@
 import React from 'react';
 import './douban.scss';
-import { AppContext } from '../App';
+import { AuthContext } from '../store/AuthProvider';
 
 const Douban = () => {
-  const { context } = React.useContext(AppContext);
+  const { context } = React.useContext(AuthContext);
 
   return (
     <div>

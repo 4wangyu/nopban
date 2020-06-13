@@ -1,14 +1,14 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import ToastBox from '../../components/ToastBox';
-import { AppContext } from '../../App';
 import './form.scss';
+import { AuthContext } from '../../store/AuthProvider';
 
 const SignIn = (props: any) => {
   const [error, setError] = React.useState();
   const [show, setShow] = React.useState(false);
   const { handleSubmit, register, errors } = useForm();
-  const { dispatch } = React.useContext(AppContext);
+  const { dispatch } = React.useContext(AuthContext);
 
   const onSubmit = (form: any) => {
     fetch('/api/signin', {

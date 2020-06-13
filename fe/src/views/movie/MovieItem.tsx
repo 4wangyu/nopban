@@ -1,16 +1,16 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
-import { AppContext } from '../../App';
 import { MovieSearchItem } from '../../models/movie.model';
 import './movie-item.scss';
 import { useRouteMatch, Link } from 'react-router-dom';
+import { AuthContext } from '../../store/AuthProvider';
 
 function MovieItem(props: {
   idx: number;
   movie: MovieSearchItem;
   refreshResult: (idx: number, movie: MovieSearchItem) => void;
 }) {
-  const { context, dispatch } = useContext(AppContext);
+  const { context, dispatch } = useContext(AuthContext);
   const { url } = useRouteMatch();
   const { idx, movie, refreshResult } = props;
 
