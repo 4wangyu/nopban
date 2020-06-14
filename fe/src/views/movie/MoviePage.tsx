@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { MOVIE_URL } from '../../lib/constant';
 import { arrToStr, getImdbIdFromUrl } from '../../lib/util';
 import { Movie } from '../../models/movie.model';
-import './movie-page.scss';
 import Rating from '../../components/Rating';
 import { AuthContext } from '../../store/AuthProvider';
 

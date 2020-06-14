@@ -14,4 +14,10 @@ button:focus {
   outline: 0;
 }
 
-@import './styles/search-item';
+main {
+  margin: auto;
+  width: 84%;
+}
+
+@import './styles/search-page';
+@import './styles/info-page';

@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
 import axios from 'axios';
+import React, { useState } from 'react';
+import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
-import './movie.scss';
+import { scrollToTop } from '../../lib/util';
 import {
-  MovieSearchResult,
   MovieSearchItem,
   MovieSearchPagination,
+  MovieSearchResult,
 } from '../../models/movie.model';
 import MovieItem from './MovieItem';
-import { scrollToTop } from '../../lib/util';
-import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
 import MoviePage from './MoviePage';
 
 const Movie = () => {
