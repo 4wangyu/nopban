@@ -26,14 +26,13 @@ export interface Music {
   uuid: string;
   title: string;
   img: string;
-  writers: NameLinkModel[];
-  publisher: string;
-  subtitle: string;
-  origin_title: string;
-  translators: NameLinkModel[];
+  musician: NameLinkModel[];
+  genre: string;
+  album_type: string;
+  medium: string;
   publish_time: string;
-  page_count: number;
-  price: string;
-  isbn: string;
+  publisher: string;
+  cd_count: number;
+  barcode: string;
   created_at?: Date;
 }

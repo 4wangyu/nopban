@@ -1,22 +1,20 @@
 import { arrToStr, getName } from '../../lib/util';
-import { BookSearchItem, Book } from '../../models/book.model';
+import { MusicSearchItem, Music } from '../../models/music.model';
 
-function formatBookSearchItem(book: Partial<Book>): BookSearchItem {
-  const url = book.uuid;
+function formatMusicSearchItem(music: Partial<Music>): MusicSearchItem {
+  const url = music.uuid;
 
-  const subtitle = book.subtitle ? ' : ' + book.subtitle : '';
-  const title = book.title + subtitle;
+  const title = music.title;
 
   const metas = [];
-  const meta = getName(book.writers)
+  const meta = getName(music.musician)
     .slice(0, 2)
-    .concat(getName(book.translators).slice(0, 2))
-    .concat([book.publisher, book.publish_time, book.price]);
+    .concat([music.publish_time, music.album_type, music.medium, music.genre]);
   metas.push(arrToStr(meta));
 
-  const img = book.img;
+  const img = music.img;
   const saved = true;
   return { url, title, metas, img, saved };
 }
 
-export { formatBookSearchItem };
+export { formatMusicSearchItem };

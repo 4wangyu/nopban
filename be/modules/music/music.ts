@@ -10,7 +10,7 @@ import {
   insertMusicRating,
   deleteMusicRating,
 } from './music.repo';
-import { formatBookSearchItem } from './music.util';
+import { formatMusicSearchItem } from './music.util';
 import { Music } from '../../models/music.model';
 
 const searchMusic = async (request: Request, response: Response) => {
@@ -55,11 +55,11 @@ const addMusic = async (request: Request, response: Response) => {
   const url = request.body.url as string;
   const uuid = getUuidFromUrl(url);
 
-  const music = await selectMusicByUuid(uuid);
-  if (music) {
-    response.status(400).json({ error: 'Book exists' });
-    return;
-  }
+  // const music = await selectMusicByUuid(uuid);
+  // if (music) {
+  //   response.status(400).json({ error: 'Book exists' });
+  //   return;
+  // }
 
   const page = await puppet();
 
@@ -69,15 +69,15 @@ const addMusic = async (request: Request, response: Response) => {
     const bodyHTML = await page.evaluate(
       () => document.getElementById('wrapper').innerHTML
     );
-    const parsedBook = await parseMusic(bodyHTML);
+    const parsedMusic = await parseMusic(bodyHTML);
 
-    const partBook = await insertMusic({ uuid, ...parsedBook } as Music);
-    const result = formatBookSearchItem(partBook);
+    const partMusic = await insertMusic({ uuid, ...parsedMusic } as Music);
+    const result = formatMusicSearchItem(partMusic);
 
     response.status(200).json(result);
   } catch (e) {
     console.warn(e);
-    response.status(500).json({ error: 'Error adding book' });
+    response.status(500).json({ error: 'Error adding music' });
   } finally {
     await page.close();
   }

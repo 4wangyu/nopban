@@ -54,61 +54,49 @@ async function parseMusic(html: string): Promise<Partial<Music>> {
   const imgSrc = $('.subject img').attr('src');
   const img = await getBase64(imgSrc);
 
-  const writers: NameLinkModel[] = [];
-  $('#info span:contains("作者")')
+  const musician: NameLinkModel[] = [];
+  $('#info span:contains("表演者")')
     .find('a')
     .each((idx, el) => {
       const name = $(el).text();
       const link = $(el).attr('href');
-      writers.push({ name, link });
+      musician.push({ name, link });
     });
 
-  const publisherEl = $('#info span:contains("出版社")').get(0);
-  const publisher = publisherEl ? publisherEl.nextSibling.data.trim() : null;
+  const genreEl = $('#info span:contains("流派")').get(0);
+  const genre = genreEl ? genreEl.nextSibling.data.trim() : null;
 
-  const subtitleEl = $('#info span:contains("副标题")').get(0);
-  const subtitle = subtitleEl ? subtitleEl.nextSibling.data.trim() : null;
+  const albumTypeEl = $('#info span:contains("专辑类型")').get(0);
+  const album_type = albumTypeEl ? albumTypeEl.nextSibling.data.trim() : null;
 
-  const originTitleEl = $('#info span:contains("原作名")').get(0);
-  const origin_title = originTitleEl
-    ? originTitleEl.nextSibling.data.trim()
-    : null;
+  const mediumEl = $('#info span:contains("介质")').get(0);
+  const medium = mediumEl ? mediumEl.nextSibling.data.trim() : null;
 
-  const translators: NameLinkModel[] = [];
-  $('#info span:contains("译者")')
-    .find('a')
-    .each((idx, el) => {
-      const name = $(el).text();
-      const link = $(el).attr('href');
-      translators.push({ name, link });
-    });
-
-  const publishTimeEl = $('#info span:contains("出版年")').get(0);
+  const publishTimeEl = $('#info span:contains("发行时间")').get(0);
   const publish_time = publishTimeEl
     ? publishTimeEl.nextSibling.data.trim()
     : null;
 
-  const pageCountEl = $('#info span:contains("页数")').get(0);
-  const page_count = pageCountEl ? pageCountEl.nextSibling.data.trim() : null;
+  const publisherEl = $('#info span:contains("出版者")').get(0);
+  const publisher = publisherEl ? publisherEl.nextSibling.data.trim() : null;
 
-  const priceEl = $('#info span:contains("定价")').get(0);
-  const price = priceEl ? priceEl.nextSibling.data.trim() : null;
+  const cdCountEl = $('#info span:contains("唱片数")').get(0);
+  const cd_count = cdCountEl ? +cdCountEl.nextSibling.data.trim() : null;
 
-  const isbnEl = $('#info span:contains("ISBN")').get(0);
-  const isbn = isbnEl ? isbnEl.nextSibling.data.trim() : null;
+  const barcodeEl = $('#info span:contains("条形码")').get(0);
+  const barcode = barcodeEl ? barcodeEl.nextSibling.data.trim() : null;
 
   return {
     title,
     img,
-    writers,
-    publisher,
-    subtitle,
-    origin_title,
-    translators,
+    musician,
+    genre,
+    album_type,
+    medium,
     publish_time,
-    page_count,
-    price,
-    isbn,
+    publisher,
+    cd_count,
+    barcode,
   };
 }
 

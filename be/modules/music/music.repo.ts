@@ -3,25 +3,22 @@ import { Music } from '../../models/music.model';
 
 async function insertMusic(music: Music): Promise<Partial<Music>> {
   const data = await database.raw(
-    `INSERT INTO book (uuid, title, img, writers, publisher, 
-      subtitle, origin_title, translators, publish_time, 
-      page_count, price, isbn, created_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    RETURNING uuid, title, subtitle, writers, translators, 
-      publisher, publish_time, price, img`,
+    `INSERT INTO music (uuid, title, img, musician, genre, album_type, 
+      medium, publish_time, publisher, cd_count, barcode, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    RETURNING title, musician, album_type, medium, genre, publish_time, img`,
     [
       music.uuid,
       music.title,
       music.img,
-      JSON.stringify(music.writers),
-      music.publisher,
-      music.subtitle,
-      music.origin_title,
-      JSON.stringify(music.translators),
+      JSON.stringify(music.musician),
+      music.genre,
+      music.album_type,
+      music.medium,
       music.publish_time,
-      music.page_count,
-      music.price,
-      music.isbn,
+      music.publisher,
+      music.cd_count,
+      music.barcode,
       new Date(),
     ]
   );

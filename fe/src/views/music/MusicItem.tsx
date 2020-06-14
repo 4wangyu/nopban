@@ -13,7 +13,7 @@ function MusicItem(props: {
   const { url } = useRouteMatch();
   const { idx, music, refreshResult } = props;
 
-  function addBook() {
+  function addItem() {
     axios({
       method: 'post',
       url: '/api/music/object',
@@ -53,7 +53,7 @@ function MusicItem(props: {
           </button>
         )}
         {context?.isAuthenticated && !music.saved && (
-          <button className="add" title="添加" onClick={addBook}>
+          <button className="add" title="添加" onClick={addItem}>
             <i className="fa fa-plus"></i>
           </button>
         )}
