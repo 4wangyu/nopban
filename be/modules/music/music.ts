@@ -29,18 +29,18 @@ const searchMusic = async (request: Request, response: Response) => {
     const results = parseMusicSearch(bodyHTML);
 
     // Return music from db if item exists
-    // const items = [];
-    // for (let m of results.items) {
-    //   const uuid = getUuidFromUrl(m.url);
-    //   const book = await selectMusicByUuid(uuid);
+    const items = [];
+    for (let m of results.items) {
+      const uuid = getUuidFromUrl(m.url);
+      const music = await selectMusicByUuid(uuid);
 
-    //   if (book) {
-    //     items.push(formatBookSearchItem(book));
-    //   } else {
-    //     items.push(m);
-    //   }
-    // }
-    // results.items = items;
+      if (music) {
+        items.push(formatMusicSearchItem(music));
+      } else {
+        items.push(m);
+      }
+    }
+    results.items = items;
 
     response.status(200).json(results);
   } catch (e) {
@@ -55,11 +55,11 @@ const addMusic = async (request: Request, response: Response) => {
   const url = request.body.url as string;
   const uuid = getUuidFromUrl(url);
 
-  // const music = await selectMusicByUuid(uuid);
-  // if (music) {
-  //   response.status(400).json({ error: 'Book exists' });
-  //   return;
-  // }
+  const music = await selectMusicByUuid(uuid);
+  if (music) {
+    response.status(400).json({ error: 'Music exists' });
+    return;
+  }
 
   const page = await puppet();
 
@@ -84,21 +84,21 @@ const addMusic = async (request: Request, response: Response) => {
 };
 
 async function getMusic(req: Request, res: Response) {
-  const bookId = req.params.bookId;
+  const uuid = req.params.uuid;
   try {
-    const book = await selectMusicByUuid(bookId);
-    if (book) {
-      delete book.id;
-      delete book.created_at;
-      res.status(200).json(book);
+    const music = await selectMusicByUuid(uuid);
+    if (music) {
+      delete music.id;
+      delete music.created_at;
+      res.status(200).json(music);
     } else {
       res.status(400).json({
-        error: 'Book does not exist',
+        error: 'Music does not exist',
       });
     }
   } catch (e) {
     console.warn(e);
-    res.status(500).json({ error: 'Error finding book' });
+    res.status(500).json({ error: 'Error finding music' });
   }
 }
 

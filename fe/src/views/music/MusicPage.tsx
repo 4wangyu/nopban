@@ -2,33 +2,33 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Rating from '../../components/Rating';
-import { BOOK_URL } from '../../lib/constant';
-import { Book } from '../../models/book.model';
+import { MUSIC_URL } from '../../lib/constant';
 import { AuthContext } from '../../store/AuthProvider';
+import { Music } from '../../models/music.model';
 
 function BookPage() {
-  const { bookId } = useParams();
-  const [book, setBook] = useState<Book>();
+  const { musicId } = useParams();
+  const [music, setMusic] = useState<Music>();
   const [rating, setRating] = useState<number>();
   const { context, dispatch } = useContext(AuthContext);
   const token = context?.token;
 
   useEffect(() => {
     axios
-      .get(`/api/book/object/${bookId}`)
+      .get(`/api/music/object/${musicId}`)
       .then((res) => {
-        setBook(res.data);
+        setMusic(res.data);
       })
       .catch((err) => {
         console.error(err);
       });
-  }, [bookId]);
+  }, [musicId]);
 
   useEffect(() => {
     if (token) {
       axios
-        .get(`/api/book/rating`, {
-          params: { uuid: bookId },
+        .get(`/api/music/rating`, {
+          params: { uuid: musicId },
           headers: {
             Authorization: 'Bearer ' + token,
           },
@@ -40,20 +40,20 @@ function BookPage() {
           console.error(err);
         });
     }
-  }, [bookId, token]);
+  }, [musicId, token]);
 
   function showPage(url: string) {
     dispatch({
       type: 'UPDATE_IFRAME',
-      iframeUrl: BOOK_URL + url,
+      iframeUrl: MUSIC_URL + url,
     });
   }
 
   function rate(r: number) {
     axios({
       method: 'post',
-      url: '/api/book/rating',
-      data: { prevRating: rating, nextRating: r, uuid: bookId },
+      url: '/api/music/rating',
+      data: { prevRating: rating, nextRating: r, uuid: musicId },
       headers: {
         Authorization: 'Bearer ' + context?.token,
       },
@@ -70,8 +70,8 @@ function BookPage() {
   function deleteRating() {
     axios({
       method: 'delete',
-      url: '/api/book/rating',
-      data: { uuid: bookId },
+      url: '/api/music/rating',
+      data: { uuid: musicId },
       headers: {
         Authorization: 'Bearer ' + context?.token,
       },
@@ -87,17 +87,20 @@ function BookPage() {
 
   return (
     <div className="info-page">
-      {book && (
+      {music && (
         <>
-          <h1>{book?.title}</h1>
+          <h1>{music?.title}</h1>
 
           <div className="content">
-            <img src={'data:image;base64,' + book?.img} alt={book?.title}></img>
+            <img
+              src={'data:image;base64,' + music?.img}
+              alt={music?.title}
+            ></img>
             <section>
               <div>
-                <label>作者: </label>
+                <label>表演者: </label>
                 <output>
-                  {book?.writers
+                  {music?.musician
                     ?.map<React.ReactNode>((o, i) => (
                       <button key={i} onClick={() => showPage(o.link)}>
                         {o.name}
@@ -107,50 +110,38 @@ function BookPage() {
                 </output>
               </div>
               <div>
-                <label>出版社: </label>
-                <output>{book?.publisher}</output>
+                <label>流派: </label>
+                <output>{music?.genre}</output>
               </div>
               <div>
-                <label>副标题: </label>
-                <output>{book?.subtitle}</output>
+                <label>专辑类型: </label>
+                <output>{music?.album_type}</output>
               </div>
               <div>
-                <label>原作名: </label>
-                <output>{book?.origin_title}</output>
+                <label>介质: </label>
+                <output>{music?.medium}</output>
               </div>
               <div>
-                <label>译者: </label>
-                <output>
-                  {book?.translators
-                    ?.map<React.ReactNode>((o, i) => (
-                      <button key={i} onClick={() => showPage(o.link)}>
-                        {o.name}
-                      </button>
-                    ))
-                    .reduce((prev, curr) => [prev, ' / ', curr])}
-                </output>
+                <label>发行时间: </label>
+                <output>{music?.publish_time}</output>
               </div>
               <div>
-                <label>出版年: </label>
-                <output>{book?.publish_time}</output>
+                <label>出版者: </label>
+                <output>{music?.publisher}</output>
               </div>
               <div>
-                <label>页数: </label>
-                <output>{book?.page_count}</output>
+                <label>唱片数: </label>
+                <output>{music?.cd_count}</output>
               </div>
               <div>
-                <label>定价: </label>
-                <output>{book?.price}</output>
-              </div>
-              <div>
-                <label>ISBN: </label>
-                <output>{book?.isbn}</output>
+                <label>条形码: </label>
+                <output>{music?.barcode}</output>
               </div>
               <div>
                 <label>豆瓣链接: </label>
                 <output>
-                  <button onClick={() => showPage('/subject/' + bookId)}>
-                    {bookId}
+                  <button onClick={() => showPage('/subject/' + musicId)}>
+                    {musicId}
                   </button>
                 </output>
               </div>
@@ -159,7 +150,7 @@ function BookPage() {
         </>
       )}
 
-      {context?.isAuthenticated && book && (
+      {context?.isAuthenticated && music && (
         <Rating
           rating={rating}
           rate={rate}

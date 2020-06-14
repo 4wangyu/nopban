@@ -27,7 +27,7 @@ async function insertMusic(music: Music): Promise<Partial<Music>> {
 }
 
 async function selectMusicByUuid(uuid: string): Promise<Music> {
-  const data = await database.raw('SELECT * FROM book WHERE uuid = ?', [uuid]);
+  const data = await database.raw('SELECT * FROM music WHERE uuid = ?', [uuid]);
   return data.rows[0];
 }
 

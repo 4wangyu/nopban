@@ -33,7 +33,7 @@ router.delete('/book/rating', checkToken, book.removeBookRating);
 //#region music
 router.get('/music/search', music.searchMusic);
 router.post('/music/object', checkToken, music.addMusic);
-router.get('/music/object/:bookId', music.getMusic);
+router.get('/music/object/:uuid', music.getMusic);
 
 router.get('/music/rating', checkToken, music.getMusicRating);
 router.post('/music/rating', checkToken, music.rateMusic);
