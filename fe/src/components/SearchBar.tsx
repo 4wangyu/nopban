@@ -39,11 +39,18 @@ const SearchBar = (props: {
     props.onButtonClick();
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      props.onButtonClick();
+    }
+  };
+
   return (
     <>
       <Search>
         <Input
           value={props.searchKey}
+          onKeyDown={handleKeyDown}
           onChange={(e) => props.setSearchKey(e.target.value)}
         ></Input>
         <Button onClick={handleClick}>
