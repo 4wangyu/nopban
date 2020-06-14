@@ -24,7 +24,7 @@ router.delete('/movie/rating', checkToken, movie.removeMovieRating);
 router.get('/book/search', book.searchBook);
 
 router.post('/book/object', checkToken, book.addBook);
-router.get('/movie/object/:movieId', book.getBook);
+router.get('/book/object/:bookId', book.getBook);
 
 router.get('/book/rating', checkToken, book.getBookRating);
 router.post('/book/rating', checkToken, book.rateBook);

@@ -88,7 +88,7 @@ function MoviePage() {
   }
 
   return (
-    <div className="movie-page">
+    <div className="info-page">
       {movie && (
         <>
           <h1>
@@ -200,7 +200,7 @@ function MoviePage() {
         </>
       )}
 
-      {context?.isAuthenticated && (
+      {context?.isAuthenticated && movie && (
         <Rating
           rating={rating}
           rate={rate}
