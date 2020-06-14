@@ -103,11 +103,11 @@ async function getBook(req: Request, res: Response) {
 }
 
 async function getBookRating(req: Request, res: Response) {
-  const bookUuid = req.query.bookUuid as string;
+  const uuid = req.query.uuid as string;
   const email = req.body.email as string;
 
   try {
-    const rating = (await selectBookRating(bookUuid, email)) || {
+    const rating = (await selectBookRating(uuid, email)) || {
       rating: null,
     };
     res.status(200).json(rating);
@@ -120,15 +120,15 @@ async function getBookRating(req: Request, res: Response) {
 async function rateBook(req: Request, res: Response) {
   const prevRating = req.body.prevRating as number;
   const nextRating = req.body.nextRating as number;
-  const bookUuid = req.body.bookUuid as string;
+  const uuid = req.body.uuid as string;
   const email = req.body.email as string;
 
   try {
     if (prevRating) {
-      const rating = await updateBookRating(bookUuid, email, nextRating);
+      const rating = await updateBookRating(uuid, email, nextRating);
       res.status(200).json(rating);
     } else {
-      const rating = await insertBookRating(bookUuid, email, nextRating);
+      const rating = await insertBookRating(uuid, email, nextRating);
       res.status(200).json(rating);
     }
   } catch (e) {
@@ -138,11 +138,11 @@ async function rateBook(req: Request, res: Response) {
 }
 
 async function removeBookRating(req: Request, res: Response) {
-  const bookUuid = req.body.bookUuid as string;
+  const uuid = req.body.uuid as string;
   const email = req.body.email as string;
 
   try {
-    const result = await deleteBookRating(bookUuid, email);
+    const result = await deleteBookRating(uuid, email);
     res.status(200).json({ success: result });
   } catch (e) {
     console.warn(e);

@@ -39,11 +39,11 @@ async function selectBookRating(
   email: string
 ): Promise<{ rating: number }> {
   const data = await database.raw(
-    `SELECT um.rating FROM user_movie um
-    INNER JOIN users ON users.id = um.user_id
-    INNER JOIN movie ON movie.id = um.movie_id
+    `SELECT ub.rating FROM user_book ub
+    INNER JOIN users ON users.id = ub.user_id
+    INNER JOIN book ON book.id = ub.book_id
     WHERE users.email = ?
-    AND movie.uuid = ?`,
+    AND book.uuid = ?`,
     [email, uuid]
   );
 
@@ -58,11 +58,11 @@ async function insertBookRating(
   const date = new Date();
 
   const data = await database.raw(
-    `INSERT INTO user_movie( user_id, movie_id, rating, updatedat, createdat)
-    SELECT users.id, movie.id, ?, ?, ?
-    FROM users, movie
+    `INSERT INTO user_book( user_id, book_id, rating, updatedat, createdat)
+    SELECT users.id, book.id, ?, ?, ?
+    FROM users, book
     WHERE users.email = ?
-    AND movie.uuid = ?
+    AND book.uuid = ?
     RETURNING rating`,
     [rating, date, date, email, uuid]
   );
@@ -77,10 +77,10 @@ async function updateBookRating(
   const date = new Date();
 
   const data = await database.raw(
-    `UPDATE user_movie um
+    `UPDATE user_book ub
     SET rating = ?, updatedat = ?
-    WHERE um.user_id = (SELECT id FROM users WHERE users.email = ?)
-    AND um.movie_id = (SELECT id FROM movie WHERE movie.uuid = ?)
+    WHERE ub.user_id = (SELECT id FROM users WHERE users.email = ?)
+    AND ub.book_id = (SELECT id FROM book WHERE book.uuid = ?)
     RETURNING rating
     `,
     [rating, date, email, uuid]
@@ -91,9 +91,9 @@ async function updateBookRating(
 
 async function deleteBookRating(uuid: string, email: string): Promise<boolean> {
   await database.raw(
-    `DELETE FROM user_movie um
-    WHERE um.user_id = (SELECT id FROM users WHERE users.email = ?)
-    AND um.movie_id = (SELECT id FROM movie WHERE movie.uuid = ?)
+    `DELETE FROM user_book ub
+    WHERE ub.user_id = (SELECT id FROM users WHERE users.email = ?)
+    AND ub.book_id = (SELECT id FROM book WHERE book.uuid = ?)
     `,
     [email, uuid]
   );

@@ -71,7 +71,7 @@ function BookPage() {
     axios({
       method: 'delete',
       url: '/api/book/rating',
-      data: { movieUuid: bookId },
+      data: { uuid: bookId },
       headers: {
         Authorization: 'Bearer ' + context?.token,
       },
