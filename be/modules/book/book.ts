@@ -55,11 +55,11 @@ const addBook = async (request: Request, response: Response) => {
   const url = request.body.url as string;
   const uuid = getUuidFromUrl(url);
 
-  const movie = await selectBookByUuid(uuid);
-  if (movie) {
-    response.status(400).json({ error: 'Movie exists' });
-    return;
-  }
+  // const book = await selectBookByUuid(uuid);
+  // if (book) {
+  //   response.status(400).json({ error: 'Book exists' });
+  //   return;
+  // }
 
   const page = await puppet();
 
@@ -69,15 +69,15 @@ const addBook = async (request: Request, response: Response) => {
     const bodyHTML = await page.evaluate(
       () => document.getElementById('wrapper').innerHTML
     );
-    const movie = await parseBook(bodyHTML);
+    const parsedBook = await parseBook(bodyHTML);
 
-    const partMovie = await insertBook({ uuid, ...movie } as Book);
-    const result = formatBookSearchItem(partMovie);
+    const partBook = await insertBook({ uuid, ...parsedBook } as Book);
+    const result = formatBookSearchItem(partBook);
 
     response.status(200).json(result);
   } catch (e) {
     console.warn(e);
-    response.status(500).json({ error: 'Error adding movie' });
+    response.status(500).json({ error: 'Error adding book' });
   } finally {
     await page.close();
   }
@@ -89,7 +89,7 @@ async function getBook(req: Request, res: Response) {
     const book = await selectBookByUuid(bookId);
     if (book) {
       delete book.id;
-      delete book.createdat;
+      delete book.created_at;
       res.status(200).json(book);
     } else {
       res.status(400).json({

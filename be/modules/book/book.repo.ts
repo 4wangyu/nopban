@@ -1,31 +1,27 @@
 import database from '../../database';
 import { Book } from '../../models/book.model';
 
-async function insertBook(movie: Book): Promise<Partial<Book>> {
+async function insertBook(book: Book): Promise<Partial<Book>> {
   const data = await database.raw(
-    `INSERT INTO Movie (uuid, title, year, poster, directors, playwriters, actors, 
-        genres, website, countries, languages, releaseDates, 
-        episodes, episodeRuntime, runtime, aliases, imdb, createdat) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
-      RETURNING uuid, title, year, poster, countries, genres, episodeRuntime, runtime, directors, actors`,
+    `INSERT INTO book (uuid, title, img, writers, publisher, 
+      subtitle, origin_title, translators, publish_time, 
+      page_count, price, isbn, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    RETURNING uuid, title, subtitle, writers, translators, 
+      publisher, publish_time, price, img`,
     [
-      movie.uuid,
-      movie.title,
-      movie.year,
-      movie.poster,
-      JSON.stringify(movie.directors),
-      JSON.stringify(movie.playwriters),
-      JSON.stringify(movie.actors),
-      movie.genres,
-      movie.website,
-      movie.countries,
-      movie.languages,
-      movie.releaseDates,
-      movie.episodes,
-      movie.episodeRuntime,
-      movie.runtime,
-      movie.aliases,
-      movie.imdb,
+      book.uuid,
+      book.title,
+      book.img,
+      JSON.stringify(book.writers),
+      book.publisher,
+      book.subtitle,
+      book.origin_title,
+      JSON.stringify(book.translators),
+      book.publish_time,
+      book.page_count,
+      book.price,
+      book.isbn,
       new Date(),
     ]
   );

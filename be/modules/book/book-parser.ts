@@ -50,91 +50,65 @@ async function parseBook(html: string): Promise<Partial<Book>> {
   const $ = cheerio.load(html);
 
   const title = $('h1 span:first-child').text();
-  const year = +$('h1 .year').text().substring(1, 5);
 
-  const posterSrc = $('.subject img').attr('src');
-  const poster = await getBase64(posterSrc);
+  const imgSrc = $('.subject img').attr('src');
+  const img = await getBase64(imgSrc);
 
-  const directors: NameLinkModel[] = [];
-  $('a[rel="v:directedBy"]').each((idx, el) => {
-    const name = $(el).text();
-    const link = $(el).attr('href');
-    directors.push({ name, link });
-  });
-
-  const playwriters: NameLinkModel[] = [];
-  $('span:contains("编剧")')
+  const writers: NameLinkModel[] = [];
+  $('#info span:contains("作者")')
     .find('a')
     .each((idx, el) => {
       const name = $(el).text();
       const link = $(el).attr('href');
-      playwriters.push({ name, link });
+      writers.push({ name, link });
     });
 
-  const actors: NameLinkModel[] = [];
-  $('.actor a[rel="v:starring"]').each((idx, el) => {
-    const name = $(el).text();
-    const link = $(el).attr('href');
-    actors.push({ name, link });
-  });
+  const publisherEl = $('#info span:contains("出版社")').get(0);
+  const publisher = publisherEl ? publisherEl.nextSibling.data.trim() : null;
 
-  const genres: string[] = [];
-  $('span[property="v:genre"]').each((idx, el) => {
-    const genre = $(el).text();
-    genres.push(genre);
-  });
+  const subtitleEl = $('#info span:contains("副标题")').get(0);
+  const subtitle = subtitleEl ? subtitleEl.nextSibling.data.trim() : null;
 
-  const website = $('span:contains("官方网站")').next().attr('href') || null;
-
-  const countries = $('span:contains("制片国家")')
-    .get(0)
-    .nextSibling.data.split('/')
-    .map((c: string) => c.trim());
-
-  const languages = $('span:contains("语言")')
-    .get(0)
-    .nextSibling.data.split('/')
-    .map((l: string) => l.trim());
-
-  const releaseDates: string[] = [];
-  $('span[property="v:initialReleaseDate"]').each((i, e) => {
-    releaseDates.push($(e).attr('content'));
-  });
-
-  const episodesEl = $('span:contains("集数")').get(0);
-  const episodes = episodesEl ? +episodesEl.nextSibling.data.trim() : null;
-
-  const episodeRuntimeEl = $('span:contains("单集片长")').get(0);
-  const episodeRuntime = episodeRuntimeEl
-    ? episodeRuntimeEl.nextSibling.data.trim()
+  const originTitleEl = $('#info span:contains("原作名")').get(0);
+  const origin_title = originTitleEl
+    ? originTitleEl.nextSibling.data.trim()
     : null;
 
-  const runtime = $('span[property="v:runtime"]').text();
+  const translators: NameLinkModel[] = [];
+  $('#info span:contains("译者")')
+    .find('a')
+    .each((idx, el) => {
+      const name = $(el).text();
+      const link = $(el).attr('href');
+      translators.push({ name, link });
+    });
 
-  const aliasesEl = $('span:contains("又名")').get(0);
-  const aliases = aliasesEl
-    ? aliasesEl.nextSibling.data.split('/').map((a: string) => a.trim())
-    : [];
+  const publishTimeEl = $('#info span:contains("出版年")').get(0);
+  const publish_time = publishTimeEl
+    ? publishTimeEl.nextSibling.data.trim()
+    : null;
 
-  const imdb = $('a:contains("tt")').attr('href');
+  const pageCountEl = $('#info span:contains("页数")').get(0);
+  const page_count = pageCountEl ? pageCountEl.nextSibling.data.trim() : null;
+
+  const priceEl = $('#info span:contains("定价")').get(0);
+  const price = priceEl ? priceEl.nextSibling.data.trim() : null;
+
+  const isbnEl = $('#info span:contains("ISBN")').get(0);
+  const isbn = isbnEl ? isbnEl.nextSibling.data.trim() : null;
 
   return {
     title,
-    year,
-    poster,
-    directors,
-    playwriters,
-    actors,
-    genres,
-    website,
-    countries,
-    languages,
-    releaseDates,
-    episodes,
-    episodeRuntime,
-    runtime,
-    aliases,
-    imdb,
+    img,
+    writers,
+    publisher,
+    subtitle,
+    origin_title,
+    translators,
+    publish_time,
+    page_count,
+    price,
+    isbn,
   };
 }
 
