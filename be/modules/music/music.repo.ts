@@ -36,11 +36,11 @@ async function selectMusicRating(
   email: string
 ): Promise<{ rating: number }> {
   const data = await database.raw(
-    `SELECT ub.rating FROM user_book ub
-    INNER JOIN users ON users.id = ub.user_id
-    INNER JOIN book ON book.id = ub.book_id
+    `SELECT um.rating FROM user_music um
+    INNER JOIN users ON users.id = um.user_id
+    INNER JOIN music ON music.id = um.music_id
     WHERE users.email = ?
-    AND book.uuid = ?`,
+    AND music.uuid = ?`,
     [email, uuid]
   );
 
@@ -55,11 +55,11 @@ async function insertMusicRating(
   const date = new Date();
 
   const data = await database.raw(
-    `INSERT INTO user_book( user_id, book_id, rating, updatedat, createdat)
-    SELECT users.id, book.id, ?, ?, ?
-    FROM users, book
+    `INSERT INTO user_music( user_id, music_id, rating, updatedat, createdat)
+    SELECT users.id, music.id, ?, ?, ?
+    FROM users, music
     WHERE users.email = ?
-    AND book.uuid = ?
+    AND music.uuid = ?
     RETURNING rating`,
     [rating, date, date, email, uuid]
   );
@@ -74,10 +74,10 @@ async function updateMusicRating(
   const date = new Date();
 
   const data = await database.raw(
-    `UPDATE user_book ub
+    `UPDATE user_music um
     SET rating = ?, updatedat = ?
-    WHERE ub.user_id = (SELECT id FROM users WHERE users.email = ?)
-    AND ub.book_id = (SELECT id FROM book WHERE book.uuid = ?)
+    WHERE um.user_id = (SELECT id FROM users WHERE users.email = ?)
+    AND um.music_id = (SELECT id FROM music WHERE music.uuid = ?)
     RETURNING rating
     `,
     [rating, date, email, uuid]
@@ -91,9 +91,9 @@ async function deleteMusicRating(
   email: string
 ): Promise<boolean> {
   await database.raw(
-    `DELETE FROM user_book ub
-    WHERE ub.user_id = (SELECT id FROM users WHERE users.email = ?)
-    AND ub.book_id = (SELECT id FROM book WHERE book.uuid = ?)
+    `DELETE FROM user_music um
+    WHERE um.user_id = (SELECT id FROM users WHERE users.email = ?)
+    AND um.music_id = (SELECT id FROM music WHERE music.uuid = ?)
     `,
     [email, uuid]
   );

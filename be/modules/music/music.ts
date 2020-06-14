@@ -113,7 +113,7 @@ async function getMusicRating(req: Request, res: Response) {
     res.status(200).json(rating);
   } catch (e) {
     console.warn(e);
-    res.status(500).json({ error: 'Error fetching book rating' });
+    res.status(500).json({ error: 'Error fetching music rating' });
   }
 }
 
@@ -133,7 +133,7 @@ async function rateMusic(req: Request, res: Response) {
     }
   } catch (e) {
     console.warn(e);
-    res.status(500).json({ error: 'Error rating book' });
+    res.status(500).json({ error: 'Error rating music' });
   }
 }
 
@@ -146,7 +146,7 @@ async function removeMusicRating(req: Request, res: Response) {
     res.status(200).json({ success: result });
   } catch (e) {
     console.warn(e);
-    res.status(500).json({ error: 'Error removing book rating' });
+    res.status(500).json({ error: 'Error removing music rating' });
   }
 }
 
