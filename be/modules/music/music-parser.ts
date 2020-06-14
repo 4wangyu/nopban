@@ -1,19 +1,19 @@
 import cheerio from 'cheerio';
 import { getBase64 } from '../../lib/util';
 import {
-  BookSearchItem,
-  BookSearchPagination,
-  Book,
+  MusicSearchPagination,
+  MusicSearchItem,
+  Music,
   NameLinkModel,
-} from '../../models/book.model';
+} from '../../models/music.model';
 
-function parseBookSearch(
+function parseMusicSearch(
   html: string
-): { items: BookSearchItem[]; pagination: BookSearchPagination[] } {
+): { items: MusicSearchItem[]; pagination: MusicSearchPagination[] } {
   const $ = cheerio.load(html, { normalizeWhitespace: true });
 
   // parse items
-  const items: BookSearchItem[] = [];
+  const items: MusicSearchItem[] = [];
   $('.item-root').each((i, el) => {
     const url = $(el).find('.title-text').attr('href');
 
@@ -34,7 +34,7 @@ function parseBookSearch(
   });
 
   // parse pagination
-  const pagination: BookSearchPagination[] = [];
+  const pagination: MusicSearchPagination[] = [];
   $('.paginator a').each((i, el) => {
     const url = $(el).attr('href');
     const start = url ? +url.split('=').reverse()[0] : null;
@@ -46,7 +46,7 @@ function parseBookSearch(
   return { items, pagination };
 }
 
-async function parseBook(html: string): Promise<Partial<Book>> {
+async function parseMusic(html: string): Promise<Partial<Music>> {
   const $ = cheerio.load(html);
 
   const title = $('h1 span:first-child').text();
@@ -112,4 +112,4 @@ async function parseBook(html: string): Promise<Partial<Book>> {
   };
 }
 
-export { parseBookSearch, parseBook };
+export { parseMusicSearch, parseMusic };

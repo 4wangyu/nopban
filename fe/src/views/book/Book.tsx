@@ -16,7 +16,7 @@ const Book = () => {
     items: [],
     pagination: [],
   });
-  const [searchKey, setSearchKey] = useState<string>('Gravity’s Rainbow');
+  const [searchKey, setSearchKey] = useState<string>('');
   let { path } = useRouteMatch();
   const history = useHistory();
 

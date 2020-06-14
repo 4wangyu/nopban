@@ -1,9 +1,48 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
+import { scrollToTop } from '../../lib/util';
+import MusicItem from './MusicItem';
+import MusicPage from './MusicPage';
+import {
+  MusicSearchResult,
+  MusicSearchItem,
+  MusicSearchPagination,
+} from '../../models/music.model';
 
 const Music = () => {
-  const [searchKey, setSearchKey] = React.useState<string>('');
-  function search() {}
+  const [result, setResult] = useState<MusicSearchResult>({
+    items: [],
+    pagination: [],
+  });
+  const [searchKey, setSearchKey] = useState<string>('cowboy bebop');
+  let { path } = useRouteMatch();
+  const history = useHistory();
+
+  function search(start = 0) {
+    axios
+      .get('/api/music/search', {
+        params: {
+          searchKey,
+          start,
+        },
+      })
+      .then(function (response) {
+        setResult(response.data);
+        history.push('/music');
+        scrollToTop();
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }
+
+  function refreshResult(idx: number, item: MusicSearchItem) {
+    const list = [...result.items];
+    list[idx] = item;
+    setResult({ items: list, pagination: result.pagination });
+  }
 
   return (
     <>
@@ -12,8 +51,39 @@ const Music = () => {
         setSearchKey={setSearchKey}
         onButtonClick={search}
       ></SearchBar>
+
       <main>
-        <h1>Tank!</h1>
+        <Switch>
+          <Route exact path={path}>
+            {result.items?.map((item: MusicSearchItem, idx: number) => (
+              <MusicItem
+                key={idx}
+                idx={idx}
+                music={item}
+                refreshResult={refreshResult}
+              ></MusicItem>
+            ))}
+            <div className="pagination">
+              {result.pagination?.map(
+                (pag: MusicSearchPagination, idx: number) => (
+                  <button
+                    disabled={pag.start === null}
+                    onClick={() => search(pag.start as number)}
+                    key={idx}
+                  >
+                    {pag.text}
+                  </button>
+                )
+              )}
+            </div>
+          </Route>
+        </Switch>
+
+        <Switch>
+          <Route path={`${path}/:musicId`}>
+            <MusicPage></MusicPage>
+          </Route>
+        </Switch>
       </main>
     </>
   );
