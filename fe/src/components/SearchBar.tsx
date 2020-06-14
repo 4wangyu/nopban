@@ -41,7 +41,7 @@ const SearchBar = (props: {
 
   useEffect(() => {
     const savedInbound = JSON.parse(
-      localStorage.getItem('inbound') || ''
+      localStorage.getItem('inbound') || 'true'
     ) as boolean;
     setInbound(savedInbound);
   }, []);

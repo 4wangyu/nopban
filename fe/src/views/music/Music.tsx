@@ -16,7 +16,7 @@ const Music = () => {
     items: [],
     pagination: [],
   });
-  const [searchKey, setSearchKey] = useState<string>('cowboy bebop');
+  const [searchKey, setSearchKey] = useState<string>('');
   let { path } = useRouteMatch();
   const history = useHistory();
 

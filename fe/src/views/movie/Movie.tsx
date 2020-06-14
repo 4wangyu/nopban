@@ -21,11 +21,16 @@ const Movie = () => {
   const history = useHistory();
 
   function search(start = 0) {
+    const inbound = JSON.parse(
+      localStorage.getItem('inbound') || 'true'
+    ) as boolean;
+
     axios
       .get('/api/movie/search', {
         params: {
           searchKey,
           start,
+          inbound,
         },
       })
       .then(function (response) {

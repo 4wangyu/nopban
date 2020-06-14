@@ -15,40 +15,46 @@ import { formatMovieSearchItem } from './movie.util';
 import { getUuidFromUrl } from '../../lib/util';
 
 const searchMovie = async (request: Request, response: Response) => {
-  const searchKey = encodeURI(request.query.searchKey as string);
-  const start = request.query.start || '0';
-  const url = `https://search.douban.com/movie/subject_search?search_text=${searchKey}&start=${start}`;
+  const start = request.query.start || 0;
+  const searchKey = request.query.searchKey as string;
+  const inbound = JSON.parse(request.query.inbound as string) as boolean;
+  if (inbound) {
+    response.status(200).json({ items: [], pagination: [] });
+  } else {
+    const encodedSearchKey = encodeURI(searchKey);
+    const url = `https://search.douban.com/movie/subject_search?search_text=${encodedSearchKey}&start=${start}`;
 
-  const page = await puppet();
+    const page = await puppet();
 
-  try {
-    await page.goto(url);
-    await page.waitForSelector('#wrapper');
-    const bodyHTML = await page.evaluate(
-      () => document.getElementById('wrapper').innerHTML
-    );
-    const results = parseMovieSearch(bodyHTML);
+    try {
+      await page.goto(url);
+      await page.waitForSelector('#wrapper');
+      const bodyHTML = await page.evaluate(
+        () => document.getElementById('wrapper').innerHTML
+      );
+      const results = parseMovieSearch(bodyHTML);
 
-    // Return movie from db if item exists
-    const items = [];
-    for (let m of results.items) {
-      const uuid = getUuidFromUrl(m.url);
-      const movie = await selectMovieByUuid(uuid);
+      // Return movie from db if item exists
+      const items = [];
+      for (let m of results.items) {
+        const uuid = getUuidFromUrl(m.url);
+        const movie = await selectMovieByUuid(uuid);
 
-      if (movie) {
-        items.push(formatMovieSearchItem(movie));
-      } else {
-        items.push(m);
+        if (movie) {
+          items.push(formatMovieSearchItem(movie));
+        } else {
+          items.push(m);
+        }
       }
-    }
-    results.items = items;
+      results.items = items;
 
-    response.status(200).json(results);
-  } catch (e) {
-    console.warn(e);
-    response.status(500).json({ error: 'Error in fetching search results' });
-  } finally {
-    await page.close();
+      response.status(200).json(results);
+    } catch (e) {
+      console.warn(e);
+      response.status(500).json({ error: 'Error in fetching search results' });
+    } finally {
+      await page.close();
+    }
   }
 };
 
