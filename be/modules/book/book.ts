@@ -29,18 +29,18 @@ const searchBook = async (request: Request, response: Response) => {
     const results = parseBookSearch(bodyHTML);
 
     // Return book from db if item exists
-    // const items = [];
-    // for (let m of results.items) {
-    //   const uuid = getUuidFromUrl(m.url);
-    //   const movie = await selectBookByUuid(uuid);
+    const items = [];
+    for (let m of results.items) {
+      const uuid = getUuidFromUrl(m.url);
+      const book = await selectBookByUuid(uuid);
 
-    //   if (movie) {
-    //     items.push(formatBookSearchItem(movie));
-    //   } else {
-    //     items.push(m);
-    //   }
-    // }
-    // results.items = items;
+      if (book) {
+        items.push(formatBookSearchItem(book));
+      } else {
+        items.push(m);
+      }
+    }
+    results.items = items;
 
     response.status(200).json(results);
   } catch (e) {
@@ -55,11 +55,11 @@ const addBook = async (request: Request, response: Response) => {
   const url = request.body.url as string;
   const uuid = getUuidFromUrl(url);
 
-  // const book = await selectBookByUuid(uuid);
-  // if (book) {
-  //   response.status(400).json({ error: 'Book exists' });
-  //   return;
-  // }
+  const book = await selectBookByUuid(uuid);
+  if (book) {
+    response.status(400).json({ error: 'Book exists' });
+    return;
+  }
 
   const page = await puppet();
 

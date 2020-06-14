@@ -30,7 +30,7 @@ async function insertBook(book: Book): Promise<Partial<Book>> {
 }
 
 async function selectBookByUuid(uuid: string): Promise<Book> {
-  const data = await database.raw('SELECT * FROM Movie WHERE uuid = ?', [uuid]);
+  const data = await database.raw('SELECT * FROM book WHERE uuid = ?', [uuid]);
   return data.rows[0];
 }
 
