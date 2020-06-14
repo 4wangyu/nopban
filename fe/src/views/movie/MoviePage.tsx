@@ -1,18 +1,17 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { AppContext } from '../../App';
 import { MOVIE_URL } from '../../lib/constant';
 import { arrToStr, getImdbIdFromUrl } from '../../lib/util';
 import { Movie } from '../../models/movie.model';
-import './movie-page.scss';
 import Rating from '../../components/Rating';
+import { AuthContext } from '../../store/AuthProvider';
 
 function MoviePage() {
   const { movieId } = useParams();
   const [movie, setMovie] = useState<Movie>();
   const [rating, setRating] = useState<number>();
-  const { context, dispatch } = useContext(AppContext);
+  const { context, dispatch } = useContext(AuthContext);
   const token = context?.token;
 
   useEffect(() => {
@@ -88,7 +87,7 @@ function MoviePage() {
   }
 
   return (
-    <div className="movie-page">
+    <div className="info-page">
       {movie && (
         <>
           <h1>
@@ -200,7 +199,7 @@ function MoviePage() {
         </>
       )}
 
-      {context?.isAuthenticated && (
+      {context?.isAuthenticated && movie && (
         <Rating
           rating={rating}
           rate={rate}

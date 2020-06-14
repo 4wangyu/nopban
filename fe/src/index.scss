@@ -13,3 +13,11 @@ code {
 button:focus {
   outline: 0;
 }
+
+main {
+  margin: auto;
+  width: 84%;
+}
+
+@import './styles/search-page';
+@import './styles/info-page';

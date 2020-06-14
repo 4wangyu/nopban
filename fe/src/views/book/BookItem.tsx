@@ -1,23 +1,23 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
-import { MovieSearchItem } from '../../models/movie.model';
 import { useRouteMatch, Link } from 'react-router-dom';
 import { AuthContext } from '../../store/AuthProvider';
+import { BookSearchItem } from '../../models/book.model';
 
-function MovieItem(props: {
+function BookItem(props: {
   idx: number;
-  movie: MovieSearchItem;
-  refreshResult: (idx: number, movie: MovieSearchItem) => void;
+  book: BookSearchItem;
+  refreshResult: (idx: number, book: BookSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
   const { url } = useRouteMatch();
-  const { idx, movie, refreshResult } = props;
+  const { idx, book, refreshResult } = props;
 
-  function addMovie() {
+  function addBook() {
     axios({
       method: 'post',
-      url: '/api/movie/object',
-      data: { url: movie.url },
+      url: '/api/book/object',
+      data: { url: book.url },
       headers: {
         Authorization: 'Bearer ' + context?.token,
       },
@@ -31,7 +31,7 @@ function MovieItem(props: {
       });
   }
 
-  function gotoMovie(url: string) {
+  function showPage(url: string) {
     dispatch({
       type: 'UPDATE_IFRAME',
       iframeUrl: url,
@@ -40,25 +40,25 @@ function MovieItem(props: {
 
   return (
     <div className="search-item">
-      {movie.saved && (
-        <img src={'data:image;base64,' + movie.poster} alt={movie.title}></img>
+      {book.saved && (
+        <img src={'data:image;base64,' + book.img} alt={book.title}></img>
       )}
 
       <div className="info">
-        {movie.saved ? (
-          <Link to={`${url}/${movie.url}`}>{movie.title}</Link>
+        {book.saved ? (
+          <Link to={`${url}/${book.url}`}>{book.title}</Link>
         ) : (
-          <button className="title" onClick={() => gotoMovie(movie.url)}>
-            {movie.title}
+          <button className="title" onClick={() => showPage(book.url)}>
+            {book.title}
           </button>
         )}
-        {context?.isAuthenticated && !movie.saved && (
-          <button className="add" title="添加" onClick={addMovie}>
+        {context?.isAuthenticated && !book.saved && (
+          <button className="add" title="添加" onClick={addBook}>
             <i className="fa fa-plus"></i>
           </button>
         )}
 
-        {movie.metas?.map((m, i) => (
+        {book.metas?.map((m, i) => (
           <p key={i}>{m}</p>
         ))}
       </div>
@@ -66,4 +66,4 @@ function MovieItem(props: {
   );
 }
 
-export default MovieItem;
+export default BookItem;

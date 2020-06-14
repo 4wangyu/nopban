@@ -1,4 +1,29 @@
-.movie-item {
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+
+  button {
+    border: 0;
+    color: #37a;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      background-color: #37a;
+      color: #fff;
+    }
+
+    &:disabled {
+      background: #83bf73;
+      color: #fff;
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+}
+
+.search-item {
   display: flex;
   margin-bottom: 20px;
 
