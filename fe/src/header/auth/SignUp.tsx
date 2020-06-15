@@ -1,17 +1,16 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import ToastBox from "../../components/ToastBox";
-import "./form.scss";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import './form.scss';
+import { handleError } from '../../lib/util';
 
 const SignUp = (props: any) => {
-  const [error, setError] = React.useState();
-  const [show, setShow] = React.useState(false);
   const { handleSubmit, register, errors } = useForm();
   const onSubmit = (form: any) => {
-    fetch("/api/signup", {
-      method: "POST",
+    fetch('/api/signup', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(form),
     })
@@ -25,71 +24,57 @@ const SignUp = (props: any) => {
         }
       })
       .then((data) => {
-        setShow(true);
+        toast.success('Signed up successfully!');
         props.toSignIn();
       })
-      .catch((err) => {
-        setError(err.message);
-        console.error("Error:", err.message);
-      });
+      .catch(handleError);
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="error action-error">{error}</div>
-
-        <div className="form-row">
-          <input
-            placeholder="用户名"
-            name="username"
-            ref={register({
-              required: "Required.",
-            })}
-          />
-          <div className="error">
-            {errors.username && errors.username.message}
-          </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="form-row">
+        <input
+          placeholder="用户名"
+          name="username"
+          ref={register({
+            required: 'Required.',
+          })}
+        />
+        <div className="error">
+          {errors.username && errors.username.message}
         </div>
+      </div>
 
-        <div className="form-row">
-          <input
-            placeholder="邮箱"
-            name="email"
-            ref={register({
-              required: "Required.",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: "Invalid email address.",
-              },
-            })}
-          />
-          <div className="error">{errors.email && errors.email.message}</div>
+      <div className="form-row">
+        <input
+          placeholder="邮箱"
+          name="email"
+          ref={register({
+            required: 'Required.',
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+              message: 'Invalid email address.',
+            },
+          })}
+        />
+        <div className="error">{errors.email && errors.email.message}</div>
+      </div>
+
+      <div className="form-row">
+        <input
+          placeholder="密码"
+          name="password"
+          ref={register({
+            required: 'Required.',
+          })}
+        />
+        <div className="error">
+          {errors.password && errors.password.message}
         </div>
+      </div>
 
-        <div className="form-row">
-          <input
-            placeholder="密码"
-            name="password"
-            ref={register({
-              required: "Required.",
-            })}
-          />
-          <div className="error">
-            {errors.password && errors.password.message}
-          </div>
-        </div>
-
-        <button type="submit">注册</button>
-      </form>
-
-      <ToastBox
-        show={show}
-        setShow={setShow}
-        message="Signed up successfully!"
-        type="success"
-      ></ToastBox>
-    </div>
+      <button type="submit">注册</button>
+    </form>
   );
 };
 

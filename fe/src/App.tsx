@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Split from 'react-split';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import Douban from './douban/Douban';
 import Header from './header/Header';
@@ -28,6 +30,7 @@ const App = () => {
           <Home />
           <Douban />
         </Split>
+        <ToastContainer position="bottom-left" />
       </Router>
     </AuthProvider>
   );

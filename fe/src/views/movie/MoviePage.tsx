@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { MOVIE_URL } from '../../lib/constant';
-import { arrToStr, getImdbIdFromUrl } from '../../lib/util';
-import { Movie } from '../../models/movie.model';
 import Rating from '../../components/Rating';
+import { MOVIE_URL } from '../../lib/constant';
+import { arrToStr, getImdbIdFromUrl, handleError } from '../../lib/util';
+import { Movie } from '../../models/movie.model';
 import { AuthContext } from '../../store/AuthProvider';
 
 function MoviePage() {
@@ -20,9 +20,7 @@ function MoviePage() {
       .then((res) => {
         setMovie(res.data);
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch(handleError);
   }, [movieId]);
 
   useEffect(() => {
@@ -37,9 +35,7 @@ function MoviePage() {
         .then((res) => {
           setRating(res.data?.rating);
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch(handleError);
     }
   }, [movieId, token]);
 
@@ -61,11 +57,8 @@ function MoviePage() {
     })
       .then(function (res) {
         setRating(res.data.rating);
-        //success toast
       })
-      .catch(function (err) {
-        console.error(err);
-      });
+      .catch(handleError);
   }
 
   function deleteRating() {
@@ -79,11 +72,8 @@ function MoviePage() {
     })
       .then(function (res) {
         setRating(undefined);
-        //success toast
       })
-      .catch(function (err) {
-        console.error(err);
-      });
+      .catch(handleError);
   }
 
   return (

@@ -1,31 +1,31 @@
 import { Request, Response } from 'express';
 import puppet from '../../puppet';
 import { getUuidFromUrl } from '../../lib/util';
-import { parseBookSearch, parseBook } from './book-parser';
+import { parseMusicSearch, parseMusic } from './music-parser';
 import {
-  selectBookByUuid,
-  insertBook,
-  selectBookRating,
-  updateBookRating,
-  insertBookRating,
-  deleteBookRating,
-  selectBookByTitle,
-} from './book.repo';
-import { formatBookSearchItem } from './book.util';
-import { Book } from '../../models/book.model';
+  selectMusicByUuid,
+  insertMusic,
+  selectMusicRating,
+  updateMusicRating,
+  insertMusicRating,
+  deleteMusicRating,
+  selectMusicByTitle,
+} from './music.repo';
+import { formatMusicSearchItem } from './music.util';
+import { Music } from '../../models/music.model';
 
-const searchBook = async (request: Request, response: Response) => {
+const searchMusic = async (request: Request, response: Response) => {
   const start = +request.query.start || 0;
   const searchKey = request.query.searchKey as string;
   const inbound = JSON.parse(request.query.inbound as string) as boolean;
 
   if (inbound) {
-    const selectedItems = await selectBookByTitle(searchKey, start);
-    const items = selectedItems.map((m) => formatBookSearchItem(m));
+    const selectedItems = await selectMusicByTitle(searchKey, start);
+    const items = selectedItems.map((m) => formatMusicSearchItem(m));
     response.status(200).json({ items, pagination: [] });
   } else {
     const encodedSearchKey = encodeURI(searchKey);
-    const url = `https://search.douban.com/book/subject_search?search_text=${encodedSearchKey}&start=${start}`;
+    const url = `https://search.douban.com/music/subject_search?search_text=${encodedSearchKey}&start=${start}`;
 
     const page = await puppet();
 
@@ -35,16 +35,16 @@ const searchBook = async (request: Request, response: Response) => {
       const bodyHTML = await page.evaluate(
         () => document.getElementById('wrapper').innerHTML
       );
-      const results = parseBookSearch(bodyHTML);
+      const results = parseMusicSearch(bodyHTML);
 
-      // Return book from db if item exists
+      // Return music from db if item exists
       const items = [];
       for (let m of results.items) {
         const uuid = getUuidFromUrl(m.url);
-        const book = await selectBookByUuid(uuid);
+        const music = await selectMusicByUuid(uuid);
 
-        if (book) {
-          items.push(formatBookSearchItem(book));
+        if (music) {
+          items.push(formatMusicSearchItem(music));
         } else {
           items.push(m);
         }
@@ -61,13 +61,13 @@ const searchBook = async (request: Request, response: Response) => {
   }
 };
 
-const addBook = async (request: Request, response: Response) => {
+const addMusic = async (request: Request, response: Response) => {
   const url = request.body.url as string;
   const uuid = getUuidFromUrl(url);
 
-  const book = await selectBookByUuid(uuid);
-  if (book) {
-    response.status(400).json({ error: 'Book exists' });
+  const music = await selectMusicByUuid(uuid);
+  if (music) {
+    response.status(400).json({ error: 'Music exists' });
     return;
   }
 
@@ -79,55 +79,55 @@ const addBook = async (request: Request, response: Response) => {
     const bodyHTML = await page.evaluate(
       () => document.getElementById('wrapper').innerHTML
     );
-    const parsedBook = await parseBook(bodyHTML);
+    const parsedMusic = await parseMusic(bodyHTML);
 
-    const partBook = await insertBook({ uuid, ...parsedBook } as Book);
-    const result = formatBookSearchItem(partBook);
+    const partMusic = await insertMusic({ uuid, ...parsedMusic } as Music);
+    const result = formatMusicSearchItem(partMusic);
 
     response.status(200).json(result);
   } catch (e) {
     console.warn(e);
-    response.status(500).json({ error: 'Error adding book' });
+    response.status(500).json({ error: 'Error adding music' });
   } finally {
     await page.close();
   }
 };
 
-async function getBook(req: Request, res: Response) {
-  const bookId = req.params.bookId;
+async function getMusic(req: Request, res: Response) {
+  const uuid = req.params.uuid;
   try {
-    const book = await selectBookByUuid(bookId);
-    if (book) {
-      delete book.id;
-      delete book.created_at;
-      res.status(200).json(book);
+    const music = await selectMusicByUuid(uuid);
+    if (music) {
+      delete music.id;
+      delete music.created_at;
+      res.status(200).json(music);
     } else {
       res.status(400).json({
-        error: 'Book does not exist',
+        error: 'Music does not exist',
       });
     }
   } catch (e) {
     console.warn(e);
-    res.status(500).json({ error: 'Error finding book' });
+    res.status(500).json({ error: 'Error finding music' });
   }
 }
 
-async function getBookRating(req: Request, res: Response) {
+async function getMusicRating(req: Request, res: Response) {
   const uuid = req.query.uuid as string;
   const email = req.body.email as string;
 
   try {
-    const rating = (await selectBookRating(uuid, email)) || {
+    const rating = (await selectMusicRating(uuid, email)) || {
       rating: null,
     };
     res.status(200).json(rating);
   } catch (e) {
     console.warn(e);
-    res.status(500).json({ error: 'Error fetching book rating' });
+    res.status(500).json({ error: 'Error fetching music rating' });
   }
 }
 
-async function rateBook(req: Request, res: Response) {
+async function rateMusic(req: Request, res: Response) {
   const prevRating = req.body.prevRating as number;
   const nextRating = req.body.nextRating as number;
   const uuid = req.body.uuid as string;
@@ -135,36 +135,36 @@ async function rateBook(req: Request, res: Response) {
 
   try {
     if (prevRating) {
-      const rating = await updateBookRating(uuid, email, nextRating);
+      const rating = await updateMusicRating(uuid, email, nextRating);
       res.status(200).json(rating);
     } else {
-      const rating = await insertBookRating(uuid, email, nextRating);
+      const rating = await insertMusicRating(uuid, email, nextRating);
       res.status(200).json(rating);
     }
   } catch (e) {
     console.warn(e);
-    res.status(500).json({ error: 'Error rating book' });
+    res.status(500).json({ error: 'Error rating music' });
   }
 }
 
-async function removeBookRating(req: Request, res: Response) {
+async function removeMusicRating(req: Request, res: Response) {
   const uuid = req.body.uuid as string;
   const email = req.body.email as string;
 
   try {
-    const result = await deleteBookRating(uuid, email);
+    const result = await deleteMusicRating(uuid, email);
     res.status(200).json({ success: result });
   } catch (e) {
     console.warn(e);
-    res.status(500).json({ error: 'Error removing book rating' });
+    res.status(500).json({ error: 'Error removing music rating' });
   }
 }
 
 export {
-  searchBook,
-  addBook,
-  getBook,
-  getBookRating,
-  rateBook,
-  removeBookRating,
+  searchMusic,
+  addMusic,
+  getMusic,
+  getMusicRating,
+  rateMusic,
+  removeMusicRating,
 };

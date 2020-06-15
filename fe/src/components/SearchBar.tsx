@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 const Input = styled.input`
   border: 3px solid #8c949e;
@@ -19,6 +20,7 @@ const Button = styled.button`
   cursor: pointer;
   font-size: 20px;
   height: 36px;
+  padding: 0;
   text-align: center;
   width: 40px;
 `;
@@ -35,19 +37,44 @@ const SearchBar = (props: {
   setSearchKey: (s: string) => void;
   onButtonClick: () => void;
 }) => {
+  const [inbound, setInbound] = useState<boolean>(true);
+
+  useEffect(() => {
+    const savedInbound = JSON.parse(
+      localStorage.getItem('inbound') || 'true'
+    ) as boolean;
+    setInbound(savedInbound);
+  }, []);
+
+  useHotkeys('alt+n', () => {
+    setInbound((inbound) => {
+      localStorage.setItem('inbound', JSON.stringify(!inbound));
+      return !inbound;
+    });
+  });
+
   function handleClick() {
-    props.onButtonClick();
+    if (props.searchKey) {
+      props.onButtonClick();
+    }
   }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleClick();
+    }
+  };
 
   return (
     <>
       <Search>
         <Input
           value={props.searchKey}
+          onKeyDown={handleKeyDown}
           onChange={(e) => props.setSearchKey(e.target.value)}
         ></Input>
         <Button onClick={handleClick}>
-          <i className="fa fa-search"></i>
+          <i className={inbound ? 'icon-nopban' : 'icon-douban'}></i>
         </Button>
       </Search>
     </>

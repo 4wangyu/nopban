@@ -12,7 +12,7 @@ function parseBookSearch(
 ): { items: BookSearchItem[]; pagination: BookSearchPagination[] } {
   const $ = cheerio.load(html, { normalizeWhitespace: true });
 
-  // parse movie items
+  // parse items
   const items: BookSearchItem[] = [];
   $('.item-root').each((i, el) => {
     const url = $(el).find('.title-text').attr('href');
@@ -33,7 +33,7 @@ function parseBookSearch(
     }
   });
 
-  // parse movie pagination
+  // parse pagination
   const pagination: BookSearchPagination[] = [];
   $('.paginator a').each((i, el) => {
     const url = $(el).attr('href');
@@ -56,9 +56,9 @@ async function parseBook(html: string): Promise<Partial<Book>> {
 
   const writers: NameLinkModel[] = [];
   $('#info span:contains("作者")')
-    .find('a')
+    .nextUntil('span:contains("出版社")', 'a')
     .each((idx, el) => {
-      const name = $(el).text();
+      const name = $(el).text().trim();
       const link = $(el).attr('href');
       writers.push({ name, link });
     });
@@ -78,7 +78,7 @@ async function parseBook(html: string): Promise<Partial<Book>> {
   $('#info span:contains("译者")')
     .find('a')
     .each((idx, el) => {
-      const name = $(el).text();
+      const name = $(el).text().trim();
       const link = $(el).attr('href');
       translators.push({ name, link });
     });

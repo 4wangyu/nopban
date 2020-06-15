@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
-import { scrollToTop } from '../../lib/util';
+import { scrollToTop, getInbound } from '../../lib/util';
 import BookItem from './BookItem';
 import BookPage from './BookPage';
 import {
@@ -16,16 +16,19 @@ const Book = () => {
     items: [],
     pagination: [],
   });
-  const [searchKey, setSearchKey] = useState<string>('Gravity’s Rainbow');
+  const [searchKey, setSearchKey] = useState<string>('');
   let { path } = useRouteMatch();
   const history = useHistory();
 
   function search(start = 0) {
+    const inbound = getInbound();
+
     axios
       .get('/api/book/search', {
         params: {
           searchKey,
           start,
+          inbound,
         },
       })
       .then(function (response) {

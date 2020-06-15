@@ -1,4 +1,6 @@
+import { AxiosError } from 'axios';
 import $ from 'jquery';
+import { toast } from 'react-toastify';
 import { NameLinkModel } from '../models/movie.model';
 
 function arrToStr(strs?: string[]): string {
@@ -26,4 +28,20 @@ function getImdbIdFromUrl(url?: string): string | undefined {
   return url?.split('/').reverse()[0];
 }
 
-export { arrToStr, getName, scrollToTop, getImdbIdFromUrl };
+function getInbound(): boolean {
+  return JSON.parse(localStorage.getItem('inbound') || 'true') as boolean;
+}
+
+function handleError(err: AxiosError) {
+  console.error(err);
+  toast.error(err.message);
+}
+
+export {
+  arrToStr,
+  getName,
+  scrollToTop,
+  getImdbIdFromUrl,
+  getInbound,
+  handleError,
+};

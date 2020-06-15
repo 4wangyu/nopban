@@ -3,36 +3,36 @@ import React, { useContext } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { handleError } from '../../lib/util';
-import { MovieSearchItem } from '../../models/movie.model';
+import { MusicSearchItem } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
 
-function MovieItem(props: {
+function MusicItem(props: {
   idx: number;
-  movie: MovieSearchItem;
-  refreshResult: (idx: number, movie: MovieSearchItem) => void;
+  music: MusicSearchItem;
+  refreshResult: (idx: number, music: MusicSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
   const { url } = useRouteMatch();
-  const { idx, movie, refreshResult } = props;
+  const { idx, music, refreshResult } = props;
 
-  function addMovie() {
+  function addItem() {
     axios({
       method: 'post',
-      url: '/api/movie/object',
-      data: { url: movie.url },
+      url: '/api/music/object',
+      data: { url: music.url },
       headers: {
         Authorization: 'Bearer ' + context?.token,
       },
     })
       .then(function (res) {
-        const m = res.data as MovieSearchItem;
+        const m = res.data as MusicSearchItem;
         refreshResult(idx, m);
         toast.success(`${m.title} added.`);
       })
       .catch(handleError);
   }
 
-  function gotoMovie(url: string) {
+  function showPage(url: string) {
     dispatch({
       type: 'UPDATE_IFRAME',
       iframeUrl: url,
@@ -41,25 +41,25 @@ function MovieItem(props: {
 
   return (
     <div className="search-item">
-      {movie.saved && (
-        <img src={'data:image;base64,' + movie.poster} alt={movie.title}></img>
+      {music.saved && (
+        <img src={'data:image;base64,' + music.img} alt={music.title}></img>
       )}
 
       <div className="info">
-        {movie.saved ? (
-          <Link to={`${url}/${movie.url}`}>{movie.title}</Link>
+        {music.saved ? (
+          <Link to={`${url}/${music.url}`}>{music.title}</Link>
         ) : (
-          <button className="title" onClick={() => gotoMovie(movie.url)}>
-            {movie.title}
+          <button className="title" onClick={() => showPage(music.url)}>
+            {music.title}
           </button>
         )}
-        {context?.isAuthenticated && !movie.saved && (
-          <button className="add" title="添加" onClick={addMovie}>
+        {context?.isAuthenticated && !music.saved && (
+          <button className="add" title="添加" onClick={addItem}>
             <i className="fa fa-plus"></i>
           </button>
         )}
 
-        {movie.metas?.map((m, i) => (
+        {music.metas?.map((m, i) => (
           <p key={i}>{m}</p>
         ))}
       </div>
@@ -67,4 +67,4 @@ function MovieItem(props: {
   );
 }
 
-export default MovieItem;
+export default MusicItem;

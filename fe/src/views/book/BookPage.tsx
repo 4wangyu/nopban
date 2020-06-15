@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Rating from '../../components/Rating';
 import { BOOK_URL } from '../../lib/constant';
+import { handleError } from '../../lib/util';
 import { Book } from '../../models/book.model';
 import { AuthContext } from '../../store/AuthProvider';
 
@@ -19,9 +20,7 @@ function BookPage() {
       .then((res) => {
         setBook(res.data);
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch(handleError);
   }, [bookId]);
 
   useEffect(() => {
@@ -36,17 +35,22 @@ function BookPage() {
         .then((res) => {
           setRating(res.data?.rating);
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch(handleError);
     }
   }, [bookId, token]);
 
   function showPage(url: string) {
-    dispatch({
-      type: 'UPDATE_IFRAME',
-      iframeUrl: BOOK_URL + url,
-    });
+    if (url.includes(BOOK_URL)) {
+      dispatch({
+        type: 'UPDATE_IFRAME',
+        iframeUrl: url,
+      });
+    } else {
+      dispatch({
+        type: 'UPDATE_IFRAME',
+        iframeUrl: BOOK_URL + url,
+      });
+    }
   }
 
   function rate(r: number) {
@@ -60,11 +64,8 @@ function BookPage() {
     })
       .then(function (res) {
         setRating(res.data.rating);
-        //success toast
       })
-      .catch(function (err) {
-        console.error(err);
-      });
+      .catch(handleError);
   }
 
   function deleteRating() {
@@ -78,11 +79,8 @@ function BookPage() {
     })
       .then(function (res) {
         setRating(undefined);
-        //success toast
       })
-      .catch(function (err) {
-        console.error(err);
-      });
+      .catch(handleError);
   }
 
   return (
@@ -94,18 +92,22 @@ function BookPage() {
           <div className="content">
             <img src={'data:image;base64,' + book?.img} alt={book?.title}></img>
             <section>
-              <div>
-                <label>作者: </label>
-                <output>
-                  {book?.writers
-                    ?.map<React.ReactNode>((o, i) => (
-                      <button key={i} onClick={() => showPage(o.link)}>
-                        {o.name}
-                      </button>
-                    ))
-                    .reduce((prev, curr) => [prev, ' / ', curr])}
-                </output>
-              </div>
+              {book?.writers.length ? (
+                <div>
+                  <label>作者: </label>
+                  <output>
+                    {book?.writers
+                      ?.map<React.ReactNode>((o, i) => (
+                        <button key={i} onClick={() => showPage(o.link)}>
+                          {o.name}
+                        </button>
+                      ))
+                      .reduce((prev, curr) => [prev, ' / ', curr])}
+                  </output>
+                </div>
+              ) : (
+                <></>
+              )}
               <div>
                 <label>出版社: </label>
                 <output>{book?.publisher}</output>
@@ -114,22 +116,28 @@ function BookPage() {
                 <label>副标题: </label>
                 <output>{book?.subtitle}</output>
               </div>
-              <div>
-                <label>原作名: </label>
-                <output>{book?.origin_title}</output>
-              </div>
-              <div>
-                <label>译者: </label>
-                <output>
-                  {book?.translators
-                    ?.map<React.ReactNode>((o, i) => (
-                      <button key={i} onClick={() => showPage(o.link)}>
-                        {o.name}
-                      </button>
-                    ))
-                    .reduce((prev, curr) => [prev, ' / ', curr])}
-                </output>
-              </div>
+              {book?.origin_title && (
+                <div>
+                  <label>原作名: </label>
+                  <output>{book?.origin_title}</output>
+                </div>
+              )}
+              {book?.translators.length ? (
+                <div>
+                  <label>译者: </label>
+                  <output>
+                    {book?.translators
+                      ?.map<React.ReactNode>((o, i) => (
+                        <button key={i} onClick={() => showPage(o.link)}>
+                          {o.name}
+                        </button>
+                      ))
+                      .reduce((prev, curr) => [prev, ' / ', curr])}
+                  </output>
+                </div>
+              ) : (
+                <></>
+              )}
               <div>
                 <label>出版年: </label>
                 <output>{book?.publish_time}</output>
