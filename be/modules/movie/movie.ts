@@ -9,17 +9,20 @@ import {
   insertMovieRating,
   updateMovieRating,
   deleteMovieRating,
+  selectMovieByTitle,
 } from './movie.repo';
 import { Movie } from '../../models/movie.model';
 import { formatMovieSearchItem } from './movie.util';
 import { getUuidFromUrl } from '../../lib/util';
 
 const searchMovie = async (request: Request, response: Response) => {
-  const start = request.query.start || 0;
+  const start = +request.query.start || 0;
   const searchKey = request.query.searchKey as string;
   const inbound = JSON.parse(request.query.inbound as string) as boolean;
   if (inbound) {
-    response.status(200).json({ items: [], pagination: [] });
+    const selectedItems = await selectMovieByTitle(searchKey, start);
+    const items = selectedItems.map((m) => formatMovieSearchItem(m));
+    response.status(200).json({ items, pagination: [] });
   } else {
     const encodedSearchKey = encodeURI(searchKey);
     const url = `https://search.douban.com/movie/subject_search?search_text=${encodedSearchKey}&start=${start}`;

@@ -1,5 +1,6 @@
 import database from '../../database';
 import { Movie } from '../../models/movie.model';
+import { ITEM_COUNT_PER_PAGE } from '../../config';
 
 async function insertMovie(movie: Movie): Promise<Partial<Movie>> {
   const data = await database.raw(
@@ -36,6 +37,18 @@ async function insertMovie(movie: Movie): Promise<Partial<Movie>> {
 async function selectMovieByUuid(uuid: string): Promise<Movie> {
   const data = await database.raw('SELECT * FROM Movie WHERE uuid = ?', [uuid]);
   return data.rows[0];
+}
+
+async function selectMovieByTitle(
+  searchKey: string,
+  start: number
+): Promise<Movie[]> {
+  const data = (await database
+    .table('movie')
+    .whereRaw(`lower(title) like '%${searchKey.toLowerCase()}%'`)
+    .limit(ITEM_COUNT_PER_PAGE)
+    .offset(start)) as Movie[];
+  return data;
 }
 
 async function selectMovieRating(
@@ -111,6 +124,7 @@ async function deleteMovieRating(
 export {
   insertMovie,
   selectMovieByUuid,
+  selectMovieByTitle,
   selectMovieRating,
   insertMovieRating,
   updateMovieRating,
