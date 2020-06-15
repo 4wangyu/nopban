@@ -26,4 +26,8 @@ function getImdbIdFromUrl(url?: string): string | undefined {
   return url?.split('/').reverse()[0];
 }
 
-export { arrToStr, getName, scrollToTop, getImdbIdFromUrl };
+function getInbound(): boolean {
+  return JSON.parse(localStorage.getItem('inbound') || 'true') as boolean;
+}
+
+export { arrToStr, getName, scrollToTop, getImdbIdFromUrl, getInbound };

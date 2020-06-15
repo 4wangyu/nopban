@@ -1,5 +1,6 @@
 import database from '../../database';
 import { Book } from '../../models/book.model';
+import { ITEM_COUNT_PER_PAGE } from '../../config';
 
 async function insertBook(book: Book): Promise<Partial<Book>> {
   const data = await database.raw(
@@ -32,6 +33,18 @@ async function insertBook(book: Book): Promise<Partial<Book>> {
 async function selectBookByUuid(uuid: string): Promise<Book> {
   const data = await database.raw('SELECT * FROM book WHERE uuid = ?', [uuid]);
   return data.rows[0];
+}
+
+async function selectBookByTitle(
+  searchKey: string,
+  start: number
+): Promise<Book[]> {
+  const data = (await database
+    .table('book')
+    .whereRaw(`lower(title) like '%${searchKey.toLowerCase()}%'`)
+    .limit(ITEM_COUNT_PER_PAGE)
+    .offset(start)) as Book[];
+  return data;
 }
 
 async function selectBookRating(
@@ -104,6 +117,7 @@ async function deleteBookRating(uuid: string, email: string): Promise<boolean> {
 export {
   insertBook,
   selectBookByUuid,
+  selectBookByTitle,
   selectBookRating,
   insertBookRating,
   updateBookRating,

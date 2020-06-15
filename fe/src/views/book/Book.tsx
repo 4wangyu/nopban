@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
-import { scrollToTop } from '../../lib/util';
+import { scrollToTop, getInbound } from '../../lib/util';
 import BookItem from './BookItem';
 import BookPage from './BookPage';
 import {
@@ -21,11 +21,14 @@ const Book = () => {
   const history = useHistory();
 
   function search(start = 0) {
+    const inbound = getInbound();
+
     axios
       .get('/api/book/search', {
         params: {
           searchKey,
           start,
+          inbound,
         },
       })
       .then(function (response) {

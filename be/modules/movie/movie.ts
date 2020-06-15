@@ -19,6 +19,7 @@ const searchMovie = async (request: Request, response: Response) => {
   const start = +request.query.start || 0;
   const searchKey = request.query.searchKey as string;
   const inbound = JSON.parse(request.query.inbound as string) as boolean;
+
   if (inbound) {
     const selectedItems = await selectMovieByTitle(searchKey, start);
     const items = selectedItems.map((m) => formatMovieSearchItem(m));

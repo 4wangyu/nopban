@@ -9,45 +9,55 @@ import {
   updateBookRating,
   insertBookRating,
   deleteBookRating,
+  selectBookByTitle,
 } from './book.repo';
 import { formatBookSearchItem } from './book.util';
 import { Book } from '../../models/book.model';
 
 const searchBook = async (request: Request, response: Response) => {
-  const searchKey = encodeURI(request.query.searchKey as string);
-  const start = request.query.start || '0';
-  const url = `https://search.douban.com/book/subject_search?search_text=${searchKey}&start=${start}`;
+  const start = +request.query.start || 0;
+  const searchKey = request.query.searchKey as string;
+  const inbound = JSON.parse(request.query.inbound as string) as boolean;
 
-  const page = await puppet();
+  if (inbound) {
+    const selectedItems = await selectBookByTitle(searchKey, start);
+    const items = selectedItems.map((m) => formatBookSearchItem(m));
+    response.status(200).json({ items, pagination: [] });
+  } else {
+    const encodedSearchKey = encodeURI(searchKey);
+    const url = `https://search.douban.com/book/subject_search?search_text=${encodedSearchKey}&start=${start}`;
 
-  try {
-    await page.goto(url);
-    await page.waitForSelector('#wrapper');
-    const bodyHTML = await page.evaluate(
-      () => document.getElementById('wrapper').innerHTML
-    );
-    const results = parseBookSearch(bodyHTML);
+    const page = await puppet();
 
-    // Return book from db if item exists
-    const items = [];
-    for (let m of results.items) {
-      const uuid = getUuidFromUrl(m.url);
-      const book = await selectBookByUuid(uuid);
+    try {
+      await page.goto(url);
+      await page.waitForSelector('#wrapper');
+      const bodyHTML = await page.evaluate(
+        () => document.getElementById('wrapper').innerHTML
+      );
+      const results = parseBookSearch(bodyHTML);
 
-      if (book) {
-        items.push(formatBookSearchItem(book));
-      } else {
-        items.push(m);
+      // Return book from db if item exists
+      const items = [];
+      for (let m of results.items) {
+        const uuid = getUuidFromUrl(m.url);
+        const book = await selectBookByUuid(uuid);
+
+        if (book) {
+          items.push(formatBookSearchItem(book));
+        } else {
+          items.push(m);
+        }
       }
-    }
-    results.items = items;
+      results.items = items;
 
-    response.status(200).json(results);
-  } catch (e) {
-    console.warn(e);
-    response.status(500).json({ error: 'Error fetching search results' });
-  } finally {
-    await page.close();
+      response.status(200).json(results);
+    } catch (e) {
+      console.warn(e);
+      response.status(500).json({ error: 'Error fetching search results' });
+    } finally {
+      await page.close();
+    }
   }
 };
 

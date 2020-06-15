@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
-import { scrollToTop } from '../../lib/util';
+import { scrollToTop, getInbound } from '../../lib/util';
 import {
   MovieSearchItem,
   MovieSearchPagination,
@@ -21,9 +21,7 @@ const Movie = () => {
   const history = useHistory();
 
   function search(start = 0) {
-    const inbound = JSON.parse(
-      localStorage.getItem('inbound') || 'true'
-    ) as boolean;
+    const inbound = getInbound();
 
     axios
       .get('/api/movie/search', {
