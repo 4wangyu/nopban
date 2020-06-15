@@ -56,9 +56,9 @@ async function parseBook(html: string): Promise<Partial<Book>> {
 
   const writers: NameLinkModel[] = [];
   $('#info span:contains("作者")')
-    .find('a')
+    .nextUntil('span:contains("出版社")', 'a')
     .each((idx, el) => {
-      const name = $(el).text();
+      const name = $(el).text().trim();
       const link = $(el).attr('href');
       writers.push({ name, link });
     });
@@ -78,7 +78,7 @@ async function parseBook(html: string): Promise<Partial<Book>> {
   $('#info span:contains("译者")')
     .find('a')
     .each((idx, el) => {
-      const name = $(el).text();
+      const name = $(el).text().trim();
       const link = $(el).attr('href');
       translators.push({ name, link });
     });
