@@ -1,12 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import ToastBox from '../../components/ToastBox';
+import { toast } from 'react-toastify';
 import './form.scss';
 import { AuthContext } from '../../store/AuthProvider';
 
 const SignIn = (props: any) => {
   const [error, setError] = React.useState();
-  const [show, setShow] = React.useState(false);
   const { handleSubmit, register, errors } = useForm();
   const { dispatch } = React.useContext(AuthContext);
 
@@ -29,7 +28,7 @@ const SignIn = (props: any) => {
       })
       .then((data) => {
         const { user, email, token } = data;
-        setShow(true);
+        toast('Signed in successfully!');
         dispatch({
           type: 'LOGIN',
           payload: {
@@ -47,48 +46,39 @@ const SignIn = (props: any) => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="error action-error">{error}</div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="error action-error">{error}</div>
 
-        <div className="form-row">
-          <input
-            placeholder="邮箱"
-            name="email"
-            ref={register({
-              required: 'Required.',
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: 'Invalid email address.',
-              },
-            })}
-          />
-          <div className="error">{errors.email && errors.email.message}</div>
+      <div className="form-row">
+        <input
+          placeholder="邮箱"
+          name="email"
+          ref={register({
+            required: 'Required.',
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+              message: 'Invalid email address.',
+            },
+          })}
+        />
+        <div className="error">{errors.email && errors.email.message}</div>
+      </div>
+
+      <div className="form-row">
+        <input
+          placeholder="密码"
+          name="password"
+          ref={register({
+            required: 'Required.',
+          })}
+        />
+        <div className="error">
+          {errors.password && errors.password.message}
         </div>
+      </div>
 
-        <div className="form-row">
-          <input
-            placeholder="密码"
-            name="password"
-            ref={register({
-              required: 'Required.',
-            })}
-          />
-          <div className="error">
-            {errors.password && errors.password.message}
-          </div>
-        </div>
-
-        <button type="submit">登录</button>
-      </form>
-
-      <ToastBox
-        show={show}
-        setShow={setShow}
-        message="Signed in successfully!"
-        type="success"
-      ></ToastBox>
-    </div>
+      <button type="submit">登录</button>
+    </form>
   );
 };
 
