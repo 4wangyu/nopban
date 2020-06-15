@@ -60,7 +60,7 @@ const Header = () => {
         <Link to="/music" onClick={() => dispatch(UPDATE_IFRAME_ACTION.MUSIC)}>
           <Span>音乐</Span>
         </Link>
-        <Link to="/author" onClick={() => dispatch(UPDATE_IFRAME_ACTION.BOOK)}>
+        {/* <Link to="/author" onClick={() => dispatch(UPDATE_IFRAME_ACTION.BOOK)}>
           <Span>作者</Span>
         </Link>
         <Link
@@ -74,7 +74,7 @@ const Header = () => {
           onClick={() => dispatch(UPDATE_IFRAME_ACTION.MUSIC)}
         >
           <Span>音乐人</Span>
-        </Link>
+        </Link> */}
       </section>
 
       <section>
