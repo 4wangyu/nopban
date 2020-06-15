@@ -1,5 +1,6 @@
 import database from '../../database';
 import { Music } from '../../models/music.model';
+import { ITEM_COUNT_PER_PAGE } from '../../config';
 
 async function insertMusic(music: Music): Promise<Partial<Music>> {
   const data = await database.raw(
@@ -29,6 +30,18 @@ async function insertMusic(music: Music): Promise<Partial<Music>> {
 async function selectMusicByUuid(uuid: string): Promise<Music> {
   const data = await database.raw('SELECT * FROM music WHERE uuid = ?', [uuid]);
   return data.rows[0];
+}
+
+async function selectMusicByTitle(
+  searchKey: string,
+  start: number
+): Promise<Music[]> {
+  const data = (await database
+    .table('music')
+    .whereRaw(`lower(title) like '%${searchKey.toLowerCase()}%'`)
+    .limit(ITEM_COUNT_PER_PAGE)
+    .offset(start)) as Music[];
+  return data;
 }
 
 async function selectMusicRating(
@@ -104,6 +117,7 @@ async function deleteMusicRating(
 export {
   insertMusic,
   selectMusicByUuid,
+  selectMusicByTitle,
   selectMusicRating,
   insertMusicRating,
   updateMusicRating,
