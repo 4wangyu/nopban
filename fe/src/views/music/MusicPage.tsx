@@ -3,8 +3,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Rating from '../../components/Rating';
 import { MUSIC_URL } from '../../lib/constant';
-import { AuthContext } from '../../store/AuthProvider';
+import { handleError } from '../../lib/util';
 import { Music } from '../../models/music.model';
+import { AuthContext } from '../../store/AuthProvider';
 
 function BookPage() {
   const { musicId } = useParams();
@@ -19,9 +20,7 @@ function BookPage() {
       .then((res) => {
         setMusic(res.data);
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch(handleError);
   }, [musicId]);
 
   useEffect(() => {
@@ -36,9 +35,7 @@ function BookPage() {
         .then((res) => {
           setRating(res.data?.rating);
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch(handleError);
     }
   }, [musicId, token]);
 
@@ -60,11 +57,8 @@ function BookPage() {
     })
       .then(function (res) {
         setRating(res.data.rating);
-        //success toast
       })
-      .catch(function (err) {
-        console.error(err);
-      });
+      .catch(handleError);
   }
 
   function deleteRating() {
@@ -78,11 +72,8 @@ function BookPage() {
     })
       .then(function (res) {
         setRating(undefined);
-        //success toast
       })
-      .catch(function (err) {
-        console.error(err);
-      });
+      .catch(handleError);
   }
 
   return (

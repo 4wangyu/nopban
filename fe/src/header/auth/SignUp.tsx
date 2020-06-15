@@ -2,9 +2,9 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import './form.scss';
+import { handleError } from '../../lib/util';
 
 const SignUp = (props: any) => {
-  const [error, setError] = React.useState();
   const { handleSubmit, register, errors } = useForm();
   const onSubmit = (form: any) => {
     fetch('/api/signup', {
@@ -24,19 +24,14 @@ const SignUp = (props: any) => {
         }
       })
       .then((data) => {
-        toast('Signed up successfully!');
+        toast.success('Signed up successfully!');
         props.toSignIn();
       })
-      .catch((err) => {
-        setError(err.message);
-        console.error('Error:', err.message);
-      });
+      .catch(handleError);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="error action-error">{error}</div>
-
       <div className="form-row">
         <input
           placeholder="用户名"

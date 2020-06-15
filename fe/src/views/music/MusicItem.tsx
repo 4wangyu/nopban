@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
-import { useRouteMatch, Link } from 'react-router-dom';
-import { AuthContext } from '../../store/AuthProvider';
+import { Link, useRouteMatch } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { handleError } from '../../lib/util';
 import { MusicSearchItem } from '../../models/music.model';
+import { AuthContext } from '../../store/AuthProvider';
 
 function MusicItem(props: {
   idx: number;
@@ -23,12 +25,11 @@ function MusicItem(props: {
       },
     })
       .then(function (res) {
-        refreshResult(idx, res.data);
-        //success toast
+        const m = res.data as MusicSearchItem;
+        refreshResult(idx, m);
+        toast.success(`${m.title} added.`);
       })
-      .catch(function (err) {
-        console.error(err);
-      });
+      .catch(handleError);
   }
 
   function showPage(url: string) {

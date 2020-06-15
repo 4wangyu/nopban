@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Rating from '../../components/Rating';
 import { BOOK_URL } from '../../lib/constant';
+import { handleError } from '../../lib/util';
 import { Book } from '../../models/book.model';
 import { AuthContext } from '../../store/AuthProvider';
 
@@ -19,9 +20,7 @@ function BookPage() {
       .then((res) => {
         setBook(res.data);
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch(handleError);
   }, [bookId]);
 
   useEffect(() => {
@@ -36,9 +35,7 @@ function BookPage() {
         .then((res) => {
           setRating(res.data?.rating);
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch(handleError);
     }
   }, [bookId, token]);
 
@@ -67,11 +64,8 @@ function BookPage() {
     })
       .then(function (res) {
         setRating(res.data.rating);
-        //success toast
       })
-      .catch(function (err) {
-        console.error(err);
-      });
+      .catch(handleError);
   }
 
   function deleteRating() {
@@ -85,11 +79,8 @@ function BookPage() {
     })
       .then(function (res) {
         setRating(undefined);
-        //success toast
       })
-      .catch(function (err) {
-        console.error(err);
-      });
+      .catch(handleError);
   }
 
   return (

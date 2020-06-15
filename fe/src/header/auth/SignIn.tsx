@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import './form.scss';
 import { AuthContext } from '../../store/AuthProvider';
+import { handleError } from '../../lib/util';
 
 const SignIn = (props: any) => {
-  const [error, setError] = React.useState();
   const { handleSubmit, register, errors } = useForm();
   const { dispatch } = React.useContext(AuthContext);
 
@@ -28,7 +28,7 @@ const SignIn = (props: any) => {
       })
       .then((data) => {
         const { user, email, token } = data;
-        toast('Signed in successfully!');
+        toast.success('Signed in successfully!');
         dispatch({
           type: 'LOGIN',
           payload: {
@@ -39,16 +39,11 @@ const SignIn = (props: any) => {
         });
         props.onHide();
       })
-      .catch((err) => {
-        setError(err.message);
-        console.error('Error:', err.message);
-      });
+      .catch(handleError);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="error action-error">{error}</div>
-
       <div className="form-row">
         <input
           placeholder="邮箱"

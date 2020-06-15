@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { handleError } from '../../lib/util';
 import { MovieSearchItem } from '../../models/movie.model';
-import { useRouteMatch, Link } from 'react-router-dom';
 import { AuthContext } from '../../store/AuthProvider';
 
 function MovieItem(props: {
@@ -23,12 +25,11 @@ function MovieItem(props: {
       },
     })
       .then(function (res) {
-        refreshResult(idx, res.data);
-        //success toast
+        const m = res.data as MovieSearchItem;
+        refreshResult(idx, m);
+        toast.success(`${m.title} added.`);
       })
-      .catch(function (err) {
-        console.error(err);
-      });
+      .catch(handleError);
   }
 
   function gotoMovie(url: string) {

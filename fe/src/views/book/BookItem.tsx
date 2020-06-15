@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
 import { useRouteMatch, Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { AuthContext } from '../../store/AuthProvider';
 import { BookSearchItem } from '../../models/book.model';
+import { handleError } from '../../lib/util';
 
 function BookItem(props: {
   idx: number;
@@ -23,12 +25,11 @@ function BookItem(props: {
       },
     })
       .then(function (res) {
-        refreshResult(idx, res.data);
-        //success toast
+        const b = res.data as BookSearchItem;
+        refreshResult(idx, b);
+        toast.success(`${b.title} added`);
       })
-      .catch(function (err) {
-        console.error(err);
-      });
+      .catch(handleError);
   }
 
   function showPage(url: string) {
