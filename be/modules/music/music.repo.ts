@@ -7,7 +7,7 @@ async function insertMusic(music: Music): Promise<Partial<Music>> {
     `INSERT INTO music (uuid, title, img, musician, genre, album_type, 
       medium, publish_time, publisher, cd_count, barcode, created_at)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    RETURNING title, musician, album_type, medium, genre, publish_time, img`,
+    RETURNING uuid, title, musician, album_type, medium, genre, publish_time, img`,
     [
       music.uuid,
       music.title,
