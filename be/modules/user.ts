@@ -89,8 +89,6 @@ const signin = (request: any, response: any) => {
   findUser(userReq)
     .then((foundUser: any) => {
       user = foundUser;
-      console.log(user);
-      console.log(userReq);
 
       return checkPassword(userReq.password, foundUser);
     })
