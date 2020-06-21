@@ -27,7 +27,7 @@ function MusicItem(props: {
       .then(function (res) {
         const m = res.data as MusicSearchItem;
         refreshResult(idx, m);
-        toast.success(`${m.title} added.`);
+        toast.success(`${m.title} 添加成功.`);
       })
       .catch(handleError);
   }

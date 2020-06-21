@@ -27,7 +27,7 @@ function BookItem(props: {
       .then(function (res) {
         const b = res.data as BookSearchItem;
         refreshResult(idx, b);
-        toast.success(`${b.title} added`);
+        toast.success(`${b.title} 添加成功.`);
       })
       .catch(handleError);
   }
