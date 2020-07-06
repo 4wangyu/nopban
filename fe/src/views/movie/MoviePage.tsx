@@ -90,42 +90,48 @@ function MoviePage() {
               alt={movie?.title}
             ></img>
             <section>
-              <div>
-                <label>导演: </label>
-                <output>
-                  {movie?.directors
-                    ?.map<React.ReactNode>((o, i) => (
-                      <button key={i} onClick={() => loadMoiveUrl(o.link)}>
-                        {o.name}
-                      </button>
-                    ))
-                    .reduce((prev, curr) => [prev, ' / ', curr])}
-                </output>
-              </div>
-              <div>
-                <label>编剧: </label>
-                <output>
-                  {movie?.playwriters
-                    ?.map<React.ReactNode>((o, i) => (
-                      <button key={i} onClick={() => loadMoiveUrl(o.link)}>
-                        {o.name}
-                      </button>
-                    ))
-                    .reduce((prev, curr) => [prev, ' / ', curr])}
-                </output>
-              </div>
-              <div>
-                <label>主演: </label>
-                <output>
-                  {movie?.actors
-                    ?.map<React.ReactNode>((o, i) => (
-                      <button key={i} onClick={() => loadMoiveUrl(o.link)}>
-                        {o.name}
-                      </button>
-                    ))
-                    .reduce((prev, curr) => [prev, ' / ', curr])}
-                </output>
-              </div>
+              {movie?.directors?.length && (
+                <div>
+                  <label>导演: </label>
+                  <output>
+                    {movie.directors
+                      .map<React.ReactNode>((o, i) => (
+                        <button key={i} onClick={() => loadMoiveUrl(o.link)}>
+                          {o.name}
+                        </button>
+                      ))
+                      .reduce((prev, curr) => [prev, ' / ', curr])}
+                  </output>
+                </div>
+              )}
+              {movie?.playwriters?.length && (
+                <div>
+                  <label>编剧: </label>
+                  <output>
+                    {movie.playwriters
+                      .map<React.ReactNode>((o, i) => (
+                        <button key={i} onClick={() => loadMoiveUrl(o.link)}>
+                          {o.name}
+                        </button>
+                      ))
+                      .reduce((prev, curr) => [prev, ' / ', curr])}
+                  </output>
+                </div>
+              )}
+              {movie?.actors?.length && (
+                <div>
+                  <label>主演: </label>
+                  <output>
+                    {movie.actors
+                      .map<React.ReactNode>((o, i) => (
+                        <button key={i} onClick={() => loadMoiveUrl(o.link)}>
+                          {o.name}
+                        </button>
+                      ))
+                      .reduce((prev, curr) => [prev, ' / ', curr])}
+                  </output>
+                </div>
+              )}
               <div>
                 <label>类型: </label>
                 <output>{arrToStr(movie?.genres)}</output>
