@@ -90,7 +90,7 @@ function MoviePage() {
               alt={movie?.title}
             ></img>
             <section>
-              {movie?.directors?.length && (
+              {movie?.directors?.length ? (
                 <div>
                   <label>导演: </label>
                   <output>
@@ -103,8 +103,10 @@ function MoviePage() {
                       .reduce((prev, curr) => [prev, ' / ', curr])}
                   </output>
                 </div>
+              ) : (
+                <></>
               )}
-              {movie?.playwriters?.length && (
+              {movie?.playwriters?.length ? (
                 <div>
                   <label>编剧: </label>
                   <output>
@@ -117,8 +119,10 @@ function MoviePage() {
                       .reduce((prev, curr) => [prev, ' / ', curr])}
                   </output>
                 </div>
+              ) : (
+                <></>
               )}
-              {movie?.actors?.length && (
+              {movie?.actors?.length ? (
                 <div>
                   <label>主演: </label>
                   <output>
@@ -131,6 +135,8 @@ function MoviePage() {
                       .reduce((prev, curr) => [prev, ' / ', curr])}
                   </output>
                 </div>
+              ) : (
+                <></>
               )}
               <div>
                 <label>类型: </label>
