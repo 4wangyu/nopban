@@ -86,15 +86,17 @@ async function parseMovie(html: string): Promise<Partial<Movie>> {
 
   const website = $('span:contains("官方网站")').next().attr('href') ?? null;
 
-  const countries = $('span:contains("制片国家")')
+  const countries: string[] = [];
+  $('span:contains("制片国家")')
     .get(0)
-    .nextSibling.data.split('/')
-    .map((c: string) => c.trim());
+    ?.nextSibling.data.split('/')
+    .forEach((c: string) => countries.push(c.trim()));
 
-  const languages = $('span:contains("语言")')
+  const languages: string[] = [];
+  $('span:contains("语言")')
     .get(0)
-    .nextSibling.data.split('/')
-    .map((l: string) => l.trim());
+    ?.nextSibling.data.split('/')
+    .forEach((l: string) => languages.push(l.trim()));
 
   const releaseDates: string[] = [];
   $('span[property="v:initialReleaseDate"]').each((i, e) => {
