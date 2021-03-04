@@ -12,34 +12,29 @@ yarn
 ### 2. Set Up PostgreSQL Database
 
 Install and start PostgreSQL.
-
 ```
 brew install postgresql
 brew services start postgresql
 ```
 
 Login to postgres.
-
 ```
 psql postgres
 ```
 
 Create a user and password and give them create database access.
-
 ```
 CREATE ROLE db_user WITH LOGIN PASSWORD 'password';
 ALTER ROLE db_user CREATEDB;
 ```
 
 Log out of the root user and log in to the newly created user.
-
 ```
 \q
 psql -d postgres -U db_user
 ```
 
 Create a nopban database and connect to it.
-
 ```
 CREATE DATABASE nopban;
 \c nopban
@@ -54,28 +49,31 @@ DB_PASSWORD=password
 DB_DATABASE=nopban
 ```
 
-
 Create tables.
-
 ```
 yarn build:db
 ```
 
-Drop database first if there is need to re-create the database.
+Upgrade postgresql database if needed.
+```
+brew postgresql-upgrade-database
+```
 
+Drop database first if there is need to re-create the database.
 ```
 DROP DATABASE IF EXISTS name;
 ```
 
+
 ## Testing
 
 If everything has been set up and ready to go for Heroku. You can test this by running the following command:
-
 ```
 heroku local web
 ```
 
 With this, you can go to `http://localhost:5000` and see what your app will look like on Heroku.
+
 
 ## Production
 
@@ -100,6 +98,7 @@ To reset production database:
 
 To run knex database migrations:
 `heroku run npx knex migrate:latest`
+
 
 ## Debug heroku
 
