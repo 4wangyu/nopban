@@ -54,7 +54,6 @@ DB_PASSWORD=password
 DB_DATABASE=nopban
 ```
 
-
 Create tables.
 
 ```
