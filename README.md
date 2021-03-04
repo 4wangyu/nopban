@@ -47,6 +47,7 @@ DB_PORT=5432
 DB_USER=db_user
 DB_PASSWORD=password
 DB_DATABASE=nopban
+SECRET=anything         # for jwt enc/dec
 ```
 
 Create tables.
