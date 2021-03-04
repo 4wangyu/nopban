@@ -30,7 +30,7 @@ const App = () => {
           <Home />
           <Douban />
         </Split>
-        <ToastContainer position="bottom-left" />
+        <ToastContainer position="bottom-left" autoClose={1500}/>
       </Router>
     </AuthProvider>
   );
