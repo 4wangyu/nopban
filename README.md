@@ -54,10 +54,16 @@ Create tables.
 yarn build:db
 ```
 
+Upgrade postgresql database if needed.
+```
+brew postgresql-upgrade-database
+```
+
 Drop database first if there is need to re-create the database.
 ```
 DROP DATABASE IF EXISTS name;
 ```
+
 
 ## Testing
 
@@ -67,6 +73,7 @@ heroku local web
 ```
 
 With this, you can go to `http://localhost:5000` and see what your app will look like on Heroku.
+
 
 ## Production
 
@@ -91,6 +98,7 @@ To reset production database:
 
 To run knex database migrations:
 `heroku run npx knex migrate:latest`
+
 
 ## Debug heroku
 
