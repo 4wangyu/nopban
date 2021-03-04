@@ -4,7 +4,12 @@
 
 ## Development
 
-### Set Up PostgreSQL Database
+### 1. Install dependencies
+```
+yarn
+```
+
+### 2. Set Up PostgreSQL Database
 
 Install and start PostgreSQL.
 
@@ -15,7 +20,9 @@ brew services start postgresql
 
 Login to postgres.
 
-`psql postgres`
+```
+psql postgres
+```
 
 Create a user and password and give them create database access.
 
@@ -38,10 +45,20 @@ CREATE DATABASE nopban;
 \c nopban
 ```
 
+Create a `.env` file at root path and add db connection details below to the file.
+```
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=db_user
+DB_PASSWORD=password
+DB_DATABASE=nopban
+```
+
+
 Create tables.
 
 ```
-\i db/init.sql
+yarn build:db
 ```
 
 Drop database first if there is need to re-create the database.
