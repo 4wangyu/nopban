@@ -4,6 +4,7 @@
   "private": true,
   "main": "dist/server.js",
   "scripts": {
+    "dev:db": "brew services start postgresql", 
     "dev:be": "nodemon",
     "dev:fe": "cd fe && yarn start",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -24,7 +25,7 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.15",
     "pg": "^8.0.3",
-    "puppeteer": "^3.2.0"
+    "puppeteer": "^8.0.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",

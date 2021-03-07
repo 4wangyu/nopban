@@ -47,7 +47,7 @@ function parseBookSearch(
 }
 
 async function parseBook(html: string): Promise<Partial<Book>> {
-  const $ = cheerio.load(html);
+  const $ = cheerio.load(cheerio.load(html)("#wrapper").html());
 
   const title = $('h1 span:first-child').text();
 

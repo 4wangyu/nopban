@@ -47,7 +47,7 @@ function parseMusicSearch(
 }
 
 async function parseMusic(html: string): Promise<Partial<Music>> {
-  const $ = cheerio.load(html);
+  const $ = cheerio.load(cheerio.load(html)("#wrapper").html());
 
   const title = $('h1 span:first-child').text();
 

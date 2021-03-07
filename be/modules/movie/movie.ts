@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Request, Response } from 'express';
 import puppet from '../../puppet';
 
@@ -72,26 +73,16 @@ const addMovie = async (request: Request, response: Response) => {
     return;
   }
 
-  const page = await puppet();
-
   try {
-    await page.goto(url);
-    await page.waitForSelector('#wrapper');
-    const bodyHTML = await page.evaluate(
-      () => document.getElementById('wrapper').innerHTML
-    );
-    const movie = await parseMovie(bodyHTML);
-
+    const res = await axios.get(url);
+    const movie = await parseMovie(res.data);
     const partMovie = await insertMovie({ uuid, ...movie } as Movie);
     const result = formatMovieSearchItem(partMovie);
-
     response.status(200).json(result);
   } catch (e) {
     console.warn(e);
     response.status(500).json({ error: 'Error adding movie' });
-  } finally {
-    await page.close();
-  }
+  } 
 };
 
 async function getMovie(req: Request, res: Response) {
