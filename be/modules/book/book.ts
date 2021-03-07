@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Request, Response } from 'express';
 import puppet from '../../puppet';
 import { getUuidFromUrl } from '../../lib/util';
@@ -71,25 +72,15 @@ const addBook = async (request: Request, response: Response) => {
     return;
   }
 
-  const page = await puppet();
-
   try {
-    await page.goto(url);
-    await page.waitForSelector('#wrapper');
-    const bodyHTML = await page.evaluate(
-      () => document.getElementById('wrapper').innerHTML
-    );
-    const parsedBook = await parseBook(bodyHTML);
-
+    const res = await axios.get(url);
+    const parsedBook = await parseBook(res.data);
     const partBook = await insertBook({ uuid, ...parsedBook } as Book);
     const result = formatBookSearchItem(partBook);
-
     response.status(200).json(result);
   } catch (e) {
     console.warn(e);
     response.status(500).json({ error: 'Error adding book' });
-  } finally {
-    await page.close();
   }
 };
 
