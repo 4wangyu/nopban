@@ -47,7 +47,7 @@ function parseMovieSearch(
 }
 
 async function parseMovie(html: string): Promise<Partial<Movie>> {
-  const $ = cheerio.load(html);
+  const $ = cheerio.load(cheerio.load(html)("#wrapper").html());
 
   const title = $('h1 span:first-child').text();
   const year = +$('h1 .year').text().substring(1, 5);
