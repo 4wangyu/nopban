@@ -6,6 +6,7 @@ import * as user from './modules/user';
 import * as movie from './modules/movie/movie';
 import * as book from './modules/book/book';
 import * as music from './modules/music/music';
+import * as mine from './modules/mine/mine';
 
 router.post('/signup', checkUser, user.signup);
 router.post('/signin', user.signin);
@@ -38,6 +39,10 @@ router.get('/music/object/:uuid', music.getMusic);
 router.get('/music/rating', checkToken, music.getMusicRating);
 router.post('/music/rating', checkToken, music.rateMusic);
 router.delete('/music/rating', checkToken, music.removeMusicRating);
+//#endregion
+
+//#region homepage
+router.get('/mine/total/:category', mine.getTotal);
 //#endregion
 
 export default router;
