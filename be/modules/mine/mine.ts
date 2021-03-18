@@ -6,7 +6,7 @@ async function getTotal(req: Request, res: Response) {
   const email = req.body.email as string;
 
   try {
-    const total = await selectTotal(category);
+    const total = await selectTotal(category, email);
     res.status(200).json(total);
   } catch (e) {
     console.warn(e);
