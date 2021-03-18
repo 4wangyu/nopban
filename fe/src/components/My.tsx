@@ -1,6 +1,7 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { handleError } from '../lib/util';
+import { AuthContext } from '../store/AuthProvider';
 
 const dictionary: { [key: string]: string } = {
   book: '读',
@@ -17,6 +18,8 @@ const quanfitier: { [key: string]: string } = {
 const My = (props: { category: string }) => {
   const { category } = props;
   const [total, setTotal] = useState();
+  const { context, dispatch } = useContext(AuthContext);
+  const token = context?.token;
 
   const mystyle: { [key: string]: string } = {
     display: 'flex',
@@ -25,18 +28,26 @@ const My = (props: { category: string }) => {
   };
 
   useEffect(() => {
-    axios
-      .get(`/api/mine/total/${category}`)
-      .then((res) => {
-        setTotal(res.data?.total);
-      })
-      .catch(handleError);
-  }, [category]);
+    if (token) {
+      axios
+        .get(`/api/mine/total`,{
+          params: {category: category},
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        })
+        .then((res) => {
+          setTotal(res.data?.total);
+        })
+        .catch(handleError);
+    }
+  }, [category, token]);
 
   return (
     <div>
       <div>
-        我{dictionary[category]}: ({total}{quanfitier[category]}
+        我{dictionary[category]}: ({total}
+        {quanfitier[category]}
         {dictionary[category]}过)
       </div>
       <div style={mystyle}>
