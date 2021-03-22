@@ -49,6 +49,22 @@ const My = (props: { category: string }) => {
     }
   }, [category, token]);
 
+  useEffect(() => {
+    if (token) {
+      axios
+        .get(`/api/mine/latestfive`, {
+          params: { category: category },
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        })
+        .then((res) => {
+          setResult(res.data);
+        })
+        .catch(handleError);
+    }
+  }, [category, token]);
+
   return (
     <div>
       <div>

@@ -43,6 +43,7 @@ router.delete('/music/rating', checkToken, music.removeMusicRating);
 
 //#region homepage
 router.get('/mine/total', checkToken, mine.getTotal);
+router.get('/mine/latestfive', checkToken, mine.getLatestFive);
 //#endregion
 
 export default router;
