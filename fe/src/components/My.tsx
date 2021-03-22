@@ -1,7 +1,12 @@
 import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { handleError } from '../lib/util';
+import { Book } from '../models/book.model';
+import { MyMovie } from '../models/movie.model';
+import { Music } from '../models/music.model';
 import { AuthContext } from '../store/AuthProvider';
+
+type ItemType = Book | MyMovie | Music;
 
 const dictionary: { [key: string]: string } = {
   book: '读',
@@ -18,6 +23,7 @@ const quanfitier: { [key: string]: string } = {
 const My = (props: { category: string }) => {
   const { category } = props;
   const [total, setTotal] = useState();
+  const [result, setResult] = useState<ItemType[]>([]);
   const { context, dispatch } = useContext(AuthContext);
   const token = context?.token;
 
@@ -30,8 +36,8 @@ const My = (props: { category: string }) => {
   useEffect(() => {
     if (token) {
       axios
-        .get(`/api/mine/total`,{
-          params: {category: category},
+        .get(`/api/mine/total`, {
+          params: { category: category },
           headers: {
             Authorization: 'Bearer ' + token,
           },
@@ -52,11 +58,12 @@ const My = (props: { category: string }) => {
       </div>
       <div style={mystyle}>
         <div>{dictionary[category]}过</div>
-        <div>pic1</div>
-        <div>pic2</div>
-        <div>pic3</div>
-        <div>pic4</div>
-        <div>pic5</div>
+        {result?.map((item: ItemType, idx: number) => (
+          <div>
+            <img src={'data:image;base64,' + item.img} alt={item.title}></img>
+            <div>{item.title}</div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -42,3 +42,7 @@ export interface Movie {
   imdb: string;
   createdat?: Date;
 }
+
+export interface MyMovie extends Movie {
+  img: string;
+}
