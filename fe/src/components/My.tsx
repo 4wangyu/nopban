@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { handleError } from '../lib/util';
 import { Book } from '../models/book.model';
 import { MyMovie } from '../models/movie.model';
@@ -8,7 +9,7 @@ import { AuthContext } from '../store/AuthProvider';
 
 type ItemType = Book | MyMovie | Music;
 
-const dictionary: { [key: string]: string } = {
+const verb: { [key: string]: string } = {
   book: '读',
   movie: '看',
   music: '听',
@@ -26,12 +27,6 @@ const My = (props: { category: string }) => {
   const [result, setResult] = useState<ItemType[]>([]);
   const { context, dispatch } = useContext(AuthContext);
   const token = context?.token;
-
-  const mystyle: { [key: string]: string } = {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  };
 
   useEffect(() => {
     if (token) {
@@ -66,19 +61,25 @@ const My = (props: { category: string }) => {
   }, [category, token]);
 
   return (
-    <div>
-      <div>
-        我{dictionary[category]}: ({total}
-        {quanfitier[category]}
-        {dictionary[category]}过)
+    <div className="item-list">
+      <div className="summary">
+        <span className="summary-title">我{verb[category]}</span>
+        <span className="summary-title">
+          &nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;
+        </span>
+        <span className="summary-number">
+          ({total}
+          {quanfitier[category]}
+          {verb[category]}过)
+        </span>
       </div>
-      <div style={mystyle}>
-        <div>{dictionary[category]}过</div>
+      <div className="list">
+        <div className="status">{verb[category]}过</div>
         {result?.map((item: ItemType, idx: number) => (
-          <div>
+          <Link title={item.title} to={`${category}/${item.uuid}`} key={idx.toString()} className="item">
             <img src={'data:image;base64,' + item.img} alt={item.title}></img>
-            <div>{item.title}</div>
-          </div>
+            <div className="title">{item.title}</div>
+          </Link>
         ))}
       </div>
     </div>
