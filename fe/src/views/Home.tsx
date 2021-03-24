@@ -7,6 +7,7 @@ import Celebrity from "./celebrity/Celebrity";
 import "./home.scss";
 import Music from "./music/Music";
 import Musician from "./musician/Musician";
+import Mine from "./mine/Mine";
 
 const Home = () => {
   return (
@@ -29,6 +30,9 @@ const Home = () => {
         </Route>
         <Route path="/musician">
           <Musician />
+        </Route>
+        <Route path="/mine">
+          <Mine />
         </Route>
       </Switch>
     </div>

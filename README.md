@@ -65,6 +65,12 @@ Drop database first if there is need to re-create the database.
 DROP DATABASE IF EXISTS name;
 ```
 
+### 3. Bring up project
+```
+yarn dev:db
+yarn dev:be
+yarn dev:fe
+```
 
 ## Testing
 
