@@ -25,7 +25,7 @@ const My = (props: { category: string }) => {
   const { category } = props;
   const [total, setTotal] = useState();
   const [result, setResult] = useState<ItemType[]>([]);
-  const { context, dispatch } = useContext(AuthContext);
+  const { context } = useContext(AuthContext);
   const token = context?.token;
 
   useEffect(() => {
