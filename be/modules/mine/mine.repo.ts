@@ -23,7 +23,6 @@ async function selectLatestFive(
   category: string,
   email: string
 ): Promise<ItemType[]> {
-  // const table = `user_${category}`;
   let data;
   switch (category) {
     case 'book':
