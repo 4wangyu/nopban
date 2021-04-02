@@ -18,9 +18,9 @@ import { Book } from '../../models/book.model';
 const searchBook = async (request: Request, response: Response) => {
   const start = +request.query.start || 0;
   const searchKey = request.query.searchKey as string;
-  const inbound = JSON.parse(request.query.inbound as string) as boolean;
+  const internal = JSON.parse(request.query.internal as string) as boolean;
 
-  if (inbound) {
+  if (internal) {
     const selectedItems = await selectBookByTitle(searchKey, start);
     const items = selectedItems.map((m) => formatBookSearchItem(m));
     response.status(200).json({ items, pagination: [] });

@@ -28,8 +28,8 @@ function getImdbIdFromUrl(url?: string): string | undefined {
   return url?.split('/').reverse()[0];
 }
 
-function getInbound(): boolean {
-  return JSON.parse(localStorage.getItem('inbound') || 'true') as boolean;
+function getInternal(): boolean {
+  return JSON.parse(localStorage.getItem('internal') || 'true') as boolean;
 }
 
 function handleError(err: AxiosError) {
@@ -42,6 +42,6 @@ export {
   getName,
   scrollToTop,
   getImdbIdFromUrl,
-  getInbound,
+  getInternal,
   handleError,
 };
