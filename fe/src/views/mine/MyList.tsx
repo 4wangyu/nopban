@@ -1,15 +1,14 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { handleError } from '../../lib/util';
-import {
-  BookSearchItem, BookSearchResult
-} from '../../models/book.model';
+import { BookSearchItem, BookSearchResult } from '../../models/book.model';
 import { MovieSearchItem, MovieSearchResult } from '../../models/movie.model';
 import { MusicSearchItem, MusicSearchResult } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
 import BookItem from '../book/BookItem';
 import MovieItem from '../movie/MovieItem';
 import MusicItem from '../music/MusicItem';
+import { useLocation } from 'react-router-dom';
 
 type SearchResultType =
   | BookSearchResult
@@ -17,12 +16,13 @@ type SearchResultType =
   | MusicSearchResult;
 type ItemType = BookSearchItem | MovieSearchItem | MusicSearchItem;
 
-const url = window.location.href;
-// const category = url.substring(url.lastIndexOf('/') + 1);
-const category: string = 'book';
-
 const MyList = () => {
   const itemPerPage = 15;
+
+  const location = useLocation();
+  const category = location.pathname.substring(
+    location.pathname.lastIndexOf('/') + 1
+  );
 
   const [result, setResult] = useState<SearchResultType>({
     items: [],
