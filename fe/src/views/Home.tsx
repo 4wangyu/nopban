@@ -1,13 +1,14 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import Book from "./book/Book";
-import Movie from "./movie/Movie";
-import Author from "./author/Author";
-import Celebrity from "./celebrity/Celebrity";
-import "./home.scss";
-import Music from "./music/Music";
-import Musician from "./musician/Musician";
-import Mine from "./mine/Mine";
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Book from './book/Book';
+import Movie from './movie/Movie';
+import Author from './author/Author';
+import Celebrity from './celebrity/Celebrity';
+import './home.scss';
+import Music from './music/Music';
+import Musician from './musician/Musician';
+import Mine from './mine/Mine';
+import MyList from './mine/MyList';
 
 const Home = () => {
   return (
@@ -33,6 +34,9 @@ const Home = () => {
         </Route>
         <Route path="/mine">
           <Mine />
+        </Route>
+        <Route path="/mylist">
+          <MyList />
         </Route>
       </Switch>
     </div>

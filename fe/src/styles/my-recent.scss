@@ -1,0 +1,49 @@
+.my-recent {
+  margin: 0 0 30px 0;
+
+  .summary {
+    white-space: nowrap;
+    margin: 0 0 10px 0;
+  }
+
+  .summary-title {
+    font-size: 16px;
+    color: #007722;
+  }
+
+  .summary-number {
+    font-size: 13px;
+    color: #3377aa;
+    text-decoration: unset;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: center;
+    gap: 25px;
+    align-items: flex-end;
+  }
+
+  .status {
+    align-self: center;
+    white-space: nowrap;
+    font-size: 13px;
+    color: #acacac;
+  }
+
+  .item,
+  .item img {
+    width: 85px;
+    text-decoration: unset;
+  }
+
+  .title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px;
+    color: #3377aa;
+  }
+}
