@@ -63,4 +63,47 @@ async function selectLatestFive(
   }
 }
 
-export { selectTotal, selectLatestFive };
+
+async function selectPagination(
+  category: string,
+  email: string
+): Promise<ItemType[]> {
+  let data;
+  switch (category) {
+    case 'book':
+      data = await database.raw(
+        `SELECT * FROM user_book AS uc
+        INNER JOIN users ON users.id = uc.user_id
+        INNER JOIN book ON book.id = uc.book_id
+        WHERE users.email = ?
+        ORDER BY uc.updatedat DESC
+        LIMIT 5`,
+        [email]
+      );
+      return data.rows;
+    case 'movie':
+      data = await database.raw(
+        `SELECT * FROM user_movie AS uc
+        INNER JOIN users ON users.id = uc.user_id
+        INNER JOIN movie ON movie.id = uc.movie_id
+        WHERE users.email = ?
+        ORDER BY uc.updatedat DESC
+        LIMIT 5`,
+        [email]
+      );
+      return data.rows;
+    case 'music':
+      data = await database.raw(
+        `SELECT * FROM user_music AS uc
+        INNER JOIN users ON users.id = uc.user_id
+        INNER JOIN music ON music.id = uc.music_id
+        WHERE users.email = ?
+        ORDER BY uc.updatedat DESC
+        LIMIT 5`,
+        [email]
+      );
+      return data.rows;
+  }
+}
+
+export { selectTotal, selectLatestFive, selectPagination };
