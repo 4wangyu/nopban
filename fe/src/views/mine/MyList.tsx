@@ -39,11 +39,22 @@ const MyList = () => {
     }
   }, [category, token]);
 
+  return (
+    <div>
+      {category}
+      <ItemList category={category} result={result}></ItemList>
+    </div>
+  );
+};
+
+export default MyList;
+
+function ItemList(props: { category: string; result: ListType }) {
+  const { category, result } = props;
   switch (category) {
     case 'book':
       return (
         <div>
-          {category}
           {(result as BookList).items?.map(
             (item: BookSearchItem, idx: number) => (
               <BookItem key={idx} book={item}></BookItem>
@@ -54,7 +65,6 @@ const MyList = () => {
     case 'movie':
       return (
         <div>
-          {category}
           {(result as MovieList).items?.map(
             (item: MovieSearchItem, idx: number) => (
               <MovieItem key={idx} movie={item}></MovieItem>
@@ -65,7 +75,6 @@ const MyList = () => {
     case 'music':
       return (
         <div>
-          {category}
           {(result as MusicList).items?.map(
             (item: MusicSearchItem, idx: number) => (
               <MusicItem key={idx} music={item}></MusicItem>
@@ -76,6 +85,4 @@ const MyList = () => {
     default:
       return <></>;
   }
-};
-
-export default MyList;
+}
