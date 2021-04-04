@@ -23,87 +23,46 @@ async function selectLatestFive(
   category: string,
   email: string
 ): Promise<ItemType[]> {
-  let data;
-  switch (category) {
-    case 'book':
-      data = await database.raw(
-        `SELECT * FROM user_book AS uc
-        INNER JOIN users ON users.id = uc.user_id
-        INNER JOIN book ON book.id = uc.book_id
-        WHERE users.email = ?
-        ORDER BY uc.updatedat DESC
-        LIMIT 5`,
-        [email]
-      );
-      return data.rows;
-    case 'movie':
-      data = await database.raw(
-        `SELECT * FROM user_movie AS uc
-        INNER JOIN users ON users.id = uc.user_id
-        INNER JOIN movie ON movie.id = uc.movie_id
-        WHERE users.email = ?
-        ORDER BY uc.updatedat DESC
-        LIMIT 5`,
-        [email]
-      );
-      return data.rows.map((row: Movie) => {
-        return {...row, img: row.poster} as MyMovie;
-      });
-    case 'music':
-      data = await database.raw(
-        `SELECT * FROM user_music AS uc
-        INNER JOIN users ON users.id = uc.user_id
-        INNER JOIN music ON music.id = uc.music_id
-        WHERE users.email = ?
-        ORDER BY uc.updatedat DESC
-        LIMIT 5`,
-        [email]
-      );
-      return data.rows;
+  const uc = `user_${category}`;
+  const c_id = `${category}_id`;
+
+  const data = await database.raw(
+    `SELECT * FROM ?? AS uc
+    INNER JOIN users ON users.id = uc.user_id
+    INNER JOIN ?? AS c ON c.id = uc.??
+    WHERE users.email = ?
+    ORDER BY uc.updatedat DESC
+    LIMIT 5`,
+    [uc, category, c_id, email]
+  );
+
+  if (category == 'movie') {
+    return data.rows.map((row: Movie) => {
+      return { ...row, img: row.poster } as MyMovie;
+    });
+  } else {
+    return data.rows;
   }
+
 }
 
-
-async function selectPagination(
+async function selectList(
   category: string,
   email: string
 ): Promise<ItemType[]> {
-  let data;
-  switch (category) {
-    case 'book':
-      data = await database.raw(
-        `SELECT * FROM user_book AS uc
-        INNER JOIN users ON users.id = uc.user_id
-        INNER JOIN book ON book.id = uc.book_id
-        WHERE users.email = ?
-        ORDER BY uc.updatedat DESC
-        LIMIT 5`,
-        [email]
-      );
-      return data.rows;
-    case 'movie':
-      data = await database.raw(
-        `SELECT * FROM user_movie AS uc
-        INNER JOIN users ON users.id = uc.user_id
-        INNER JOIN movie ON movie.id = uc.movie_id
-        WHERE users.email = ?
-        ORDER BY uc.updatedat DESC
-        LIMIT 5`,
-        [email]
-      );
-      return data.rows;
-    case 'music':
-      data = await database.raw(
-        `SELECT * FROM user_music AS uc
-        INNER JOIN users ON users.id = uc.user_id
-        INNER JOIN music ON music.id = uc.music_id
-        WHERE users.email = ?
-        ORDER BY uc.updatedat DESC
-        LIMIT 5`,
-        [email]
-      );
-      return data.rows;
-  }
+  const uc = `user_${category}`;
+  const c_id = `${category}_id`;
+
+  const data = await database.raw(
+    `SELECT * FROM ?? AS uc
+    INNER JOIN users ON users.id = uc.user_id
+    INNER JOIN ?? AS c ON c.id = uc.??
+    WHERE users.email = ?
+    ORDER BY uc.updatedat DESC
+    LIMIT 5`,
+    [uc, category, c_id, email]
+  );
+  return data.rows;
 }
 
-export { selectTotal, selectLatestFive, selectPagination };
+export { selectTotal, selectLatestFive, selectList };

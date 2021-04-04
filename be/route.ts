@@ -1,12 +1,13 @@
 const express = require('express'),
   router = express.Router();
-import checkUser from './middleware/check-user';
 import checkToken from './middleware/check-token';
-import * as user from './modules/user';
-import * as movie from './modules/movie/movie';
+import checkUser from './middleware/check-user';
+import { validateCategory } from './middleware/validate';
 import * as book from './modules/book/book';
-import * as music from './modules/music/music';
 import * as mine from './modules/mine/mine';
+import * as movie from './modules/movie/movie';
+import * as music from './modules/music/music';
+import * as user from './modules/user';
 
 router.post('/signup', checkUser, user.signup);
 router.post('/signin', user.signin);
@@ -44,7 +45,7 @@ router.delete('/music/rating', checkToken, music.removeMusicRating);
 //#region homepage
 router.get('/mine/total', checkToken, mine.getTotal);
 router.get('/mine/latestfive', checkToken, mine.getLatestFive);
-router.get('/mine/pagination', checkToken, mine.getPagination);
+router.get('/mine/list', checkToken, validateCategory, mine.getList);
 //#endregion
 
 export default router;

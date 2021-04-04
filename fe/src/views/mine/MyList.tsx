@@ -16,14 +16,13 @@ type SearchResultType =
   | MusicSearchResult;
 type ItemType = BookSearchItem | MovieSearchItem | MusicSearchItem;
 
-const MyList = () => {
-  const itemPerPage = 15;
+const itemPerPage = 15;
 
+const MyList = () => {
   const location = useLocation();
   const category = location.pathname.substring(
     location.pathname.lastIndexOf('/') + 1
   );
-
   const [result, setResult] = useState<SearchResultType>({
     items: [],
     pagination: [],
@@ -34,7 +33,7 @@ const MyList = () => {
   useEffect(() => {
     if (token) {
       axios
-        .get(`/api/mine/pagination`, {
+        .get(`/api/mine/list`, {
           params: { category: category },
           headers: {
             Authorization: 'Bearer ' + token,
@@ -99,7 +98,7 @@ const MyList = () => {
         </div>
       );
     default:
-      return <div>category not found</div>;
+      return <div></div>;
   }
 };
 

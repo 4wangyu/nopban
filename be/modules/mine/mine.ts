@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { formatBookSearchItem } from '../book/book.util';
 import { formatMovieSearchItem } from '../movie/movie.util';
 import { formatMusicSearchItem } from '../music/music.util';
-import { selectLatestFive, selectPagination, selectTotal } from './mine.repo';
+import { selectLatestFive, selectList, selectTotal } from './mine.repo';
 
 async function getTotal(req: Request, res: Response) {
   const category = req.query.category as string;
@@ -30,12 +30,12 @@ async function getLatestFive(req: Request, res: Response) {
   }
 }
 
-async function getPagination(req: Request, res: Response) {
+async function getList(req: Request, res: Response) {
   const category = req.query.category as string;
   const email = req.body.email as string;
 
   try {
-    const selectedItems = await selectPagination(category, email);
+    const selectedItems = await selectList(category, email);
     let items;
     switch (category) {
       case 'book':
@@ -50,8 +50,8 @@ async function getPagination(req: Request, res: Response) {
     res.status(200).json({items, pagination: []});
   } catch (e) {
     console.warn(e);
-    res.status(500).json({ error: 'Error fetching latest five items' });
+    res.status(500).json({ error: 'Error fetching list of items' });
   }
 }
 
-export { getTotal, getLatestFive, getPagination };
+export { getTotal, getLatestFive, getList };

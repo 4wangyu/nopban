@@ -34,7 +34,7 @@ function getInternal(): boolean {
 
 function handleError(err: AxiosError) {
   console.error(err);
-  toast.error(err.message);
+  toast.error(err.response?.data.error);
 }
 
 export {
