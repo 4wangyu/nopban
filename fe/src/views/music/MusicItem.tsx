@@ -7,9 +7,9 @@ import { MusicSearchItem } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
 
 function MusicItem(props: {
-  idx: number;
+  idx?: number;
   music: MusicSearchItem;
-  refreshResult: (idx: number, music: MusicSearchItem) => void;
+  refreshResult?: (idx: number, music: MusicSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
   const { url } = useRouteMatch();
@@ -26,7 +26,7 @@ function MusicItem(props: {
     })
       .then(function (res) {
         const m = res.data as MusicSearchItem;
-        refreshResult(idx, m);
+        refreshResult && idx !== undefined && refreshResult(idx, m);
         toast.success(`${m.title} 添加成功.`);
       })
       .catch(handleError);

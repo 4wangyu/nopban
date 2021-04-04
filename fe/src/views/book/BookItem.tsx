@@ -7,9 +7,9 @@ import { BookSearchItem } from '../../models/book.model';
 import { handleError } from '../../lib/util';
 
 function BookItem(props: {
-  idx: number;
+  idx?: number;
   book: BookSearchItem;
-  refreshResult: (idx: number, book: BookSearchItem) => void;
+  refreshResult?: (idx: number, book: BookSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
   const { url } = useRouteMatch();
@@ -26,7 +26,7 @@ function BookItem(props: {
     })
       .then(function (res) {
         const b = res.data as BookSearchItem;
-        refreshResult(idx, b);
+        refreshResult && idx !== undefined && refreshResult(idx, b);
         toast.success(`${b.title} 添加成功.`);
       })
       .catch(handleError);

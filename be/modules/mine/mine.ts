@@ -41,13 +41,13 @@ async function getList(req: Request, res: Response) {
       case 'book':
         items = selectedItems.map((m) => formatBookSearchItem(m));
         break;
-      case 'movie': 
+      case 'movie':
         items = selectedItems.map((m) => formatMovieSearchItem(m));
         break;
       case 'music':
         items = selectedItems.map((m) => formatMusicSearchItem(m));
     }
-    res.status(200).json({items, pagination: []});
+    res.status(200).json({ items });
   } catch (e) {
     console.warn(e);
     res.status(500).json({ error: 'Error fetching list of items' });

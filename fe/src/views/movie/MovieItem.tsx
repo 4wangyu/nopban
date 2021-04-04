@@ -7,9 +7,9 @@ import { MovieSearchItem } from '../../models/movie.model';
 import { AuthContext } from '../../store/AuthProvider';
 
 function MovieItem(props: {
-  idx: number;
+  idx?: number;
   movie: MovieSearchItem;
-  refreshResult: (idx: number, movie: MovieSearchItem) => void;
+  refreshResult?: (idx: number, movie: MovieSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
   const { url } = useRouteMatch();
@@ -26,7 +26,7 @@ function MovieItem(props: {
     })
       .then(function (res) {
         const m = res.data as MovieSearchItem;
-        refreshResult(idx, m);
+        refreshResult && idx !== undefined && refreshResult(idx, m);
         toast.success(`${m.title} 添加成功.`);
       })
       .catch(handleError);
