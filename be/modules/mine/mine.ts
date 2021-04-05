@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { formatBookSearchItem } from '../book/book.util';
 import { formatMovieSearchItem } from '../movie/movie.util';
 import { formatMusicSearchItem } from '../music/music.util';
-import { selectLatestFive, selectList, selectTotal } from './mine.repo';
+import { selectLatestFive, selectSubList, selectTotal } from './mine.repo';
 
 async function getTotal(req: Request, res: Response) {
   const category = req.query.category as string;
@@ -30,12 +30,14 @@ async function getLatestFive(req: Request, res: Response) {
   }
 }
 
-async function getList(req: Request, res: Response) {
+async function getSubList(req: Request, res: Response) {
   const category = req.query.category as string;
+  const count = req.query.count as string;
+  const offset = req.query.offset as string;
   const email = req.body.email as string;
 
   try {
-    const selectedItems = await selectList(category, email);
+    const selectedItems = await selectSubList(category, count, offset, email);
     let items;
     switch (category) {
       case 'book':
@@ -47,11 +49,12 @@ async function getList(req: Request, res: Response) {
       case 'music':
         items = selectedItems.map((m) => formatMusicSearchItem(m));
     }
-    res.status(200).json({ items });
+    const total = await selectTotal(category, email);
+    res.status(200).json({ items, total });
   } catch (e) {
     console.warn(e);
     res.status(500).json({ error: 'Error fetching list of items' });
   }
 }
 
-export { getTotal, getLatestFive, getList };
+export { getTotal, getLatestFive, getSubList };

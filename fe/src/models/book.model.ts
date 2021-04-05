@@ -18,6 +18,7 @@ export interface BookSearchResult {
 
 export interface BookList {
   items: BookSearchItem[];
+  total: number;
 }
 
 export interface NameLinkModel {

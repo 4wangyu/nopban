@@ -47,7 +47,7 @@ function MusicItem(props: {
 
       <div className="info">
         {music.saved ? (
-          <Link to={`${url}/${music.url}`}>{music.title}</Link>
+          <Link to={`/music/${music.url}`}>{music.title}</Link>
         ) : (
           <button className="title" onClick={() => showPage(music.url)}>
             {music.title}

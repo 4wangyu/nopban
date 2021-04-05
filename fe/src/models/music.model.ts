@@ -18,6 +18,7 @@ export interface MusicSearchResult {
 
 export interface MusicList {
   items: MusicSearchItem[];
+  total: number;
 }
 
 export interface NameLinkModel {

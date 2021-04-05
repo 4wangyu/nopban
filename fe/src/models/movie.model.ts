@@ -18,6 +18,7 @@ export interface MovieSearchResult {
 
 export interface MovieList {
   items: MovieSearchItem[];
+  total: number;
 }
 
 export interface NameLinkModel {

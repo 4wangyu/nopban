@@ -47,7 +47,7 @@ function MovieItem(props: {
 
       <div className="info">
         {movie.saved ? (
-          <Link to={`${url}/${movie.url}`}>{movie.title}</Link>
+          <Link to={`/movie/${movie.url}`}>{movie.title}</Link>
         ) : (
           <button className="title" onClick={() => gotoMovie(movie.url)}>
             {movie.title}

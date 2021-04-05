@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import $ from 'jquery';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { NameLinkModel } from '../models/movie.model';
 
@@ -37,6 +38,10 @@ function handleError(err: AxiosError) {
   toast.error(err.response?.data.error);
 }
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 export {
   arrToStr,
   getName,
@@ -44,4 +49,5 @@ export {
   getImdbIdFromUrl,
   getInternal,
   handleError,
+  useQuery,
 };

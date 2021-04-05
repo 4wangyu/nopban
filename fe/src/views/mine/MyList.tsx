@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { handleError } from '../../lib/util';
+import { CATEGORIES, DICT_NOUN, DICT_VERB } from '../../lib/constant';
+import { handleError, useQuery } from '../../lib/util';
 import { BookList, BookSearchItem } from '../../models/book.model';
 import { MovieList, MovieSearchItem } from '../../models/movie.model';
 import { MusicList, MusicSearchItem } from '../../models/music.model';
@@ -11,14 +12,17 @@ import MovieItem from '../movie/MovieItem';
 import MusicItem from '../music/MusicItem';
 
 type ListType = BookList | MovieList | MusicList;
+const itemsPerPage = 12;
 
 const MyList = () => {
   const location = useLocation();
   const category = location.pathname.substring(
     location.pathname.lastIndexOf('/') + 1
   );
+  const page = +(useQuery().get('p') || 1);
   const [result, setResult] = useState<ListType>({
     items: [],
+    total: 0,
   });
   const { context } = useContext(AuthContext);
   const token = context?.token;
@@ -26,8 +30,12 @@ const MyList = () => {
   useEffect(() => {
     if (token) {
       axios
-        .get(`/api/mine/list`, {
-          params: { category: category },
+        .get(`/api/mine/sublist`, {
+          params: {
+            category: category,
+            count: itemsPerPage,
+            offset: itemsPerPage * (page - 1),
+          },
           headers: {
             Authorization: 'Bearer ' + token,
           },
@@ -39,12 +47,18 @@ const MyList = () => {
     }
   }, [category, token]);
 
-  return (
-    <div>
-      {category}
-      <ItemList category={category} result={result}></ItemList>
-    </div>
-  );
+  if (CATEGORIES.includes(category)) {
+    return (
+      <div>
+        <h1>
+          我{DICT_VERB[category]}过的{DICT_NOUN[category]}({result?.total})
+        </h1>
+        <ItemList category={category} result={result}></ItemList>
+      </div>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default MyList;

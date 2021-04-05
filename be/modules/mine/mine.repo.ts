@@ -1,14 +1,11 @@
+import database from '../../database';
 import { Book } from '../../models/book.model';
 import { Movie, MyMovie } from '../../models/movie.model';
 import { Music } from '../../models/music.model';
-import database from '../../database';
 
 type ItemType = Book | MyMovie | Music;
 
-async function selectTotal(
-  category: string,
-  email: string
-): Promise<{ total: number }> {
+async function selectTotal(category: string, email: string): Promise<number> {
   const table = `user_${category}`;
   const data = await database.raw(
     `SELECT COUNT(*) AS total FROM ?? AS uc
@@ -16,7 +13,7 @@ async function selectTotal(
     WHERE users.email = ?`,
     [table, email]
   );
-  return data.rows[0];
+  return +data.rows[0].total;
 }
 
 async function selectLatestFive(
@@ -43,11 +40,12 @@ async function selectLatestFive(
   } else {
     return data.rows;
   }
-
 }
 
-async function selectList(
+async function selectSubList(
   category: string,
+  count: string,
+  offset: string,
   email: string
 ): Promise<ItemType[]> {
   const uc = `user_${category}`;
@@ -59,10 +57,11 @@ async function selectList(
     INNER JOIN ?? AS c ON c.id = uc.??
     WHERE users.email = ?
     ORDER BY uc.updatedat DESC
-    LIMIT 5`,
-    [uc, category, c_id, email]
+    LIMIT ?
+    OFFSET ?`,
+    [uc, category, c_id, email, count, offset]
   );
   return data.rows;
 }
 
-export { selectTotal, selectLatestFive, selectList };
+export { selectTotal, selectLatestFive, selectSubList };

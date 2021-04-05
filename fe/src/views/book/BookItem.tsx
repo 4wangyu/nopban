@@ -47,7 +47,7 @@ function BookItem(props: {
 
       <div className="info">
         {book.saved ? (
-          <Link to={`${url}/${book.url}`}>{book.title}</Link>
+          <Link to={`/book/${book.url}`}>{book.title}</Link>
         ) : (
           <button className="title" onClick={() => showPage(book.url)}>
             {book.title}
