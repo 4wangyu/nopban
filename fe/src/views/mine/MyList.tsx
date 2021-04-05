@@ -38,9 +38,9 @@ const MyList = () => {
   function usePageParam(lastPage: number) {
     const p = +(useQuery().get('p') || 1);
     if (lastPage) {
-      return p < 1 ? 1 : p > lastPage ? lastPage : p;
+      return p < 1 || isNaN(p) ? 1 : p > lastPage ? lastPage : p;
     } else {
-      return p < 1 ? 1 : p;
+      return p < 1 || isNaN(p) ? 1 : p;
     }
   }
 
