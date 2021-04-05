@@ -66,7 +66,7 @@ const Music = () => {
                 refreshResult={refreshResult}
               ></MusicItem>
             ))}
-            <div className="pagination">
+            <div className="paginator">
               {result.pagination?.map(
                 (pag: MusicSearchPagination, idx: number) => (
                   <button

@@ -66,7 +66,7 @@ const Book = () => {
                 refreshResult={refreshResult}
               ></BookItem>
             ))}
-            <div className="pagination">
+            <div className="paginator">
               {result.pagination?.map(
                 (pag: BookSearchPagination, idx: number) => (
                   <button

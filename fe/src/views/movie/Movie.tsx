@@ -66,7 +66,7 @@ const Movie = () => {
                 refreshResult={refreshResult}
               ></MovieItem>
             ))}
-            <div className="pagination">
+            <div className="paginator">
               {result.pagination?.map(
                 (pag: MovieSearchPagination, idx: number) => (
                   <button
