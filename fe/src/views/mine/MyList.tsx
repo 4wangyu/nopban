@@ -12,9 +12,11 @@ import MovieItem from '../movie/MovieItem';
 import MusicItem from '../music/MusicItem';
 
 type ListType = BookList | MovieList | MusicList;
-const itemsPerPage = 12;
+const ITEM_PER_PAGE = 12;
 
 const MyList = () => {
+  const { context } = useContext(AuthContext);
+  const token = context?.token;
   const location = useLocation();
   const category = location.pathname.substring(
     location.pathname.lastIndexOf('/') + 1
@@ -24,8 +26,10 @@ const MyList = () => {
     items: [],
     total: 0,
   });
-  const { context } = useContext(AuthContext);
-  const token = context?.token;
+
+  const startNumber = (page - 1) * ITEM_PER_PAGE + 1;
+  const endNumber =
+    page * ITEM_PER_PAGE < result?.total ? page * ITEM_PER_PAGE : result?.total;
 
   useEffect(() => {
     if (token) {
@@ -33,8 +37,8 @@ const MyList = () => {
         .get(`/api/mine/sublist`, {
           params: {
             category: category,
-            count: itemsPerPage,
-            offset: itemsPerPage * (page - 1),
+            count: ITEM_PER_PAGE,
+            offset: ITEM_PER_PAGE * (page - 1),
           },
           headers: {
             Authorization: 'Bearer ' + token,
@@ -47,12 +51,24 @@ const MyList = () => {
     }
   }, [category, page, token]);
 
+  const mystyle: { [key: string]: string } = {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  };
+
   if (CATEGORIES.includes(category)) {
     return (
       <div>
         <h1>
           我{DICT_VERB[category]}过的{DICT_NOUN[category]}({result?.total})
         </h1>
+        <div style={mystyle}>
+          <span>按时间排序</span>
+          <span>
+            {startNumber}-{endNumber} / {result?.total}
+          </span>
+        </div>
         <ItemList category={category} result={result}></ItemList>
       </div>
     );

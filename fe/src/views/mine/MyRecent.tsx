@@ -11,11 +11,11 @@ import { AuthContext } from '../../store/AuthProvider';
 type ItemType = Book | MyMovie | Music;
 
 const MyRecent = (props: { category: string }) => {
+  const { context } = useContext(AuthContext);
+  const token = context?.token;
   const { category } = props;
   const [total, setTotal] = useState();
   const [result, setResult] = useState<ItemType[]>([]);
-  const { context } = useContext(AuthContext);
-  const token = context?.token;
 
   useEffect(() => {
     if (token) {
