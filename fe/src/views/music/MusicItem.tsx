@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { handleError } from '../../lib/util';
 import { MusicSearchItem } from '../../models/music.model';
@@ -12,7 +12,6 @@ function MusicItem(props: {
   refreshResult?: (idx: number, music: MusicSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
-  const { url } = useRouteMatch();
   const { idx, music, refreshResult } = props;
 
   function addItem() {

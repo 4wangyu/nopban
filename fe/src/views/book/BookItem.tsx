@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
-import { useRouteMatch, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { AuthContext } from '../../store/AuthProvider';
-import { BookSearchItem } from '../../models/book.model';
 import { handleError } from '../../lib/util';
+import { BookSearchItem } from '../../models/book.model';
+import { AuthContext } from '../../store/AuthProvider';
 
 function BookItem(props: {
   idx?: number;
@@ -12,7 +12,6 @@ function BookItem(props: {
   refreshResult?: (idx: number, book: BookSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
-  const { url } = useRouteMatch();
   const { idx, book, refreshResult } = props;
 
   function addBook() {

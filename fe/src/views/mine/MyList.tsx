@@ -45,7 +45,7 @@ const MyList = () => {
         })
         .catch(handleError);
     }
-  }, [category, token]);
+  }, [category, page, token]);
 
   if (CATEGORIES.includes(category)) {
     return (

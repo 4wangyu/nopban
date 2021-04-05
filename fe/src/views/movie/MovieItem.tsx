@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { handleError } from '../../lib/util';
 import { MovieSearchItem } from '../../models/movie.model';
@@ -12,7 +12,6 @@ function MovieItem(props: {
   refreshResult?: (idx: number, movie: MovieSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
-  const { url } = useRouteMatch();
   const { idx, movie, refreshResult } = props;
 
   function addMovie() {
