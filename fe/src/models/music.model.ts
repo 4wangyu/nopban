@@ -16,7 +16,7 @@ export interface MusicSearchResult {
   pagination: MusicSearchPagination[];
 }
 
-export interface MusicList {
+export interface MusicSubList {
   items: MusicSearchItem[];
   total: number;
 }

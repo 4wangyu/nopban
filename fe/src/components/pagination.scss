@@ -1,0 +1,20 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px auto;
+  width: 100%;
+  font: 14px Arial, Helvetica, sans-serif;
+
+  a {
+    text-decoration: none;
+    border: none;
+    color: #3377aa;
+    font-weight: normal;
+
+    &:not(.active) {
+      pointer-events: none;
+      color: #aaa;
+    }
+  }
+}

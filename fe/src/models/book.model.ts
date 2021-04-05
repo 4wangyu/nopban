@@ -16,7 +16,7 @@ export interface BookSearchResult {
   pagination: BookSearchPagination[];
 }
 
-export interface BookList {
+export interface BookSubList {
   items: BookSearchItem[];
   total: number;
 }
