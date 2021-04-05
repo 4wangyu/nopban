@@ -7,6 +7,7 @@ import { Book } from '../../models/book.model';
 import { MyMovie } from '../../models/movie.model';
 import { Music } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
+import './my-recent.scss';
 
 type ItemType = Book | MyMovie | Music;
 
