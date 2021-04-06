@@ -25,6 +25,7 @@ const Title = styled.div`
   font-size: 26px;
   font-weight: bold;
   margin: 30px 0px;
+  color: #494949;
 `;
 
 const Info = styled.div`
