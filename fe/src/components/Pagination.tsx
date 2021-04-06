@@ -1,16 +1,17 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import './pagination.scss';
 
 const pagesToDislay = 9;
 
-interface getPagesArgType {
+const getPages = ({
+  count,
+  firstPage,
+}: {
   count: number;
   firstPage: number;
-}
-
-const getPages = ({ count, firstPage }: getPagesArgType): number[] => {
+}): number[] => {
   return Array.from({ length: count }, (_, i) => i + firstPage);
 };
 

@@ -6,15 +6,15 @@ import { Music } from '../../models/music.model';
 type ItemType = Book | MyMovie | Music;
 
 async function selectTotal(category: string, email: string): Promise<number> {
-  const uc = `user_${category}`;
-  const c_id = `${category}_id`;
+  const userCategory = `user_${category}`;
+  const categoryId = `${category}_id`;
 
   const data = await database.raw(
     `SELECT COUNT(*) AS total FROM ?? AS uc
     INNER JOIN users ON users.id = uc.user_id
     INNER JOIN ?? AS c ON c.id = uc.??
     WHERE users.email = ?`,
-    [uc, category, c_id, email]
+    [userCategory, category, categoryId, email]
   );
   return +data.rows[0].total;
 }
@@ -23,8 +23,8 @@ async function selectLatestFive(
   category: string,
   email: string
 ): Promise<ItemType[]> {
-  const uc = `user_${category}`;
-  const c_id = `${category}_id`;
+  const userCategory = `user_${category}`;
+  const categoryId = `${category}_id`;
 
   const data = await database.raw(
     `SELECT * FROM ?? AS uc
@@ -33,7 +33,7 @@ async function selectLatestFive(
     WHERE users.email = ?
     ORDER BY uc.updatedat DESC
     LIMIT 5`,
-    [uc, category, c_id, email]
+    [userCategory, category, categoryId, email]
   );
 
   if (category == 'movie') {
@@ -51,8 +51,8 @@ async function selectSubList(
   offset: string,
   email: string
 ): Promise<ItemType[]> {
-  const uc = `user_${category}`;
-  const c_id = `${category}_id`;
+  const userCategory = `user_${category}`;
+  const categoryId = `${category}_id`;
 
   const data = await database.raw(
     `SELECT * FROM ?? AS uc
@@ -62,7 +62,7 @@ async function selectSubList(
     ORDER BY uc.updatedat DESC
     LIMIT ?
     OFFSET ?`,
-    [uc, category, c_id, email, count, offset]
+    [userCategory, category, categoryId, email, count, offset]
   );
   return data.rows;
 }
