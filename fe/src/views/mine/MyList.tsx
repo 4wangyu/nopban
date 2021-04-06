@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 import Pagination from '../../components/Pagination';
 import { CATEGORIES, DICT_NOUN, DICT_VERB } from '../../lib/constant';
 import { handleError, useQuery } from '../../lib/util';
@@ -13,7 +14,29 @@ import MovieItem from '../movie/MovieItem';
 import MusicItem from '../music/MusicItem';
 
 type SubListType = BookSubList | MovieSubList | MusicSubList;
-const itemPerPage = 1;
+const itemPerPage = 10;
+
+const MyListPage = styled.div`
+  margin: auto;
+  width: 84%;
+`;
+
+const Title = styled.div`
+  font-size: 26px;
+  font-weight: bold;
+  margin: 30px 0px;
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #999;
+  font-size: 13px;
+  margin-bottom: 30px;
+  border-bottom: 1px dashed #ddd;
+  padding-bottom: 5px;
+`;
 
 const MyList = () => {
   const { context } = useContext(AuthContext);
@@ -62,27 +85,21 @@ const MyList = () => {
     }
   }, [category, currentPage, token]);
 
-  const mystyle: { [key: string]: string } = {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  };
-
   if (CATEGORIES.includes(category)) {
     return (
-      <div>
-        <h1>
+      <MyListPage>
+        <Title>
           我{DICT_VERB[category]}过的{DICT_NOUN[category]}({result?.total})
-        </h1>
-        <div style={mystyle}>
+        </Title>
+        <Info>
           <span>按时间排序</span>
           <span>
             {startNumber}-{endNumber} / {result?.total}
           </span>
-        </div>
+        </Info>
         <ItemList category={category} result={result}></ItemList>
         <Pagination currentPage={currentPage} lastPage={lastPage}></Pagination>
-      </div>
+      </MyListPage>
     );
   } else {
     return <></>;
