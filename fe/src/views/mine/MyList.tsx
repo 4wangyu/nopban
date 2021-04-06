@@ -86,25 +86,23 @@ const MyList = () => {
     }
   }, [category, currentPage, token]);
 
-  if (CATEGORIES.includes(category)) {
-    return (
-      <MyListPage>
-        <Title>
-          我{DICT_VERB[category]}过的{DICT_NOUN[category]}({result?.total})
-        </Title>
-        <Info>
-          <span>按时间排序</span>
-          <span>
-            {startNumber}-{endNumber} / {result?.total}
-          </span>
-        </Info>
-        <ItemList category={category} result={result}></ItemList>
-        <Pagination currentPage={currentPage} lastPage={lastPage}></Pagination>
-      </MyListPage>
-    );
-  } else {
-    return <></>;
-  }
+  return CATEGORIES.includes(category) ? (
+    <MyListPage>
+      <Title>
+        我{DICT_VERB[category]}过的{DICT_NOUN[category]}({result?.total})
+      </Title>
+      <Info>
+        <span>按时间排序</span>
+        <span>
+          {startNumber}-{endNumber} / {result?.total}
+        </span>
+      </Info>
+      <ItemList category={category} result={result}></ItemList>
+      <Pagination currentPage={currentPage} lastPage={lastPage}></Pagination>
+    </MyListPage>
+  ) : (
+    <></>
+  );
 };
 
 export default MyList;
