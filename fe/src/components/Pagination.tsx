@@ -1,8 +1,9 @@
 import React from 'react';
+import classNames from 'classnames';
 import { NavLink, useLocation } from 'react-router-dom';
 import './pagination.scss';
 
-const pagesToDislay = 5;
+const pagesToDislay = 9;
 
 interface getPagesArgType {
   count: number;
@@ -52,8 +53,10 @@ const Pagination = (props: { currentPage: number; lastPage: number }) => {
     if (display) {
       return (
         <>
-          <NavLink to={getUrl(1)}>1</NavLink>
-          <span>...</span>
+          <NavLink to={getUrl(1)} className="page">
+            1
+          </NavLink>
+          <span className="page">...</span>
         </>
       );
     } else {
@@ -66,8 +69,10 @@ const Pagination = (props: { currentPage: number; lastPage: number }) => {
     if (display) {
       return (
         <>
-          <span>...</span>
-          <NavLink to={getUrl(lastPage)}>{lastPage}</NavLink>
+          <span className="page">...</span>
+          <NavLink to={getUrl(lastPage)} className="page">
+            {lastPage}
+          </NavLink>
         </>
       );
     } else {
@@ -80,13 +85,19 @@ const Pagination = (props: { currentPage: number; lastPage: number }) => {
       <NavLink to={getUrl(currentPage - 1)} isActive={() => currentPage > 1}>
         {'<'}前页
       </NavLink>
-      <FirstPage display={displayFirstPage}></FirstPage>
-      {pages.map((p) => (
-        <NavLink key={p} to={getUrl(p)} isActive={() => currentPage !== p}>
-          {p}
-        </NavLink>
-      ))}
-      <LastPage display={displayLastPage} lastPage={lastPage}></LastPage>
+      <nav className="pages">
+        <FirstPage display={displayFirstPage}></FirstPage>
+        {pages.map((p) => (
+          <NavLink
+            key={p}
+            to={getUrl(p)}
+            className={classNames({ current: p === currentPage, page: true })}
+          >
+            {p}
+          </NavLink>
+        ))}
+        <LastPage display={displayLastPage} lastPage={lastPage}></LastPage>
+      </nav>
       <NavLink
         to={getUrl(currentPage + 1)}
         isActive={() => currentPage < lastPage}

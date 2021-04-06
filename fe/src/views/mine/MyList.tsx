@@ -13,7 +13,7 @@ import MovieItem from '../movie/MovieItem';
 import MusicItem from '../music/MusicItem';
 
 type SubListType = BookSubList | MovieSubList | MusicSubList;
-const itemPerPage = 3;
+const itemPerPage = 1;
 
 const MyList = () => {
   const { context } = useContext(AuthContext);
