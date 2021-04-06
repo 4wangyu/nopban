@@ -3,7 +3,7 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import './pagination.scss';
 
-const pagesToDislay = 9;
+const pagesToDislay = 7;
 
 const getPages = ({
   count,
