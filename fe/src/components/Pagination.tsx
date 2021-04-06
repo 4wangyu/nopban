@@ -50,34 +50,30 @@ const Pagination = (props: { currentPage: number; lastPage: number }) => {
 
   function FirstPage(props: { display: boolean }) {
     const { display } = props;
-    if (display) {
-      return (
-        <>
-          <NavLink to={getUrl(1)} className="page">
-            1
-          </NavLink>
-          <span className="page">...</span>
-        </>
-      );
-    } else {
-      return <></>;
-    }
+    return display ? (
+      <>
+        <NavLink to={getUrl(1)} className="page">
+          1
+        </NavLink>
+        <span className="page">...</span>
+      </>
+    ) : (
+      <></>
+    );
   }
 
   function LastPage(props: { display: boolean; lastPage: number }) {
     const { display, lastPage } = props;
-    if (display) {
-      return (
-        <>
-          <span className="page">...</span>
-          <NavLink to={getUrl(lastPage)} className="page">
-            {lastPage}
-          </NavLink>
-        </>
-      );
-    } else {
-      return <></>;
-    }
+    return display ? (
+      <>
+        <span className="page">...</span>
+        <NavLink to={getUrl(lastPage)} className="page">
+          {lastPage}
+        </NavLink>
+      </>
+    ) : (
+      <></>
+    );
   }
 
   return (
