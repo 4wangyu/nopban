@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
-import { scrollToTop, getInbound } from '../../lib/util';
+import { scrollToTop, getInternal } from '../../lib/util';
 import {
   MovieSearchItem,
   MovieSearchPagination,
@@ -21,14 +21,14 @@ const Movie = () => {
   const history = useHistory();
 
   function search(start = 0) {
-    const inbound = getInbound();
+    const internal = getInternal();
 
     axios
       .get('/api/movie/search', {
         params: {
           searchKey,
           start,
-          inbound,
+          internal,
         },
       })
       .then(function (response) {
@@ -66,7 +66,7 @@ const Movie = () => {
                 refreshResult={refreshResult}
               ></MovieItem>
             ))}
-            <div className="pagination">
+            <div className="paginator">
               {result.pagination?.map(
                 (pag: MovieSearchPagination, idx: number) => (
                   <button

@@ -18,9 +18,9 @@ import { Music } from '../../models/music.model';
 const searchMusic = async (request: Request, response: Response) => {
   const start = +request.query.start || 0;
   const searchKey = request.query.searchKey as string;
-  const inbound = JSON.parse(request.query.inbound as string) as boolean;
+  const internal = JSON.parse(request.query.internal as string) as boolean;
 
-  if (inbound) {
+  if (internal) {
     const selectedItems = await selectMusicByTitle(searchKey, start);
     const items = selectedItems.map((m) => formatMusicSearchItem(m));
     response.status(200).json({ items, pagination: [] });

@@ -16,6 +16,11 @@ export interface MovieSearchResult {
   pagination: MovieSearchPagination[];
 }
 
+export interface MovieSubList {
+  items: MovieSearchItem[];
+  total: number;
+}
+
 export interface NameLinkModel {
   name: string;
   link: string;

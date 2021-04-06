@@ -16,6 +16,11 @@ export interface MusicSearchResult {
   pagination: MusicSearchPagination[];
 }
 
+export interface MusicSubList {
+  items: MusicSearchItem[];
+  total: number;
+}
+
 export interface NameLinkModel {
   name: string;
   link: string;

@@ -1,18 +1,17 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { handleError } from '../../lib/util';
 import { MovieSearchItem } from '../../models/movie.model';
 import { AuthContext } from '../../store/AuthProvider';
 
 function MovieItem(props: {
-  idx: number;
+  idx?: number;
   movie: MovieSearchItem;
-  refreshResult: (idx: number, movie: MovieSearchItem) => void;
+  refreshResult?: (idx: number, movie: MovieSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
-  const { url } = useRouteMatch();
   const { idx, movie, refreshResult } = props;
 
   function addMovie() {
@@ -26,7 +25,7 @@ function MovieItem(props: {
     })
       .then(function (res) {
         const m = res.data as MovieSearchItem;
-        refreshResult(idx, m);
+        refreshResult && idx !== undefined && refreshResult(idx, m);
         toast.success(`${m.title} 添加成功.`);
       })
       .catch(handleError);
@@ -47,7 +46,7 @@ function MovieItem(props: {
 
       <div className="info">
         {movie.saved ? (
-          <Link to={`${url}/${movie.url}`}>{movie.title}</Link>
+          <Link to={`/movie/${movie.url}`}>{movie.title}</Link>
         ) : (
           <button className="title" onClick={() => gotoMovie(movie.url)}>
             {movie.title}

@@ -1,18 +1,17 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { handleError } from '../../lib/util';
 import { MusicSearchItem } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
 
 function MusicItem(props: {
-  idx: number;
+  idx?: number;
   music: MusicSearchItem;
-  refreshResult: (idx: number, music: MusicSearchItem) => void;
+  refreshResult?: (idx: number, music: MusicSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
-  const { url } = useRouteMatch();
   const { idx, music, refreshResult } = props;
 
   function addItem() {
@@ -26,7 +25,7 @@ function MusicItem(props: {
     })
       .then(function (res) {
         const m = res.data as MusicSearchItem;
-        refreshResult(idx, m);
+        refreshResult && idx !== undefined && refreshResult(idx, m);
         toast.success(`${m.title} 添加成功.`);
       })
       .catch(handleError);
@@ -47,7 +46,7 @@ function MusicItem(props: {
 
       <div className="info">
         {music.saved ? (
-          <Link to={`${url}/${music.url}`}>{music.title}</Link>
+          <Link to={`/music/${music.url}`}>{music.title}</Link>
         ) : (
           <button className="title" onClick={() => showPage(music.url)}>
             {music.title}

@@ -16,6 +16,11 @@ export interface BookSearchResult {
   pagination: BookSearchPagination[];
 }
 
+export interface BookSubList {
+  items: BookSearchItem[];
+  total: number;
+}
+
 export interface NameLinkModel {
   name: string;
   link: string;

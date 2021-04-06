@@ -1,18 +1,17 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
-import { useRouteMatch, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { AuthContext } from '../../store/AuthProvider';
-import { BookSearchItem } from '../../models/book.model';
 import { handleError } from '../../lib/util';
+import { BookSearchItem } from '../../models/book.model';
+import { AuthContext } from '../../store/AuthProvider';
 
 function BookItem(props: {
-  idx: number;
+  idx?: number;
   book: BookSearchItem;
-  refreshResult: (idx: number, book: BookSearchItem) => void;
+  refreshResult?: (idx: number, book: BookSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
-  const { url } = useRouteMatch();
   const { idx, book, refreshResult } = props;
 
   function addBook() {
@@ -26,7 +25,7 @@ function BookItem(props: {
     })
       .then(function (res) {
         const b = res.data as BookSearchItem;
-        refreshResult(idx, b);
+        refreshResult && idx !== undefined && refreshResult(idx, b);
         toast.success(`${b.title} 添加成功.`);
       })
       .catch(handleError);
@@ -47,7 +46,7 @@ function BookItem(props: {
 
       <div className="info">
         {book.saved ? (
-          <Link to={`${url}/${book.url}`}>{book.title}</Link>
+          <Link to={`/book/${book.url}`}>{book.title}</Link>
         ) : (
           <button className="title" onClick={() => showPage(book.url)}>
             {book.title}

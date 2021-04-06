@@ -37,19 +37,19 @@ const SearchBar = (props: {
   setSearchKey: (s: string) => void;
   onButtonClick: () => void;
 }) => {
-  const [inbound, setInbound] = useState<boolean>(true);
+  const [internal, setInternal] = useState<boolean>(true);
 
   useEffect(() => {
-    const savedInbound = JSON.parse(
-      localStorage.getItem('inbound') || 'true'
+    const savedInternal = JSON.parse(
+      localStorage.getItem('internal') || 'true'
     ) as boolean;
-    setInbound(savedInbound);
+    setInternal(savedInternal);
   }, []);
 
   useHotkeys('alt+n', () => {
-    setInbound((inbound) => {
-      localStorage.setItem('inbound', JSON.stringify(!inbound));
-      return !inbound;
+    setInternal((internal) => {
+      localStorage.setItem('internal', JSON.stringify(!internal));
+      return !internal;
     });
   });
 
@@ -74,7 +74,7 @@ const SearchBar = (props: {
           onChange={(e) => props.setSearchKey(e.target.value)}
         ></Input>
         <Button onClick={handleClick}>
-          <i className={inbound ? 'icon-nopban' : 'icon-douban'}></i>
+          <i className={internal ? 'icon-nopban' : 'icon-douban'}></i>
         </Button>
       </Search>
     </>

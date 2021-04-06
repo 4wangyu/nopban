@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import $ from 'jquery';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { NameLinkModel } from '../models/movie.model';
 
@@ -28,13 +29,17 @@ function getImdbIdFromUrl(url?: string): string | undefined {
   return url?.split('/').reverse()[0];
 }
 
-function getInbound(): boolean {
-  return JSON.parse(localStorage.getItem('inbound') || 'true') as boolean;
+function getInternal(): boolean {
+  return JSON.parse(localStorage.getItem('internal') || 'true') as boolean;
 }
 
 function handleError(err: AxiosError) {
   console.error(err);
-  toast.error(err.message);
+  toast.error(err.response?.data.error);
+}
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
 }
 
 export {
@@ -42,6 +47,7 @@ export {
   getName,
   scrollToTop,
   getImdbIdFromUrl,
-  getInbound,
+  getInternal,
   handleError,
+  useQuery,
 };

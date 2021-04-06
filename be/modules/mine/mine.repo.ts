@@ -1,66 +1,70 @@
+import database from '../../database';
 import { Book } from '../../models/book.model';
 import { Movie, MyMovie } from '../../models/movie.model';
 import { Music } from '../../models/music.model';
-import database from '../../database';
 
 type ItemType = Book | MyMovie | Music;
 
-async function selectTotal(
-  category: string,
-  email: string
-): Promise<{ total: number }> {
-  const table = `user_${category}`;
+async function selectTotal(category: string, email: string): Promise<number> {
+  const userCategory = `user_${category}`;
+  const categoryId = `${category}_id`;
+
   const data = await database.raw(
     `SELECT COUNT(*) AS total FROM ?? AS uc
     INNER JOIN users ON users.id = uc.user_id
+    INNER JOIN ?? AS c ON c.id = uc.??
     WHERE users.email = ?`,
-    [table, email]
+    [userCategory, category, categoryId, email]
   );
-  return data.rows[0];
+  return +data.rows[0].total;
 }
 
 async function selectLatestFive(
   category: string,
   email: string
 ): Promise<ItemType[]> {
-  let data;
-  switch (category) {
-    case 'book':
-      data = await database.raw(
-        `SELECT * FROM user_book AS uc
-        INNER JOIN users ON users.id = uc.user_id
-        INNER JOIN book ON book.id = uc.book_id
-        WHERE users.email = ?
-        ORDER BY uc.updatedat DESC
-        LIMIT 5`,
-        [email]
-      );
-      return data.rows;
-    case 'movie':
-      data = await database.raw(
-        `SELECT * FROM user_movie AS uc
-        INNER JOIN users ON users.id = uc.user_id
-        INNER JOIN movie ON movie.id = uc.movie_id
-        WHERE users.email = ?
-        ORDER BY uc.updatedat DESC
-        LIMIT 5`,
-        [email]
-      );
-      return data.rows.map((row: Movie) => {
-        return {...row, img: row.poster} as MyMovie;
-      });
-    case 'music':
-      data = await database.raw(
-        `SELECT * FROM user_music AS uc
-        INNER JOIN users ON users.id = uc.user_id
-        INNER JOIN music ON music.id = uc.music_id
-        WHERE users.email = ?
-        ORDER BY uc.updatedat DESC
-        LIMIT 5`,
-        [email]
-      );
-      return data.rows;
+  const userCategory = `user_${category}`;
+  const categoryId = `${category}_id`;
+
+  const data = await database.raw(
+    `SELECT * FROM ?? AS uc
+    INNER JOIN users ON users.id = uc.user_id
+    INNER JOIN ?? AS c ON c.id = uc.??
+    WHERE users.email = ?
+    ORDER BY uc.updatedat DESC
+    LIMIT 5`,
+    [userCategory, category, categoryId, email]
+  );
+
+  if (category == 'movie') {
+    return data.rows.map((row: Movie) => {
+      return { ...row, img: row.poster } as MyMovie;
+    });
+  } else {
+    return data.rows;
   }
 }
 
-export { selectTotal, selectLatestFive };
+async function selectSubList(
+  category: string,
+  count: string,
+  offset: string,
+  email: string
+): Promise<ItemType[]> {
+  const userCategory = `user_${category}`;
+  const categoryId = `${category}_id`;
+
+  const data = await database.raw(
+    `SELECT * FROM ?? AS uc
+    INNER JOIN users ON users.id = uc.user_id
+    INNER JOIN ?? AS c ON c.id = uc.??
+    WHERE users.email = ?
+    ORDER BY uc.updatedat DESC
+    LIMIT ?
+    OFFSET ?`,
+    [userCategory, category, categoryId, email, count, offset]
+  );
+  return data.rows;
+}
+
+export { selectTotal, selectLatestFive, selectSubList };

@@ -1,5 +1,5 @@
 import React from 'react';
-import My from '../../components/My';
+import MyRecent from './MyRecent';
 
 const Mine = () => {
   const mystyle: { [key: string]: string } = {
@@ -11,9 +11,9 @@ const Mine = () => {
 
   return (
     <div style={mystyle}>
-      <My category="book" />
-      <My category="movie" />
-      <My category="music" />
+      <MyRecent category="book" />
+      <MyRecent category="movie" />
+      <MyRecent category="music" />
     </div>
   );
 };
