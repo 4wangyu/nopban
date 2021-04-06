@@ -13,7 +13,7 @@ import MovieItem from '../movie/MovieItem';
 import MusicItem from '../music/MusicItem';
 
 type SubListType = BookSubList | MovieSubList | MusicSubList;
-const itemPerPage = 12;
+const itemPerPage = 3;
 
 const MyList = () => {
   const { context } = useContext(AuthContext);
@@ -22,10 +22,8 @@ const MyList = () => {
     items: [],
     total: 0,
   });
-  const location = useLocation();
-  const category = location.pathname.substring(
-    location.pathname.lastIndexOf('/') + 1
-  );
+  const pathname = useLocation().pathname;
+  const category = pathname.substring(pathname.lastIndexOf('/') + 1);
 
   const lastPage = Math.ceil((result?.total * 1.0) / itemPerPage);
   const currentPage = usePageParam(lastPage);
@@ -83,11 +81,7 @@ const MyList = () => {
           </span>
         </div>
         <ItemList category={category} result={result}></ItemList>
-        <Pagination
-          category={category}
-          currentPage={currentPage}
-          lastPage={lastPage}
-        ></Pagination>
+        <Pagination currentPage={currentPage} lastPage={lastPage}></Pagination>
       </div>
     );
   } else {

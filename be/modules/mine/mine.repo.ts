@@ -6,12 +6,15 @@ import { Music } from '../../models/music.model';
 type ItemType = Book | MyMovie | Music;
 
 async function selectTotal(category: string, email: string): Promise<number> {
-  const table = `user_${category}`;
+  const uc = `user_${category}`;
+  const c_id = `${category}_id`;
+
   const data = await database.raw(
     `SELECT COUNT(*) AS total FROM ?? AS uc
     INNER JOIN users ON users.id = uc.user_id
+    INNER JOIN ?? AS c ON c.id = uc.??
     WHERE users.email = ?`,
-    [table, email]
+    [uc, category, c_id, email]
   );
   return +data.rows[0].total;
 }
