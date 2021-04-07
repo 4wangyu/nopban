@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Pagination from '../../components/Pagination';
 import { CATEGORIES, DICT_NOUN, DICT_VERB } from '../../lib/constant';
-import { handleError, useQuery } from '../../lib/util';
+import { handleError, scrollToTop, useQuery } from '../../lib/util';
 import { BookSearchItem, BookSubList } from '../../models/book.model';
 import { MovieSearchItem, MovieSubList } from '../../models/movie.model';
 import { MusicSearchItem, MusicSubList } from '../../models/music.model';
@@ -81,6 +81,7 @@ const MyList = () => {
         })
         .then((res) => {
           setResult(res.data);
+          scrollToTop();
         })
         .catch(handleError);
     }
