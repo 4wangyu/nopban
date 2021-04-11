@@ -8,8 +8,8 @@ import {
   MovieSearchPagination,
   MovieSearchResult,
 } from '../../models/movie.model';
-import MovieItem from './MovieItem';
 import MoviePage from './MoviePage';
+import MovieSearchItem from './MovieSearchItem';
 
 const Movie = () => {
   const [result, setResult] = useState<MovieSearchResult>({
@@ -59,12 +59,12 @@ const Movie = () => {
         <Switch>
           <Route exact path={path}>
             {result.items?.map((item: MovieSearchItemType, idx: number) => (
-              <MovieItem
+              <MovieSearchItem
                 key={idx}
                 movie={item}
                 idx={idx}
                 refreshResult={refreshResult}
-              ></MovieItem>
+              ></MovieSearchItem>
             ))}
             <div className="paginator">
               {result.pagination?.map(

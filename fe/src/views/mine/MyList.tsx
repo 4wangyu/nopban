@@ -9,9 +9,9 @@ import { BookSearchItemType, BookSubList } from '../../models/book.model';
 import { MovieSearchItemType, MovieSubList } from '../../models/movie.model';
 import { MusicSearchItemType, MusicSubList } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
-import BookItem from '../book/BookItem';
-import MovieItem from '../movie/MovieItem';
-import MusicItem from '../music/MusicItem';
+import BookSearchItem from '../book/BookSearchItem';
+import MovieSearchItem from '../movie/MovieSearchItem';
+import MusicSearchItem from '../music/MusicSearchItem';
 
 type SubListType = BookSubList | MovieSubList | MusicSubList;
 const itemPerPage = 10;
@@ -116,7 +116,7 @@ function ItemList(props: { category: string; result: SubListType }) {
         <div>
           {(result as BookSubList).items?.map(
             (item: BookSearchItemType, idx: number) => (
-              <BookItem key={idx} book={item}></BookItem>
+              <BookSearchItem key={idx} book={item}></BookSearchItem>
             )
           )}
         </div>
@@ -126,7 +126,7 @@ function ItemList(props: { category: string; result: SubListType }) {
         <div>
           {(result as MovieSubList).items?.map(
             (item: MovieSearchItemType, idx: number) => (
-              <MovieItem key={idx} movie={item}></MovieItem>
+              <MovieSearchItem key={idx} movie={item}></MovieSearchItem>
             )
           )}
         </div>
@@ -136,7 +136,7 @@ function ItemList(props: { category: string; result: SubListType }) {
         <div>
           {(result as MusicSubList).items?.map(
             (item: MusicSearchItemType, idx: number) => (
-              <MusicItem key={idx} music={item}></MusicItem>
+              <MusicSearchItem key={idx} music={item}></MusicSearchItem>
             )
           )}
         </div>

@@ -6,7 +6,7 @@ import { handleError } from '../../lib/util';
 import { BookSearchItemType } from '../../models/book.model';
 import { AuthContext } from '../../store/AuthProvider';
 
-function BookItem(props: {
+function BookSearchItem(props: {
   book: BookSearchItemType;
   idx?: number;
   refreshResult?: (idx: number, book: BookSearchItemType) => void;
@@ -66,4 +66,4 @@ function BookItem(props: {
   );
 }
 
-export default BookItem;
+export default BookSearchItem;

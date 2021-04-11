@@ -8,8 +8,8 @@ import {
   BookSearchPagination,
   BookSearchResult,
 } from '../../models/book.model';
-import BookItem from './BookItem';
 import BookPage from './BookPage';
+import BookSearchItem from './BookSearchItem';
 
 const Book = () => {
   const [result, setResult] = useState<BookSearchResult>({
@@ -59,12 +59,12 @@ const Book = () => {
         <Switch>
           <Route exact path={path}>
             {result.items?.map((item: BookSearchItemType, idx: number) => (
-              <BookItem
+              <BookSearchItem
                 key={idx}
                 book={item}
                 idx={idx}
                 refreshResult={refreshResult}
-              ></BookItem>
+              ></BookSearchItem>
             ))}
             <div className="paginator">
               {result.pagination?.map(

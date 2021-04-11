@@ -8,8 +8,8 @@ import {
   MusicSearchPagination,
   MusicSearchResult,
 } from '../../models/music.model';
-import MusicItem from './MusicItem';
 import MusicPage from './MusicPage';
+import MusicSearchItem from './MusicSearchItem';
 
 const Music = () => {
   const [result, setResult] = useState<MusicSearchResult>({
@@ -59,12 +59,12 @@ const Music = () => {
         <Switch>
           <Route exact path={path}>
             {result.items?.map((item: MusicSearchItemType, idx: number) => (
-              <MusicItem
+              <MusicSearchItem
                 key={idx}
                 music={item}
                 idx={idx}
                 refreshResult={refreshResult}
-              ></MusicItem>
+              ></MusicSearchItem>
             ))}
             <div className="paginator">
               {result.pagination?.map(
