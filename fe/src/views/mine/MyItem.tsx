@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MyMusicItemType } from '../../models/music.model';
+import { MY_ITEM_TYPE } from '../../lib/constant';
 
-function MyMusicItem(props: { item: MyMusicItemType }) {
-  const { item } = props;
+function MyItem(props: { category: string; item: MY_ITEM_TYPE }) {
+  const { category, item } = props;
 
   return (
     <div className="my-list-item">
       <img src={'data:image;base64,' + item.img} alt={item.title}></img>
       <div className="info">
-        <Link to={`/music/${item.url}`}>{item.title}</Link>
+        <Link to={`/${category}/${item.url}`}>{item.title}</Link>
         {item.metas?.map((m, i) => (
           <p key={i}>{m}</p>
         ))}
@@ -19,4 +19,4 @@ function MyMusicItem(props: { item: MyMusicItemType }) {
   );
 }
 
-export default MyMusicItem;
+export default MyItem;

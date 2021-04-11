@@ -3,18 +3,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Pagination from '../../components/Pagination';
-import { CATEGORIES, DICT_NOUN, DICT_VERB } from '../../lib/constant';
+import {
+  CATEGORIES,
+  DICT_NOUN,
+  DICT_VERB,
+  MY_ITEM_TYPE,
+  MY_SUB_LIST_TYPE,
+} from '../../lib/constant';
 import { handleError, scrollToTop, useQuery } from '../../lib/util';
-import { MyBookSubList, MyBookItemType } from '../../models/book.model';
-import { MyMovieSubList, MyMovieItemType } from '../../models/movie.model';
-import { MyMusicSubList, MyMusicItemType } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
-import MyBookItem from './MyBookItem';
-import MyMovieItem from './MyMovieItem';
-import MyMusicItem from './MyMusicItem';
+import MyItem from './MyItem';
 
-type MySubListType = MyBookSubList | MyMovieSubList | MyMusicSubList;
-const itemPerPage = 10;
+const ITEM_PER_PAGE = 10;
 
 const MyListPage = styled.div`
   margin: auto;
@@ -42,19 +42,19 @@ const Info = styled.div`
 const MyList = () => {
   const { context } = useContext(AuthContext);
   const token = context?.token;
-  const [result, setResult] = useState<MySubListType>({
+  const [result, setResult] = useState<MY_SUB_LIST_TYPE>({
     items: [],
     total: 0,
   });
   const pathname = useLocation().pathname;
   const category = pathname.substring(pathname.lastIndexOf('/') + 1);
 
-  const lastPage = Math.ceil((result?.total * 1.0) / itemPerPage);
+  const lastPage = Math.ceil((result?.total * 1.0) / ITEM_PER_PAGE);
   const currentPage = usePageParam(lastPage);
-  const startNumber = (currentPage - 1) * itemPerPage + 1;
+  const startNumber = (currentPage - 1) * ITEM_PER_PAGE + 1;
   const endNumber =
-    currentPage * itemPerPage < result?.total
-      ? currentPage * itemPerPage
+    currentPage * ITEM_PER_PAGE < result?.total
+      ? currentPage * ITEM_PER_PAGE
       : result?.total;
 
   function usePageParam(lastPage: number) {
@@ -72,8 +72,8 @@ const MyList = () => {
         .get(`/api/mine/sublist`, {
           params: {
             category: category,
-            count: itemPerPage,
-            offset: itemPerPage * (currentPage - 1),
+            count: ITEM_PER_PAGE,
+            offset: ITEM_PER_PAGE * (currentPage - 1),
           },
           headers: {
             Authorization: 'Bearer ' + token,
@@ -98,7 +98,13 @@ const MyList = () => {
           {startNumber}-{endNumber} / {result?.total}
         </span>
       </Info>
-      <ItemList category={category} result={result}></ItemList>
+      <div>
+        {(result.items as MY_ITEM_TYPE[])?.map(
+          (item: MY_ITEM_TYPE, idx: number) => (
+            <MyItem key={idx} category={category} item={item}></MyItem>
+          )
+        )}
+      </div>
       <Pagination currentPage={currentPage} lastPage={lastPage}></Pagination>
     </MyListPage>
   ) : (
@@ -107,41 +113,3 @@ const MyList = () => {
 };
 
 export default MyList;
-
-function ItemList(props: { category: string; result: MySubListType }) {
-  const { category, result } = props;
-  switch (category) {
-    case 'book':
-      return (
-        <div>
-          {(result as MyBookSubList).items?.map(
-            (item: MyBookItemType, idx: number) => (
-              <MyBookItem key={idx} item={item}></MyBookItem>
-            )
-          )}
-        </div>
-      );
-    case 'movie':
-      return (
-        <div>
-          {(result as MyMovieSubList).items?.map(
-            (item: MyMovieItemType, idx: number) => (
-              <MyMovieItem key={idx} item={item}></MyMovieItem>
-            )
-          )}
-        </div>
-      );
-    case 'music':
-      return (
-        <div>
-          {(result as MyMusicSubList).items?.map(
-            (item: MyMusicItemType, idx: number) => (
-              <MyMusicItem key={idx} item={item}></MyMusicItem>
-            )
-          )}
-        </div>
-      );
-    default:
-      return <></>;
-  }
-}

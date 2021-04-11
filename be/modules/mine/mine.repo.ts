@@ -1,9 +1,6 @@
+import { MY_TYPE } from 'be/be/lib/constant';
 import database from '../../database';
-import { MyBook } from '../../models/book.model';
 import { Movie, MyMovie } from '../../models/movie.model';
-import { MyMusic } from '../../models/music.model';
-
-type MyItemType = MyBook | MyMovie | MyMusic;
 
 async function selectTotal(category: string, email: string): Promise<number> {
   const userCategory = `user_${category}`;
@@ -22,7 +19,7 @@ async function selectTotal(category: string, email: string): Promise<number> {
 async function selectLatestFive(
   category: string,
   email: string
-): Promise<MyItemType[]> {
+): Promise<MY_TYPE[]> {
   const userCategory = `user_${category}`;
   const categoryId = `${category}_id`;
 
@@ -50,7 +47,7 @@ async function selectSubList(
   count: string,
   offset: string,
   email: string
-): Promise<MyItemType[]> {
+): Promise<MY_TYPE[]> {
   const userCategory = `user_${category}`;
   const categoryId = `${category}_id`;
 
