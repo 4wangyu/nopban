@@ -1,19 +1,19 @@
 import cheerio from 'cheerio';
+import { getBase64 } from '../../lib/util';
 import {
-  MovieSearchItem,
+  Movie,
+  MovieSearchItemType,
   MovieSearchPagination,
   NameLinkModel,
-  Movie,
 } from '../../models/movie.model';
-import { getBase64 } from '../../lib/util';
 
 function parseMovieSearch(
   html: string
-): { items: MovieSearchItem[]; pagination: MovieSearchPagination[] } {
+): { items: MovieSearchItemType[]; pagination: MovieSearchPagination[] } {
   const $ = cheerio.load(html, { normalizeWhitespace: true });
 
   // parse movie items
-  const items: MovieSearchItem[] = [];
+  const items: MovieSearchItemType[] = [];
   $('.item-root').each((i, el) => {
     const url = $(el).find('.title-text').attr('href');
 
@@ -47,7 +47,7 @@ function parseMovieSearch(
 }
 
 async function parseMovie(html: string): Promise<Partial<Movie>> {
-  const $ = cheerio.load(cheerio.load(html)("#wrapper").html());
+  const $ = cheerio.load(cheerio.load(html)('#wrapper').html());
 
   const title = $('h1 span:first-child').text();
   const year = +$('h1 .year').text().substring(1, 5);

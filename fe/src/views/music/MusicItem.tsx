@@ -3,13 +3,13 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { handleError } from '../../lib/util';
-import { MusicSearchItem } from '../../models/music.model';
+import { MusicSearchItemType } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
 
 function MusicItem(props: {
-  music: MusicSearchItem;
+  music: MusicSearchItemType;
   idx?: number;
-  refreshResult?: (idx: number, music: MusicSearchItem) => void;
+  refreshResult?: (idx: number, music: MusicSearchItemType) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
   const { idx, music, refreshResult } = props;
@@ -24,7 +24,7 @@ function MusicItem(props: {
       },
     })
       .then(function (res) {
-        const m = res.data as MusicSearchItem;
+        const m = res.data as MusicSearchItemType;
         refreshResult && idx !== undefined && refreshResult(idx, m);
         toast.success(`${m.title} 添加成功.`);
       })

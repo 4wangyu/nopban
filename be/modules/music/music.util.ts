@@ -1,7 +1,11 @@
 import { arrToStr, getName } from '../../lib/util';
-import { MusicSearchItem, Music, MusicItem } from '../../models/music.model';
+import {
+  Music,
+  MusicItemType,
+  MusicSearchItemType,
+} from '../../models/music.model';
 
-function formatMusicItem(music: Partial<Music>): MusicItem {
+function formatMusicItem(music: Partial<Music>): MusicItemType {
   const url = music.uuid;
 
   const title = music.title;
@@ -16,7 +20,9 @@ function formatMusicItem(music: Partial<Music>): MusicItem {
   return { url, title, metas, img };
 }
 
-function formatInternalMusicSearchItem(music: Partial<Music>): MusicSearchItem {
+function formatInternalMusicSearchItem(
+  music: Partial<Music>
+): MusicSearchItemType {
   const musicItem = formatMusicItem(music);
   return { ...musicItem, saved: true };
 }

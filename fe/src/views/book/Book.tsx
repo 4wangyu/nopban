@@ -2,14 +2,14 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
-import { scrollToTop, getInternal } from '../../lib/util';
+import { getInternal, scrollToTop } from '../../lib/util';
+import {
+  BookSearchItemType,
+  BookSearchPagination,
+  BookSearchResult,
+} from '../../models/book.model';
 import BookItem from './BookItem';
 import BookPage from './BookPage';
-import {
-  BookSearchResult,
-  BookSearchItem,
-  BookSearchPagination,
-} from '../../models/book.model';
 
 const Book = () => {
   const [result, setResult] = useState<BookSearchResult>({
@@ -41,7 +41,7 @@ const Book = () => {
       });
   }
 
-  function refreshResult(idx: number, item: BookSearchItem) {
+  function refreshResult(idx: number, item: BookSearchItemType) {
     const list = [...result.items];
     list[idx] = item;
     setResult({ items: list, pagination: result.pagination });
@@ -58,7 +58,7 @@ const Book = () => {
       <main>
         <Switch>
           <Route exact path={path}>
-            {result.items?.map((item: BookSearchItem, idx: number) => (
+            {result.items?.map((item: BookSearchItemType, idx: number) => (
               <BookItem
                 key={idx}
                 book={item}

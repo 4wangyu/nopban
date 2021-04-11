@@ -1,19 +1,19 @@
 import cheerio from 'cheerio';
 import { getBase64 } from '../../lib/util';
 import {
-  MusicSearchPagination,
-  MusicSearchItem,
   Music,
+  MusicSearchItemType,
+  MusicSearchPagination,
   NameLinkModel,
 } from '../../models/music.model';
 
 function parseMusicSearch(
   html: string
-): { items: MusicSearchItem[]; pagination: MusicSearchPagination[] } {
+): { items: MusicSearchItemType[]; pagination: MusicSearchPagination[] } {
   const $ = cheerio.load(html, { normalizeWhitespace: true });
 
   // parse items
-  const items: MusicSearchItem[] = [];
+  const items: MusicSearchItemType[] = [];
   $('.item-root').each((i, el) => {
     const url = $(el).find('.title-text').attr('href');
 
@@ -47,7 +47,7 @@ function parseMusicSearch(
 }
 
 async function parseMusic(html: string): Promise<Partial<Music>> {
-  const $ = cheerio.load(cheerio.load(html)("#wrapper").html());
+  const $ = cheerio.load(cheerio.load(html)('#wrapper').html());
 
   const title = $('h1 span:first-child').text();
 

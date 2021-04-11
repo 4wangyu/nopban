@@ -2,14 +2,14 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
-import { scrollToTop, getInternal } from '../../lib/util';
+import { getInternal, scrollToTop } from '../../lib/util';
+import {
+  MusicSearchItemType,
+  MusicSearchPagination,
+  MusicSearchResult,
+} from '../../models/music.model';
 import MusicItem from './MusicItem';
 import MusicPage from './MusicPage';
-import {
-  MusicSearchResult,
-  MusicSearchItem,
-  MusicSearchPagination,
-} from '../../models/music.model';
 
 const Music = () => {
   const [result, setResult] = useState<MusicSearchResult>({
@@ -41,7 +41,7 @@ const Music = () => {
       });
   }
 
-  function refreshResult(idx: number, item: MusicSearchItem) {
+  function refreshResult(idx: number, item: MusicSearchItemType) {
     const list = [...result.items];
     list[idx] = item;
     setResult({ items: list, pagination: result.pagination });
@@ -58,7 +58,7 @@ const Music = () => {
       <main>
         <Switch>
           <Route exact path={path}>
-            {result.items?.map((item: MusicSearchItem, idx: number) => (
+            {result.items?.map((item: MusicSearchItemType, idx: number) => (
               <MusicItem
                 key={idx}
                 music={item}

@@ -1,7 +1,11 @@
 import { arrToStr, getName } from '../../lib/util';
-import { Movie, MovieItem, MovieSearchItem } from '../../models/movie.model';
+import {
+  Movie,
+  MovieItemType,
+  MovieSearchItemType,
+} from '../../models/movie.model';
 
-function formatMovieItem(movie: Partial<Movie>): MovieItem {
+function formatMovieItem(movie: Partial<Movie>): MovieItemType {
   const url = movie.uuid;
   const title = movie.title + ' (' + movie.year + ')';
 
@@ -20,7 +24,9 @@ function formatMovieItem(movie: Partial<Movie>): MovieItem {
   return { url, title, metas, poster };
 }
 
-function formatInternalMovieSearchItem(movie: Partial<Movie>): MovieSearchItem {
+function formatInternalMovieSearchItem(
+  movie: Partial<Movie>
+): MovieSearchItemType {
   const movieItem = formatMovieItem(movie);
   return { ...movieItem, saved: true };
 }

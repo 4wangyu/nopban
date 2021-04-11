@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import Pagination from '../../components/Pagination';
 import { CATEGORIES, DICT_NOUN, DICT_VERB } from '../../lib/constant';
 import { handleError, scrollToTop, useQuery } from '../../lib/util';
-import { BookSearchItem, BookSubList } from '../../models/book.model';
-import { MovieSearchItem, MovieSubList } from '../../models/movie.model';
-import { MusicSearchItem, MusicSubList } from '../../models/music.model';
+import { BookSearchItemType, BookSubList } from '../../models/book.model';
+import { MovieSearchItemType, MovieSubList } from '../../models/movie.model';
+import { MusicSearchItemType, MusicSubList } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
 import BookItem from '../book/BookItem';
 import MovieItem from '../movie/MovieItem';
@@ -115,7 +115,7 @@ function ItemList(props: { category: string; result: SubListType }) {
       return (
         <div>
           {(result as BookSubList).items?.map(
-            (item: BookSearchItem, idx: number) => (
+            (item: BookSearchItemType, idx: number) => (
               <BookItem key={idx} book={item}></BookItem>
             )
           )}
@@ -125,7 +125,7 @@ function ItemList(props: { category: string; result: SubListType }) {
       return (
         <div>
           {(result as MovieSubList).items?.map(
-            (item: MovieSearchItem, idx: number) => (
+            (item: MovieSearchItemType, idx: number) => (
               <MovieItem key={idx} movie={item}></MovieItem>
             )
           )}
@@ -135,7 +135,7 @@ function ItemList(props: { category: string; result: SubListType }) {
       return (
         <div>
           {(result as MusicSubList).items?.map(
-            (item: MusicSearchItem, idx: number) => (
+            (item: MusicSearchItemType, idx: number) => (
               <MusicItem key={idx} music={item}></MusicItem>
             )
           )}
