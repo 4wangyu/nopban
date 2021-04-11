@@ -19,6 +19,7 @@ main {
   width: 84%;
 }
 
+@import './styles/common';
 @import './styles/iconfont';
-@import './styles/search-page';
 @import './styles/info-page';
+@import './styles/search-page';

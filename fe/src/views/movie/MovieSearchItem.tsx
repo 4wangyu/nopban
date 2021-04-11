@@ -8,8 +8,8 @@ import { AuthContext } from '../../store/AuthProvider';
 
 function MovieSearchItem(props: {
   movie: MovieSearchItemType;
-  idx?: number;
-  refreshResult?: (idx: number, movie: MovieSearchItemType) => void;
+  idx: number;
+  refreshResult: (idx: number, movie: MovieSearchItemType) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
   const { idx, movie, refreshResult } = props;
@@ -25,7 +25,7 @@ function MovieSearchItem(props: {
     })
       .then(function (res) {
         const m = res.data as MovieSearchItemType;
-        refreshResult && idx !== undefined && refreshResult(idx, m);
+        refreshResult(idx, m);
         toast.success(`${m.title} 添加成功.`);
       })
       .catch(handleError);

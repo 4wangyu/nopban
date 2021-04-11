@@ -8,8 +8,8 @@ import { AuthContext } from '../../store/AuthProvider';
 
 function BookSearchItem(props: {
   book: BookSearchItemType;
-  idx?: number;
-  refreshResult?: (idx: number, book: BookSearchItemType) => void;
+  idx: number;
+  refreshResult: (idx: number, book: BookSearchItemType) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
   const { idx, book, refreshResult } = props;
@@ -25,7 +25,7 @@ function BookSearchItem(props: {
     })
       .then(function (res) {
         const b = res.data as BookSearchItemType;
-        refreshResult && idx !== undefined && refreshResult(idx, b);
+        refreshResult(idx, b);
         toast.success(`${b.title} 添加成功.`);
       })
       .catch(handleError);

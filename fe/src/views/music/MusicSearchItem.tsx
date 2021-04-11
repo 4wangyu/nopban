@@ -8,8 +8,8 @@ import { AuthContext } from '../../store/AuthProvider';
 
 function MusicSearchItem(props: {
   music: MusicSearchItemType;
-  idx?: number;
-  refreshResult?: (idx: number, music: MusicSearchItemType) => void;
+  idx: number;
+  refreshResult: (idx: number, music: MusicSearchItemType) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
   const { idx, music, refreshResult } = props;
@@ -25,7 +25,7 @@ function MusicSearchItem(props: {
     })
       .then(function (res) {
         const m = res.data as MusicSearchItemType;
-        refreshResult && idx !== undefined && refreshResult(idx, m);
+        refreshResult(idx, m);
         toast.success(`${m.title} 添加成功.`);
       })
       .catch(handleError);

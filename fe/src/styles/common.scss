@@ -1,0 +1,45 @@
+.my-list-item,
+.search-item {
+  display: flex;
+  margin-bottom: 20px;
+
+  img {
+    margin-right: 15px;
+    max-height: 72px;
+    width: 48px;
+  }
+
+  .info {
+    flex: 1;
+  }
+
+  button,
+  a {
+    background: none;
+    border: 0;
+    color: #37a;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 4px;
+    padding: 0;
+    text-align: left;
+
+    &:hover {
+      background-color: #37a;
+      color: #fff;
+    }
+  }
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  p {
+    color: #757575;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+  }
+}
