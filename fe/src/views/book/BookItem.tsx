@@ -7,8 +7,8 @@ import { BookSearchItem } from '../../models/book.model';
 import { AuthContext } from '../../store/AuthProvider';
 
 function BookItem(props: {
-  idx?: number;
   book: BookSearchItem;
+  idx?: number;
   refreshResult?: (idx: number, book: BookSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);

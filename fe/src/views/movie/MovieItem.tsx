@@ -7,8 +7,8 @@ import { MovieSearchItem } from '../../models/movie.model';
 import { AuthContext } from '../../store/AuthProvider';
 
 function MovieItem(props: {
-  idx?: number;
   movie: MovieSearchItem;
+  idx?: number;
   refreshResult?: (idx: number, movie: MovieSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);

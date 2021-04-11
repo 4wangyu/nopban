@@ -61,8 +61,8 @@ const Movie = () => {
             {result.items?.map((item: MovieSearchItem, idx: number) => (
               <MovieItem
                 key={idx}
-                idx={idx}
                 movie={item}
+                idx={idx}
                 refreshResult={refreshResult}
               ></MovieItem>
             ))}

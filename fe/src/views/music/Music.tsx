@@ -61,8 +61,8 @@ const Music = () => {
             {result.items?.map((item: MusicSearchItem, idx: number) => (
               <MusicItem
                 key={idx}
-                idx={idx}
                 music={item}
+                idx={idx}
                 refreshResult={refreshResult}
               ></MusicItem>
             ))}

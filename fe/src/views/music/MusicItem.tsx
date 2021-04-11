@@ -7,8 +7,8 @@ import { MusicSearchItem } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
 
 function MusicItem(props: {
-  idx?: number;
   music: MusicSearchItem;
+  idx?: number;
   refreshResult?: (idx: number, music: MusicSearchItem) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);

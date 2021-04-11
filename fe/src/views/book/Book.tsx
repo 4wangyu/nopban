@@ -61,8 +61,8 @@ const Book = () => {
             {result.items?.map((item: BookSearchItem, idx: number) => (
               <BookItem
                 key={idx}
-                idx={idx}
                 book={item}
+                idx={idx}
                 refreshResult={refreshResult}
               ></BookItem>
             ))}
