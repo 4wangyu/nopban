@@ -3,6 +3,8 @@ import {
   Movie,
   MovieItemType,
   MovieSearchItemType,
+  MyMovie,
+  MyMovieItemType,
 } from '../../models/movie.model';
 
 function formatMovieItem(movie: Partial<Movie>): MovieItemType {
@@ -31,4 +33,9 @@ function formatInternalMovieSearchItem(
   return { ...movieItem, saved: true };
 }
 
-export { formatMovieItem, formatInternalMovieSearchItem };
+function formatMyMovieItem(movie: Partial<MyMovie>): MyMovieItemType {
+  const movieItem = formatMovieItem(movie);
+  return { ...movieItem, img: movie.img, rating: movie.rating };
+}
+
+export { formatMovieItem, formatInternalMovieSearchItem, formatMyMovieItem };

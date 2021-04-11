@@ -44,3 +44,7 @@ export interface Book {
   isbn: string;
   created_at?: Date;
 }
+
+export interface MyBook extends Book {
+  rating: number;
+}

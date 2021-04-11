@@ -23,8 +23,8 @@ export interface MusicSearchResult {
   pagination: MusicSearchPagination[];
 }
 
-export interface MusicSubList {
-  items: MusicSearchItemType[];
+export interface MyMusicSubList {
+  items: MyMusicItemType[];
   total: number;
 }
 
@@ -47,4 +47,8 @@ export interface Music {
   cd_count: number;
   barcode: string;
   created_at?: Date;
+}
+
+export interface MyMusic extends Music {
+  rating: number;
 }

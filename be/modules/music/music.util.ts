@@ -3,6 +3,8 @@ import {
   Music,
   MusicItemType,
   MusicSearchItemType,
+  MyMusic,
+  MyMusicItemType,
 } from '../../models/music.model';
 
 function formatMusicItem(music: Partial<Music>): MusicItemType {
@@ -27,4 +29,9 @@ function formatInternalMusicSearchItem(
   return { ...musicItem, saved: true };
 }
 
-export { formatMusicItem, formatInternalMusicSearchItem };
+function formatMyMusicItem(music: Partial<MyMusic>): MyMusicItemType {
+  const musicItem = formatMusicItem(music);
+  return { ...musicItem, rating: music.rating };
+}
+
+export { formatMusicItem, formatInternalMusicSearchItem, formatMyMusicItem };

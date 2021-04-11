@@ -43,3 +43,7 @@ export interface Music {
   barcode: string;
   created_at?: Date;
 }
+
+export interface MyMusic extends Music {
+  rating: number;
+}

@@ -3,20 +3,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { DICT_QUANTIFIER, DICT_VERB } from '../../lib/constant';
 import { handleError } from '../../lib/util';
-import { Book } from '../../models/book.model';
+import { MyBook } from '../../models/book.model';
 import { MyMovie } from '../../models/movie.model';
-import { Music } from '../../models/music.model';
+import { MyMusic } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
 import './my-recent.scss';
 
-type ItemType = Book | MyMovie | Music;
+type MyItemType = MyBook | MyMovie | MyMusic;
 
 const MyRecent = (props: { category: string }) => {
   const { context } = useContext(AuthContext);
   const token = context?.token;
   const { category } = props;
   const [total, setTotal] = useState();
-  const [result, setResult] = useState<ItemType[]>([]);
+  const [result, setResult] = useState<MyItemType[]>([]);
 
   useEffect(() => {
     if (token) {
@@ -65,7 +65,7 @@ const MyRecent = (props: { category: string }) => {
       </div>
       <div className="list">
         <div className="status">{DICT_VERB[category]}过</div>
-        {result?.map((item: ItemType, idx: number) => (
+        {result?.map((item: MyItemType, idx: number) => (
           <Link
             title={item.title}
             to={`/${category}/${item.uuid}`}

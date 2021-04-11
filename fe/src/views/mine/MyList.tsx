@@ -5,15 +5,15 @@ import styled from 'styled-components';
 import Pagination from '../../components/Pagination';
 import { CATEGORIES, DICT_NOUN, DICT_VERB } from '../../lib/constant';
 import { handleError, scrollToTop, useQuery } from '../../lib/util';
-import { BookSearchItemType, BookSubList } from '../../models/book.model';
-import { MovieSearchItemType, MovieSubList } from '../../models/movie.model';
-import { MusicSearchItemType, MusicSubList } from '../../models/music.model';
+import { MyBookSubList, MyBookItemType } from '../../models/book.model';
+import { MyMovieSubList, MyMovieItemType } from '../../models/movie.model';
+import { MyMusicSubList, MyMusicItemType } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
 import MyBookItem from './MyBookItem';
 import MyMovieItem from './MyMovieItem';
 import MyMusicItem from './MyMusicItem';
 
-type SubListType = BookSubList | MovieSubList | MusicSubList;
+type MySubListType = MyBookSubList | MyMovieSubList | MyMusicSubList;
 const itemPerPage = 10;
 
 const MyListPage = styled.div`
@@ -42,7 +42,7 @@ const Info = styled.div`
 const MyList = () => {
   const { context } = useContext(AuthContext);
   const token = context?.token;
-  const [result, setResult] = useState<SubListType>({
+  const [result, setResult] = useState<MySubListType>({
     items: [],
     total: 0,
   });
@@ -108,15 +108,15 @@ const MyList = () => {
 
 export default MyList;
 
-function ItemList(props: { category: string; result: SubListType }) {
+function ItemList(props: { category: string; result: MySubListType }) {
   const { category, result } = props;
   switch (category) {
     case 'book':
       return (
         <div>
-          {(result as BookSubList).items?.map(
-            (item: BookSearchItemType, idx: number) => (
-              <MyBookItem key={idx} book={item}></MyBookItem>
+          {(result as MyBookSubList).items?.map(
+            (item: MyBookItemType, idx: number) => (
+              <MyBookItem key={idx} item={item}></MyBookItem>
             )
           )}
         </div>
@@ -124,9 +124,9 @@ function ItemList(props: { category: string; result: SubListType }) {
     case 'movie':
       return (
         <div>
-          {(result as MovieSubList).items?.map(
-            (item: MovieSearchItemType, idx: number) => (
-              <MyMovieItem key={idx} movie={item}></MyMovieItem>
+          {(result as MyMovieSubList).items?.map(
+            (item: MyMovieItemType, idx: number) => (
+              <MyMovieItem key={idx} item={item}></MyMovieItem>
             )
           )}
         </div>
@@ -134,9 +134,9 @@ function ItemList(props: { category: string; result: SubListType }) {
     case 'music':
       return (
         <div>
-          {(result as MusicSubList).items?.map(
-            (item: MusicSearchItemType, idx: number) => (
-              <MyMusicItem key={idx} music={item}></MyMusicItem>
+          {(result as MyMusicSubList).items?.map(
+            (item: MyMusicItemType, idx: number) => (
+              <MyMusicItem key={idx} item={item}></MyMusicItem>
             )
           )}
         </div>

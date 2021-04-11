@@ -23,8 +23,8 @@ export interface BookSearchResult {
   pagination: BookSearchPagination[];
 }
 
-export interface BookSubList {
-  items: BookSearchItemType[];
+export interface MyBookSubList {
+  items: MyBookItemType[];
   total: number;
 }
 
@@ -48,4 +48,8 @@ export interface Book {
   price: string;
   isbn: string;
   created_at?: Date;
+}
+
+export interface MyBook extends Book {
+  rating: number;
 }

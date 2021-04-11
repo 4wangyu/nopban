@@ -10,6 +10,7 @@ export interface MovieSearchItemType extends MovieItemType {
 }
 
 export interface MyMovieItemType extends MovieItemType {
+  img: string;
   rating: number;
 }
 
@@ -23,8 +24,8 @@ export interface MovieSearchResult {
   pagination: MovieSearchPagination[];
 }
 
-export interface MovieSubList {
-  items: MovieSearchItemType[];
+export interface MyMovieSubList {
+  items: MyMovieItemType[];
   total: number;
 }
 
@@ -57,4 +58,5 @@ export interface Movie {
 
 export interface MyMovie extends Movie {
   img: string;
+  rating: number;
 }

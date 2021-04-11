@@ -1,18 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookSearchItemType } from '../../models/book.model';
+import { MyBookItemType } from '../../models/book.model';
 
-function MyBookItem(props: { book: BookSearchItemType }) {
-  const { book } = props;
+function MyBookItem(props: { item: MyBookItemType }) {
+  const { item } = props;
 
   return (
     <div className="my-list-item">
-      <img src={'data:image;base64,' + book.img} alt={book.title}></img>
+      <img src={'data:image;base64,' + item.img} alt={item.title}></img>
       <div className="info">
-        <Link to={`/book/${book.url}`}>{book.title}</Link>
-        {book.metas?.map((m, i) => (
+        <Link to={`/book/${item.url}`}>{item.title}</Link>
+        {item.metas?.map((m, i) => (
           <p key={i}>{m}</p>
         ))}
+        {item.rating}
       </div>
     </div>
   );

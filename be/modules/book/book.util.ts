@@ -3,6 +3,8 @@ import {
   Book,
   BookItemType,
   BookSearchItemType,
+  MyBook,
+  MyBookItemType,
 } from '../../models/book.model';
 
 function formatBookItem(book: Partial<Book>): BookItemType {
@@ -27,4 +29,9 @@ function formatInternalBookSearchItem(book: Partial<Book>): BookSearchItemType {
   return { ...bookItem, saved: true };
 }
 
-export { formatBookItem, formatInternalBookSearchItem };
+function formatMyBookItem(book: Partial<MyBook>): MyBookItemType {
+  const bookItem = formatBookItem(book);
+  return { ...bookItem, rating: book.rating };
+}
+
+export { formatBookItem, formatInternalBookSearchItem, formatMyBookItem };
