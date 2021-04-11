@@ -13,7 +13,7 @@ function MyItem(props: { category: string; item: MY_ITEM_TYPE }) {
         {item.metas?.map((m, i) => (
           <p key={i}>{m}</p>
         ))}
-        {item.rating}
+        <div>{item.rating}</div>
       </div>
     </div>
   );
