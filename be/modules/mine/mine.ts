@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { formatBookSearchItem } from '../book/book.util';
-import { formatMovieSearchItem } from '../movie/movie.util';
-import { formatMusicSearchItem } from '../music/music.util';
+import { formatInternalBookSearchItem } from '../book/book.util';
+import { formatInternalMovieSearchItem } from '../movie/movie.util';
+import { formatInternalMusicSearchItem } from '../music/music.util';
 import { selectLatestFive, selectSubList, selectTotal } from './mine.repo';
 
 async function getTotal(req: Request, res: Response) {
@@ -41,13 +41,13 @@ async function getSubList(req: Request, res: Response) {
     let items;
     switch (category) {
       case 'book':
-        items = selectedItems.map((m) => formatBookSearchItem(m));
+        items = selectedItems.map((m) => formatInternalBookSearchItem(m));
         break;
       case 'movie':
-        items = selectedItems.map((m) => formatMovieSearchItem(m));
+        items = selectedItems.map((m) => formatInternalMovieSearchItem(m));
         break;
       case 'music':
-        items = selectedItems.map((m) => formatMusicSearchItem(m));
+        items = selectedItems.map((m) => formatInternalMusicSearchItem(m));
     }
     const total = await selectTotal(category, email);
     res.status(200).json({ items, total });

@@ -1,19 +1,19 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
-import puppet from '../../puppet';
 import { getUuidFromUrl } from '../../lib/util';
-import { parseBookSearch, parseBook } from './book-parser';
-import {
-  selectBookByUuid,
-  insertBook,
-  selectBookRating,
-  updateBookRating,
-  insertBookRating,
-  deleteBookRating,
-  selectBookByTitle,
-} from './book.repo';
-import { formatBookSearchItem } from './book.util';
 import { Book } from '../../models/book.model';
+import puppet from '../../puppet';
+import { parseBook, parseBookSearch } from './book-parser';
+import {
+  deleteBookRating,
+  insertBook,
+  insertBookRating,
+  selectBookByTitle,
+  selectBookByUuid,
+  selectBookRating,
+  updateBookRating
+} from './book.repo';
+import { formatInternalBookSearchItem } from './book.util';
 
 const searchBook = async (request: Request, response: Response) => {
   const start = +request.query.start || 0;
@@ -22,7 +22,7 @@ const searchBook = async (request: Request, response: Response) => {
 
   if (internal) {
     const selectedItems = await selectBookByTitle(searchKey, start);
-    const items = selectedItems.map((m) => formatBookSearchItem(m));
+    const items = selectedItems.map((m) => formatInternalBookSearchItem(m));
     response.status(200).json({ items, pagination: [] });
   } else {
     const encodedSearchKey = encodeURI(searchKey);
@@ -45,7 +45,7 @@ const searchBook = async (request: Request, response: Response) => {
         const book = await selectBookByUuid(uuid);
 
         if (book) {
-          items.push(formatBookSearchItem(book));
+          items.push(formatInternalBookSearchItem(book));
         } else {
           items.push(m);
         }
@@ -76,7 +76,7 @@ const addBook = async (request: Request, response: Response) => {
     const res = await axios.get(url);
     const parsedBook = await parseBook(res.data);
     const partBook = await insertBook({ uuid, ...parsedBook } as Book);
-    const result = formatBookSearchItem(partBook);
+    const result = formatInternalBookSearchItem(partBook);
     response.status(200).json(result);
   } catch (e) {
     console.warn(e);

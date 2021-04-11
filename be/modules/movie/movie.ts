@@ -1,20 +1,19 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
+import { getUuidFromUrl } from '../../lib/util';
+import { Movie } from '../../models/movie.model';
 import puppet from '../../puppet';
-
-import { parseMovieSearch, parseMovie } from './movie-parser';
+import { parseMovie, parseMovieSearch } from './movie-parser';
 import {
+  deleteMovieRating,
   insertMovie,
+  insertMovieRating,
+  selectMovieByTitle,
   selectMovieByUuid,
   selectMovieRating,
-  insertMovieRating,
   updateMovieRating,
-  deleteMovieRating,
-  selectMovieByTitle,
 } from './movie.repo';
-import { Movie } from '../../models/movie.model';
-import { formatMovieSearchItem } from './movie.util';
-import { getUuidFromUrl } from '../../lib/util';
+import { formatInternalMovieSearchItem } from './movie.util';
 
 const searchMovie = async (request: Request, response: Response) => {
   const start = +request.query.start || 0;
@@ -23,7 +22,7 @@ const searchMovie = async (request: Request, response: Response) => {
 
   if (internal) {
     const selectedItems = await selectMovieByTitle(searchKey, start);
-    const items = selectedItems.map((m) => formatMovieSearchItem(m));
+    const items = selectedItems.map((m) => formatInternalMovieSearchItem(m));
     response.status(200).json({ items, pagination: [] });
   } else {
     const encodedSearchKey = encodeURI(searchKey);
@@ -46,7 +45,7 @@ const searchMovie = async (request: Request, response: Response) => {
         const movie = await selectMovieByUuid(uuid);
 
         if (movie) {
-          items.push(formatMovieSearchItem(movie));
+          items.push(formatInternalMovieSearchItem(movie));
         } else {
           items.push(m);
         }
@@ -77,12 +76,12 @@ const addMovie = async (request: Request, response: Response) => {
     const res = await axios.get(url);
     const movie = await parseMovie(res.data);
     const partMovie = await insertMovie({ uuid, ...movie } as Movie);
-    const result = formatMovieSearchItem(partMovie);
+    const result = formatInternalMovieSearchItem(partMovie);
     response.status(200).json(result);
   } catch (e) {
     console.warn(e);
     response.status(500).json({ error: 'Error adding movie' });
-  } 
+  }
 };
 
 async function getMovie(req: Request, res: Response) {

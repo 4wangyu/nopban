@@ -1,19 +1,19 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
-import puppet from '../../puppet';
 import { getUuidFromUrl } from '../../lib/util';
-import { parseMusicSearch, parseMusic } from './music-parser';
+import { Music } from '../../models/music.model';
+import puppet from '../../puppet';
+import { parseMusic, parseMusicSearch } from './music-parser';
 import {
-  selectMusicByUuid,
+  deleteMusicRating,
   insertMusic,
+  insertMusicRating,
+  selectMusicByTitle,
+  selectMusicByUuid,
   selectMusicRating,
   updateMusicRating,
-  insertMusicRating,
-  deleteMusicRating,
-  selectMusicByTitle,
 } from './music.repo';
-import { formatMusicSearchItem } from './music.util';
-import { Music } from '../../models/music.model';
+import { formatInternalMusicSearchItem } from './music.util';
 
 const searchMusic = async (request: Request, response: Response) => {
   const start = +request.query.start || 0;
@@ -22,7 +22,7 @@ const searchMusic = async (request: Request, response: Response) => {
 
   if (internal) {
     const selectedItems = await selectMusicByTitle(searchKey, start);
-    const items = selectedItems.map((m) => formatMusicSearchItem(m));
+    const items = selectedItems.map((m) => formatInternalMusicSearchItem(m));
     response.status(200).json({ items, pagination: [] });
   } else {
     const encodedSearchKey = encodeURI(searchKey);
@@ -45,7 +45,7 @@ const searchMusic = async (request: Request, response: Response) => {
         const music = await selectMusicByUuid(uuid);
 
         if (music) {
-          items.push(formatMusicSearchItem(music));
+          items.push(formatInternalMusicSearchItem(music));
         } else {
           items.push(m);
         }
@@ -76,7 +76,7 @@ const addMusic = async (request: Request, response: Response) => {
     const res = await axios.get(url);
     const parsedMusic = await parseMusic(res.data);
     const partMusic = await insertMusic({ uuid, ...parsedMusic } as Music);
-    const result = formatMusicSearchItem(partMusic);
+    const result = formatInternalMusicSearchItem(partMusic);
     response.status(200).json(result);
   } catch (e) {
     console.warn(e);

@@ -1,7 +1,7 @@
 import { arrToStr, getName } from '../../lib/util';
-import { BookSearchItem, Book } from '../../models/book.model';
+import { Book, BookItem, BookSearchItem } from '../../models/book.model';
 
-function formatBookSearchItem(book: Partial<Book>): BookSearchItem {
+function formatBookItem(book: Partial<Book>): BookItem {
   const url = book.uuid;
 
   const subtitle = book.subtitle ? ' : ' + book.subtitle : '';
@@ -15,8 +15,12 @@ function formatBookSearchItem(book: Partial<Book>): BookSearchItem {
   metas.push(arrToStr(meta));
 
   const img = book.img;
-  const saved = true;
-  return { url, title, metas, img, saved };
+  return { url, title, metas, img };
 }
 
-export { formatBookSearchItem };
+function formatInternalBookSearchItem(book: Partial<Book>): BookSearchItem {
+  const bookItem = formatBookItem(book);
+  return { ...bookItem, saved: true };
+}
+
+export { formatBookItem, formatInternalBookSearchItem };
