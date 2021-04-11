@@ -1,9 +1,16 @@
-export interface MovieSearchItem {
+export interface MovieItem {
   url: string;
   title: string;
   metas: string[];
-  poster?: string;
+  poster?: string;  
+}
+
+export interface MovieSearchItem extends MovieItem{
   saved: boolean;
+}
+
+export interface MyMovieItem extends MovieItem {
+  rating: number;
 }
 
 export interface MovieSearchPagination {

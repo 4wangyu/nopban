@@ -1,9 +1,16 @@
-export interface BookSearchItem {
+export interface BookItem {
   url: string;
   title: string;
   metas: string[];
   img?: string;
+}
+
+export interface BookSearchItem extends BookItem {
   saved: boolean;
+}
+
+export interface MyBookItem extends BookItem {
+  rating: number;
 }
 
 export interface BookSearchPagination {

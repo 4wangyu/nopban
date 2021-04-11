@@ -1,9 +1,16 @@
-export interface MusicSearchItem {
+export interface MusicItem {
   url: string;
   title: string;
   metas: string[];
   img?: string;
+}
+
+export interface MusicSearchItem extends MusicItem {
   saved: boolean;
+}
+
+export interface MyMusicItem extends MusicItem {
+  rating: number;
 }
 
 export interface MusicSearchPagination {
