@@ -4,4 +4,4 @@ import { MyMusic } from '../models/music.model';
 
 export const CATEGORIES: string[] = ['book', 'movie', 'music'];
 
-export type MY_TYPE = MyBook | MyMovie | MyMusic;
+export type MyType = MyBook | MyMovie | MyMusic;

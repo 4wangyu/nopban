@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MyRating } from '../../components/Rating';
-import { MY_ITEM_TYPE } from '../../lib/constant';
+import { MyItemType } from '../../lib/constant';
 
-function MyItem(props: { category: string; item: MY_ITEM_TYPE }) {
+function MyItem(props: { category: string; item: MyItemType }) {
   const { category, item } = props;
 
   return (

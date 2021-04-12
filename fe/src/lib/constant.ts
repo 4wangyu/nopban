@@ -34,6 +34,6 @@ export const DICT_QUANTIFIER: { [key: string]: string } = {
   music: '张',
 };
 
-export type MY_TYPE = MyBook | MyMovie | MyMusic;
-export type MY_ITEM_TYPE = MyBookItemType | MyMovieItemType | MyMusicItemType;
-export type MY_SUB_LIST_TYPE = MyBookSubList | MyMovieSubList | MyMusicSubList;
+export type MyType = MyBook | MyMovie | MyMusic;
+export type MyItemType = MyBookItemType | MyMovieItemType | MyMusicItemType;
+export type MySubListType = MyBookSubList | MyMovieSubList | MyMusicSubList;

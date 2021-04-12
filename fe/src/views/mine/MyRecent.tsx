@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { DICT_QUANTIFIER, DICT_VERB, MY_TYPE } from '../../lib/constant';
+import { DICT_QUANTIFIER, DICT_VERB, MyType } from '../../lib/constant';
 import { handleError } from '../../lib/util';
 import { AuthContext } from '../../store/AuthProvider';
 import './my-recent.scss';
@@ -11,7 +11,7 @@ const MyRecent = (props: { category: string }) => {
   const token = context?.token;
   const { category } = props;
   const [total, setTotal] = useState();
-  const [result, setResult] = useState<MY_TYPE[]>([]);
+  const [result, setResult] = useState<MyType[]>([]);
 
   useEffect(() => {
     if (token) {
@@ -60,7 +60,7 @@ const MyRecent = (props: { category: string }) => {
       </div>
       <div className="list">
         <div className="status">{DICT_VERB[category]}过</div>
-        {result?.map((item: MY_TYPE, idx: number) => (
+        {result?.map((item: MyType, idx: number) => (
           <Link
             title={item.title}
             to={`/${category}/${item.uuid}`}

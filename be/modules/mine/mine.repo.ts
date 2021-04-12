@@ -1,4 +1,4 @@
-import { MY_TYPE } from 'be/be/lib/constant';
+import { MyType } from 'be/be/lib/constant';
 import database from '../../database';
 import { Movie, MyMovie } from '../../models/movie.model';
 
@@ -19,7 +19,7 @@ async function selectTotal(category: string, email: string): Promise<number> {
 async function selectLatestFive(
   category: string,
   email: string
-): Promise<MY_TYPE[]> {
+): Promise<MyType[]> {
   const userCategory = `user_${category}`;
   const categoryId = `${category}_id`;
 
@@ -47,7 +47,7 @@ async function selectSubList(
   count: string,
   offset: string,
   email: string
-): Promise<MY_TYPE[]> {
+): Promise<MyType[]> {
   const userCategory = `user_${category}`;
   const categoryId = `${category}_id`;
 

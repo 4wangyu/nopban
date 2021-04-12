@@ -7,8 +7,8 @@ import {
   CATEGORIES,
   DICT_NOUN,
   DICT_VERB,
-  MY_ITEM_TYPE,
-  MY_SUB_LIST_TYPE,
+  MyItemType,
+  MySubListType,
 } from '../../lib/constant';
 import { handleError, scrollToTop, useQuery } from '../../lib/util';
 import { AuthContext } from '../../store/AuthProvider';
@@ -42,7 +42,7 @@ const Info = styled.div`
 const MyList = () => {
   const { context } = useContext(AuthContext);
   const token = context?.token;
-  const [result, setResult] = useState<MY_SUB_LIST_TYPE>({
+  const [result, setResult] = useState<MySubListType>({
     items: [],
     total: 0,
   });
@@ -99,8 +99,8 @@ const MyList = () => {
         </span>
       </Info>
       <div>
-        {(result.items as MY_ITEM_TYPE[])?.map(
-          (item: MY_ITEM_TYPE, idx: number) => (
+        {(result.items as MyItemType[])?.map(
+          (item: MyItemType, idx: number) => (
             <MyItem key={idx} category={category} item={item}></MyItem>
           )
         )}
