@@ -1,19 +1,19 @@
 import cheerio from 'cheerio';
 import { getBase64 } from '../../lib/util';
 import {
-  BookSearchItem,
-  BookSearchPagination,
   Book,
+  BookSearchItemType,
+  BookSearchPagination,
   NameLinkModel,
 } from '../../models/book.model';
 
 function parseBookSearch(
   html: string
-): { items: BookSearchItem[]; pagination: BookSearchPagination[] } {
+): { items: BookSearchItemType[]; pagination: BookSearchPagination[] } {
   const $ = cheerio.load(html, { normalizeWhitespace: true });
 
   // parse items
-  const items: BookSearchItem[] = [];
+  const items: BookSearchItemType[] = [];
   $('.item-root').each((i, el) => {
     const url = $(el).find('.title-text').attr('href');
 
@@ -47,7 +47,7 @@ function parseBookSearch(
 }
 
 async function parseBook(html: string): Promise<Partial<Book>> {
-  const $ = cheerio.load(cheerio.load(html)("#wrapper").html());
+  const $ = cheerio.load(cheerio.load(html)('#wrapper').html());
 
   const title = $('h1 span:first-child').text();
 

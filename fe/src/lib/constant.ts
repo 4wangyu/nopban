@@ -1,3 +1,15 @@
+import { MyBook, MyBookItemType, MyBookSubList } from '../models/book.model';
+import {
+  MyMovie,
+  MyMovieItemType,
+  MyMovieSubList,
+} from '../models/movie.model';
+import {
+  MyMusic,
+  MyMusicItemType,
+  MyMusicSubList,
+} from '../models/music.model';
+
 export const CATEGORIES: string[] = ['book', 'movie', 'music'];
 
 export const MOVIE_URL = 'https://movie.douban.com';
@@ -21,3 +33,7 @@ export const DICT_QUANTIFIER: { [key: string]: string } = {
   movie: '部',
   music: '张',
 };
+
+export type MyType = MyBook | MyMovie | MyMusic;
+export type MyItemType = MyBookItemType | MyMovieItemType | MyMusicItemType;
+export type MySubListType = MyBookSubList | MyMovieSubList | MyMusicSubList;

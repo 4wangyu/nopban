@@ -1,22 +1,17 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { DICT_QUANTIFIER, DICT_VERB } from '../../lib/constant';
+import { DICT_QUANTIFIER, DICT_VERB, MyType } from '../../lib/constant';
 import { handleError } from '../../lib/util';
-import { Book } from '../../models/book.model';
-import { MyMovie } from '../../models/movie.model';
-import { Music } from '../../models/music.model';
 import { AuthContext } from '../../store/AuthProvider';
 import './my-recent.scss';
-
-type ItemType = Book | MyMovie | Music;
 
 const MyRecent = (props: { category: string }) => {
   const { context } = useContext(AuthContext);
   const token = context?.token;
   const { category } = props;
   const [total, setTotal] = useState();
-  const [result, setResult] = useState<ItemType[]>([]);
+  const [result, setResult] = useState<MyType[]>([]);
 
   useEffect(() => {
     if (token) {
@@ -65,7 +60,7 @@ const MyRecent = (props: { category: string }) => {
       </div>
       <div className="list">
         <div className="status">{DICT_VERB[category]}过</div>
-        {result?.map((item: ItemType, idx: number) => (
+        {result?.map((item: MyType, idx: number) => (
           <Link
             title={item.title}
             to={`/${category}/${item.uuid}`}

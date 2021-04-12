@@ -3,18 +3,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Pagination from '../../components/Pagination';
-import { CATEGORIES, DICT_NOUN, DICT_VERB } from '../../lib/constant';
-import { handleError, useQuery } from '../../lib/util';
-import { BookSearchItem, BookSubList } from '../../models/book.model';
-import { MovieSearchItem, MovieSubList } from '../../models/movie.model';
-import { MusicSearchItem, MusicSubList } from '../../models/music.model';
+import {
+  CATEGORIES,
+  DICT_NOUN,
+  DICT_VERB,
+  MyItemType,
+  MySubListType,
+} from '../../lib/constant';
+import { handleError, scrollToTop, useQuery } from '../../lib/util';
 import { AuthContext } from '../../store/AuthProvider';
-import BookItem from '../book/BookItem';
-import MovieItem from '../movie/MovieItem';
-import MusicItem from '../music/MusicItem';
+import MyItem from './MyItem';
 
-type SubListType = BookSubList | MovieSubList | MusicSubList;
-const itemPerPage = 10;
+const ITEM_PER_PAGE = 10;
 
 const MyListPage = styled.div`
   margin: auto;
@@ -42,19 +42,19 @@ const Info = styled.div`
 const MyList = () => {
   const { context } = useContext(AuthContext);
   const token = context?.token;
-  const [result, setResult] = useState<SubListType>({
+  const [result, setResult] = useState<MySubListType>({
     items: [],
     total: 0,
   });
   const pathname = useLocation().pathname;
   const category = pathname.substring(pathname.lastIndexOf('/') + 1);
 
-  const lastPage = Math.ceil((result?.total * 1.0) / itemPerPage);
+  const lastPage = Math.ceil((result?.total * 1.0) / ITEM_PER_PAGE);
   const currentPage = usePageParam(lastPage);
-  const startNumber = (currentPage - 1) * itemPerPage + 1;
+  const startNumber = (currentPage - 1) * ITEM_PER_PAGE + 1;
   const endNumber =
-    currentPage * itemPerPage < result?.total
-      ? currentPage * itemPerPage
+    currentPage * ITEM_PER_PAGE < result?.total
+      ? currentPage * ITEM_PER_PAGE
       : result?.total;
 
   function usePageParam(lastPage: number) {
@@ -72,8 +72,8 @@ const MyList = () => {
         .get(`/api/mine/sublist`, {
           params: {
             category: category,
-            count: itemPerPage,
-            offset: itemPerPage * (currentPage - 1),
+            count: ITEM_PER_PAGE,
+            offset: ITEM_PER_PAGE * (currentPage - 1),
           },
           headers: {
             Authorization: 'Bearer ' + token,
@@ -81,6 +81,7 @@ const MyList = () => {
         })
         .then((res) => {
           setResult(res.data);
+          scrollToTop();
         })
         .catch(handleError);
     }
@@ -97,7 +98,13 @@ const MyList = () => {
           {startNumber}-{endNumber} / {result?.total}
         </span>
       </Info>
-      <ItemList category={category} result={result}></ItemList>
+      <div>
+        {(result.items as MyItemType[])?.map(
+          (item: MyItemType, idx: number) => (
+            <MyItem key={idx} category={category} item={item}></MyItem>
+          )
+        )}
+      </div>
       <Pagination currentPage={currentPage} lastPage={lastPage}></Pagination>
     </MyListPage>
   ) : (
@@ -106,41 +113,3 @@ const MyList = () => {
 };
 
 export default MyList;
-
-function ItemList(props: { category: string; result: SubListType }) {
-  const { category, result } = props;
-  switch (category) {
-    case 'book':
-      return (
-        <div>
-          {(result as BookSubList).items?.map(
-            (item: BookSearchItem, idx: number) => (
-              <BookItem key={idx} book={item}></BookItem>
-            )
-          )}
-        </div>
-      );
-    case 'movie':
-      return (
-        <div>
-          {(result as MovieSubList).items?.map(
-            (item: MovieSearchItem, idx: number) => (
-              <MovieItem key={idx} movie={item}></MovieItem>
-            )
-          )}
-        </div>
-      );
-    case 'music':
-      return (
-        <div>
-          {(result as MusicSubList).items?.map(
-            (item: MusicSearchItem, idx: number) => (
-              <MusicItem key={idx} music={item}></MusicItem>
-            )
-          )}
-        </div>
-      );
-    default:
-      return <></>;
-  }
-}

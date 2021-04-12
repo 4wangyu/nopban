@@ -3,13 +3,13 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { handleError } from '../../lib/util';
-import { MovieSearchItem } from '../../models/movie.model';
+import { MovieSearchItemType } from '../../models/movie.model';
 import { AuthContext } from '../../store/AuthProvider';
 
-function MovieItem(props: {
-  idx?: number;
-  movie: MovieSearchItem;
-  refreshResult?: (idx: number, movie: MovieSearchItem) => void;
+function MovieSearchItem(props: {
+  movie: MovieSearchItemType;
+  idx: number;
+  refreshResult: (idx: number, movie: MovieSearchItemType) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
   const { idx, movie, refreshResult } = props;
@@ -24,8 +24,8 @@ function MovieItem(props: {
       },
     })
       .then(function (res) {
-        const m = res.data as MovieSearchItem;
-        refreshResult && idx !== undefined && refreshResult(idx, m);
+        const m = res.data as MovieSearchItemType;
+        refreshResult(idx, m);
         toast.success(`${m.title} 添加成功.`);
       })
       .catch(handleError);
@@ -66,4 +66,4 @@ function MovieItem(props: {
   );
 }
 
-export default MovieItem;
+export default MovieSearchItem;

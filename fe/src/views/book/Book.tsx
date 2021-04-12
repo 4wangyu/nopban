@@ -2,14 +2,14 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
-import { scrollToTop, getInternal } from '../../lib/util';
-import BookItem from './BookItem';
-import BookPage from './BookPage';
+import { getInternal, scrollToTop } from '../../lib/util';
 import {
-  BookSearchResult,
-  BookSearchItem,
+  BookSearchItemType,
   BookSearchPagination,
+  BookSearchResult,
 } from '../../models/book.model';
+import BookPage from './BookPage';
+import BookSearchItem from './BookSearchItem';
 
 const Book = () => {
   const [result, setResult] = useState<BookSearchResult>({
@@ -41,7 +41,7 @@ const Book = () => {
       });
   }
 
-  function refreshResult(idx: number, item: BookSearchItem) {
+  function refreshResult(idx: number, item: BookSearchItemType) {
     const list = [...result.items];
     list[idx] = item;
     setResult({ items: list, pagination: result.pagination });
@@ -58,13 +58,13 @@ const Book = () => {
       <main>
         <Switch>
           <Route exact path={path}>
-            {result.items?.map((item: BookSearchItem, idx: number) => (
-              <BookItem
+            {result.items?.map((item: BookSearchItemType, idx: number) => (
+              <BookSearchItem
                 key={idx}
-                idx={idx}
                 book={item}
+                idx={idx}
                 refreshResult={refreshResult}
-              ></BookItem>
+              ></BookSearchItem>
             ))}
             <div className="paginator">
               {result.pagination?.map(

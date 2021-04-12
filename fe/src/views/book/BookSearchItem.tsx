@@ -3,13 +3,13 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { handleError } from '../../lib/util';
-import { BookSearchItem } from '../../models/book.model';
+import { BookSearchItemType } from '../../models/book.model';
 import { AuthContext } from '../../store/AuthProvider';
 
-function BookItem(props: {
-  idx?: number;
-  book: BookSearchItem;
-  refreshResult?: (idx: number, book: BookSearchItem) => void;
+function BookSearchItem(props: {
+  book: BookSearchItemType;
+  idx: number;
+  refreshResult: (idx: number, book: BookSearchItemType) => void;
 }) {
   const { context, dispatch } = useContext(AuthContext);
   const { idx, book, refreshResult } = props;
@@ -24,8 +24,8 @@ function BookItem(props: {
       },
     })
       .then(function (res) {
-        const b = res.data as BookSearchItem;
-        refreshResult && idx !== undefined && refreshResult(idx, b);
+        const b = res.data as BookSearchItemType;
+        refreshResult(idx, b);
         toast.success(`${b.title} 添加成功.`);
       })
       .catch(handleError);
@@ -66,4 +66,4 @@ function BookItem(props: {
   );
 }
 
-export default BookItem;
+export default BookSearchItem;

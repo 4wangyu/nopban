@@ -3,7 +3,7 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import './pagination.scss';
 
-const pagesToDislay = 7;
+const PAGES_TO_DISPLAY = 7;
 
 const getPages = ({
   count,
@@ -25,21 +25,24 @@ const Pagination = (props: { currentPage: number; lastPage: number }) => {
 
   if (!lastPage) {
     pages = [];
-  } else if (lastPage <= pagesToDislay + 1) {
+  } else if (lastPage <= PAGES_TO_DISPLAY + 1) {
     pages = getPages({ count: lastPage, firstPage: 1 });
-  } else if (currentPage <= Math.ceil(pagesToDislay / 2.0) + 1) {
-    pages = getPages({ count: pagesToDislay, firstPage: 1 });
+  } else if (currentPage <= Math.ceil(PAGES_TO_DISPLAY / 2.0) + 1) {
+    pages = getPages({ count: PAGES_TO_DISPLAY, firstPage: 1 });
     displayLastPage = true;
-  } else if (currentPage >= lastPage - (Math.floor(pagesToDislay / 2.0) + 1)) {
+  } else if (
+    currentPage >=
+    lastPage - (Math.floor(PAGES_TO_DISPLAY / 2.0) + 1)
+  ) {
     pages = getPages({
-      count: pagesToDislay,
-      firstPage: 1 + lastPage - pagesToDislay,
+      count: PAGES_TO_DISPLAY,
+      firstPage: 1 + lastPage - PAGES_TO_DISPLAY,
     });
     displayFirstPage = true;
   } else {
     pages = getPages({
-      count: pagesToDislay,
-      firstPage: 1 + currentPage - Math.ceil(pagesToDislay / 2.0),
+      count: PAGES_TO_DISPLAY,
+      firstPage: 1 + currentPage - Math.ceil(PAGES_TO_DISPLAY / 2.0),
     });
     displayFirstPage = true;
     displayLastPage = true;

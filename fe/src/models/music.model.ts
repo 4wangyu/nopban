@@ -1,9 +1,16 @@
-export interface MusicSearchItem {
+export interface MusicItemType {
   url: string;
   title: string;
   metas: string[];
   img?: string;
+}
+
+export interface MusicSearchItemType extends MusicItemType {
   saved: boolean;
+}
+
+export interface MyMusicItemType extends MusicItemType {
+  rating: number;
 }
 
 export interface MusicSearchPagination {
@@ -12,12 +19,12 @@ export interface MusicSearchPagination {
 }
 
 export interface MusicSearchResult {
-  items: MusicSearchItem[];
+  items: MusicSearchItemType[];
   pagination: MusicSearchPagination[];
 }
 
-export interface MusicSubList {
-  items: MusicSearchItem[];
+export interface MyMusicSubList {
+  items: MyMusicItemType[];
   total: number;
 }
 
@@ -40,4 +47,8 @@ export interface Music {
   cd_count: number;
   barcode: string;
   created_at?: Date;
+}
+
+export interface MyMusic extends Music {
+  rating: number;
 }

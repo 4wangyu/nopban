@@ -1,9 +1,6 @@
+import { MyType } from 'be/be/lib/constant';
 import database from '../../database';
-import { Book } from '../../models/book.model';
 import { Movie, MyMovie } from '../../models/movie.model';
-import { Music } from '../../models/music.model';
-
-type ItemType = Book | MyMovie | Music;
 
 async function selectTotal(category: string, email: string): Promise<number> {
   const userCategory = `user_${category}`;
@@ -22,7 +19,7 @@ async function selectTotal(category: string, email: string): Promise<number> {
 async function selectLatestFive(
   category: string,
   email: string
-): Promise<ItemType[]> {
+): Promise<MyType[]> {
   const userCategory = `user_${category}`;
   const categoryId = `${category}_id`;
 
@@ -50,7 +47,7 @@ async function selectSubList(
   count: string,
   offset: string,
   email: string
-): Promise<ItemType[]> {
+): Promise<MyType[]> {
   const userCategory = `user_${category}`;
   const categoryId = `${category}_id`;
 
@@ -64,7 +61,14 @@ async function selectSubList(
     OFFSET ?`,
     [userCategory, category, categoryId, email, count, offset]
   );
-  return data.rows;
+
+  if (category == 'movie') {
+    return data.rows.map((row: Movie) => {
+      return { ...row, img: row.poster } as MyMovie;
+    });
+  } else {
+    return data.rows;
+  }
 }
 
 export { selectTotal, selectLatestFive, selectSubList };

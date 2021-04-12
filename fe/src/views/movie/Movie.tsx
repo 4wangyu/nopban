@@ -2,14 +2,14 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
-import { scrollToTop, getInternal } from '../../lib/util';
+import { getInternal, scrollToTop } from '../../lib/util';
 import {
-  MovieSearchItem,
+  MovieSearchItemType,
   MovieSearchPagination,
   MovieSearchResult,
 } from '../../models/movie.model';
-import MovieItem from './MovieItem';
 import MoviePage from './MoviePage';
+import MovieSearchItem from './MovieSearchItem';
 
 const Movie = () => {
   const [result, setResult] = useState<MovieSearchResult>({
@@ -41,7 +41,7 @@ const Movie = () => {
       });
   }
 
-  function refreshResult(idx: number, movie: MovieSearchItem) {
+  function refreshResult(idx: number, movie: MovieSearchItemType) {
     const list = [...result.items];
     list[idx] = movie;
     setResult({ items: list, pagination: result.pagination });
@@ -58,13 +58,13 @@ const Movie = () => {
       <main>
         <Switch>
           <Route exact path={path}>
-            {result.items?.map((item: MovieSearchItem, idx: number) => (
-              <MovieItem
+            {result.items?.map((item: MovieSearchItemType, idx: number) => (
+              <MovieSearchItem
                 key={idx}
-                idx={idx}
                 movie={item}
+                idx={idx}
                 refreshResult={refreshResult}
-              ></MovieItem>
+              ></MovieSearchItem>
             ))}
             <div className="paginator">
               {result.pagination?.map(

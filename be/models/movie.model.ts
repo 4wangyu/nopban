@@ -1,9 +1,17 @@
-export interface MovieSearchItem {
+export interface MovieItemType {
   url: string;
   title: string;
   metas: string[];
   poster?: string;
+}
+
+export interface MovieSearchItemType extends MovieItemType {
   saved: boolean;
+}
+
+export interface MyMovieItemType extends MovieItemType {
+  img: string;
+  rating: number;
 }
 
 export interface MovieSearchPagination {
@@ -12,7 +20,7 @@ export interface MovieSearchPagination {
 }
 
 export interface MovieSearchResult {
-  items: MovieSearchItem[];
+  items: MovieSearchItemType[];
   pagination: MovieSearchPagination[];
 }
 
@@ -45,4 +53,5 @@ export interface Movie {
 
 export interface MyMovie extends Movie {
   img: string;
+  rating: number;
 }
