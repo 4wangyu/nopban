@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './rating.scss';
 
+const RATINGS = [1, 2, 3, 4, 5];
+
 function RatingStar(props: {
   ratingRep: number;
   ratingShown: number;
@@ -33,36 +35,15 @@ function Rating(props: {
     <div className="action">
       <label>评价: </label>
       <span onMouseLeave={() => setHoverRating(0)} className="rating">
-        <RatingStar
-          ratingRep={1}
-          ratingShown={ratingShown}
-          rate={rate}
-          setHoverRating={setHoverRating}
-        ></RatingStar>
-        <RatingStar
-          ratingRep={2}
-          ratingShown={ratingShown}
-          rate={rate}
-          setHoverRating={setHoverRating}
-        ></RatingStar>
-        <RatingStar
-          ratingRep={3}
-          ratingShown={ratingShown}
-          rate={rate}
-          setHoverRating={setHoverRating}
-        ></RatingStar>
-        <RatingStar
-          ratingRep={4}
-          ratingShown={ratingShown}
-          rate={rate}
-          setHoverRating={setHoverRating}
-        ></RatingStar>
-        <RatingStar
-          ratingRep={5}
-          ratingShown={ratingShown}
-          rate={rate}
-          setHoverRating={setHoverRating}
-        ></RatingStar>
+        {RATINGS.map((r: number, idx: number) => (
+          <RatingStar
+            key={idx}
+            ratingRep={r}
+            ratingShown={ratingShown}
+            rate={rate}
+            setHoverRating={setHoverRating}
+          ></RatingStar>
+        ))}
       </span>
 
       {rating && (
@@ -76,11 +57,13 @@ function Rating(props: {
 
 function MyRating(props: { rating: number }) {
   const { rating } = props;
-  const ratings = [1, 2, 3, 4, 5];
   return (
     <span>
-      {ratings.map((r: number, idx: number) => (
-        <span key={idx} className={rating >= r ? 'my-filled-star' : 'my-unfilled-star'}>
+      {RATINGS.map((r: number, idx: number) => (
+        <span
+          key={idx}
+          className={rating >= r ? 'my-filled-star' : 'my-unfilled-star'}
+        >
           &#9733;
         </span>
       ))}
