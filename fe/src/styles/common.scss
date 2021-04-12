@@ -1,12 +1,11 @@
 .my-list-item,
 .search-item {
   display: flex;
+  align-items: flex-start;
   margin-bottom: 20px;
 
   img {
     margin-right: 15px;
-    max-height: 72px;
-    width: 48px;
     object-fit: contain;
   }
 

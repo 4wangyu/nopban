@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { MyRating } from '../../components/Rating';
 import { MY_ITEM_TYPE } from '../../lib/constant';
 
 function MyItem(props: { category: string; item: MY_ITEM_TYPE }) {
@@ -13,7 +14,11 @@ function MyItem(props: { category: string; item: MY_ITEM_TYPE }) {
         {item.metas?.map((m, i) => (
           <p key={i}>{m}</p>
         ))}
-        <div>{item.rating}</div>
+        <div className="my-item-info">
+          <div className="my-info">
+            <MyRating rating={item.rating}></MyRating>
+          </div>
+        </div>
       </div>
     </div>
   );

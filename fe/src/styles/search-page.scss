@@ -25,6 +25,10 @@
 }
 
 .search-item {
+  img {
+    width: 48px;
+  }
+
   .title {
     margin-right: 10px;
     max-width: calc(100% - 26px);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Rating from '../../components/Rating';
+import { Rating } from '../../components/Rating';
 import { MOVIE_URL } from '../../lib/constant';
 import { arrToStr, getImdbIdFromUrl, handleError } from '../../lib/util';
 import { Movie } from '../../models/movie.model';

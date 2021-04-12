@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Rating from '../../components/Rating';
+import { Rating } from '../../components/Rating';
 import { BOOK_URL } from '../../lib/constant';
 import { handleError } from '../../lib/util';
 import { Book } from '../../models/book.model';

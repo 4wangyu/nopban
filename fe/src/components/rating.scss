@@ -6,7 +6,6 @@
     background: none;
     border: 0;
     cursor: pointer;
-
     padding: 0;
   }
 }
@@ -30,4 +29,12 @@
   &:hover button {
     color: #f00;
   }
+}
+
+.my-unfilled-star {
+  color: #dadada
+}
+
+.my-filled-star {
+  color: #ffac2c
 }

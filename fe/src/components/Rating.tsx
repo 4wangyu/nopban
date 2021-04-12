@@ -74,4 +74,18 @@ function Rating(props: {
   );
 }
 
-export default Rating;
+function MyRating(props: { rating: number }) {
+  const { rating } = props;
+  const ratings = [1, 2, 3, 4, 5];
+  return (
+    <span>
+      {ratings.map((r: number, idx: number) => (
+        <span key={idx} className={rating >= r ? 'my-filled-star' : 'my-unfilled-star'}>
+          &#9733;
+        </span>
+      ))}
+    </span>
+  );
+}
+
+export { Rating, MyRating };
