@@ -15,6 +15,7 @@ import { AuthContext } from '../../store/AuthProvider';
 import MyItem from './MyItem';
 
 const ITEM_PER_PAGE = 10;
+const SORT_TYPES = ['time', 'rating'];
 
 const MyListPage = styled.div`
   margin: auto;
@@ -48,6 +49,7 @@ const MyList = () => {
   });
   const pathname = useLocation().pathname;
   const category = pathname.substring(pathname.lastIndexOf('/') + 1);
+  const sort = useSortParam();
 
   const lastPage = Math.ceil((result?.total * 1.0) / ITEM_PER_PAGE);
   const currentPage = usePageParam(lastPage);
@@ -66,6 +68,11 @@ const MyList = () => {
     }
   }
 
+  function useSortParam() {
+    const sort = useQuery().get('sort') || 'time';
+    return SORT_TYPES.includes(sort) ? sort : 'time';
+  }
+
   useEffect(() => {
     if (token) {
       axios
@@ -74,6 +81,7 @@ const MyList = () => {
             category: category,
             count: ITEM_PER_PAGE,
             offset: ITEM_PER_PAGE * (currentPage - 1),
+            sort: sort,
           },
           headers: {
             Authorization: 'Bearer ' + token,

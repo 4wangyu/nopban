@@ -46,20 +46,29 @@ async function selectSubList(
   category: string,
   count: string,
   offset: string,
+  sort: string,
   email: string
 ): Promise<MyType[]> {
   const userCategory = `user_${category}`;
   const categoryId = `${category}_id`;
+  let sortColumn;
+  switch (sort) {
+    case 'time':
+      sortColumn = 'updatedat';
+      break;
+    case 'rating':
+      sortColumn = 'rating';
+  }
 
   const data = await database.raw(
     `SELECT * FROM ?? AS uc
     INNER JOIN users ON users.id = uc.user_id
     INNER JOIN ?? AS c ON c.id = uc.??
     WHERE users.email = ?
-    ORDER BY uc.updatedat DESC
+    ORDER BY uc.?? DESC, uc.updatedat DESC
     LIMIT ?
     OFFSET ?`,
-    [userCategory, category, categoryId, email, count, offset]
+    [userCategory, category, categoryId, email, sortColumn, count, offset]
   );
 
   if (category == 'movie') {
