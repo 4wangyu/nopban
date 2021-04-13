@@ -8,7 +8,7 @@ import {
   DICT_NOUN,
   DICT_VERB,
   MyItemType,
-  MySubListType,
+  MyListType,
 } from '../../lib/constant';
 import { handleError, scrollToTop, useQuery } from '../../lib/util';
 import { AuthContext } from '../../store/AuthProvider';
@@ -43,7 +43,7 @@ const Info = styled.div`
 const MyList = () => {
   const { context } = useContext(AuthContext);
   const token = context?.token;
-  const [result, setResult] = useState<MySubListType>({
+  const [result, setResult] = useState<MyListType>({
     items: [],
     total: 0,
   });
@@ -76,7 +76,7 @@ const MyList = () => {
   useEffect(() => {
     if (token) {
       axios
-        .get(`/api/mine/sublist`, {
+        .get(`/api/mine/list`, {
           params: {
             category: category,
             count: ITEM_PER_PAGE,

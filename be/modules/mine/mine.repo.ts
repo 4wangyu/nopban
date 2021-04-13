@@ -2,7 +2,7 @@ import { MyType } from 'be/be/lib/constant';
 import database from '../../database';
 import { Movie, MyMovie } from '../../models/movie.model';
 
-async function selectTotal(category: string, email: string): Promise<number> {
+async function selectMyTotal(category: string, email: string): Promise<number> {
   const userCategory = `user_${category}`;
   const categoryId = `${category}_id`;
 
@@ -16,7 +16,7 @@ async function selectTotal(category: string, email: string): Promise<number> {
   return +data.rows[0].total;
 }
 
-async function selectLatestFive(
+async function selectMyLatestFive(
   category: string,
   email: string
 ): Promise<MyType[]> {
@@ -42,7 +42,7 @@ async function selectLatestFive(
   }
 }
 
-async function selectSubList(
+async function selectMyList(
   category: string,
   count: string,
   offset: string,
@@ -80,4 +80,4 @@ async function selectSubList(
   }
 }
 
-export { selectTotal, selectLatestFive, selectSubList };
+export { selectMyTotal, selectMyLatestFive, selectMyList };

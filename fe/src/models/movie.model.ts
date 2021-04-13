@@ -25,7 +25,7 @@ export interface MovieSearchResult {
   pagination: MovieSearchPagination[];
 }
 
-export interface MyMovieSubList {
+export interface MyMovieList {
   items: MyMovieItemType[];
   total: number;
 }
