@@ -35,7 +35,7 @@ function formatInternalMovieSearchItem(
 
 function formatMyMovieItem(movie: Partial<MyMovie>): MyMovieItemType {
   const movieItem = formatMovieItem(movie);
-  return { ...movieItem, img: movie.img, rating: movie.rating };
+  return { ...movieItem, img: movie.img, rating: movie.rating, updatedat: movie.updatedat.toISOString().split('T')[0] };
 }
 
 export { formatMovieItem, formatInternalMovieSearchItem, formatMyMovieItem };

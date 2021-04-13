@@ -11,6 +11,7 @@ export interface MusicSearchItemType extends MusicItemType {
 
 export interface MyMusicItemType extends MusicItemType {
   rating: number;
+  updatedat: string;
 }
 
 export interface MusicSearchPagination {
@@ -51,4 +52,5 @@ export interface Music {
 
 export interface MyMusic extends Music {
   rating: number;
+  updatedat: Date;
 }

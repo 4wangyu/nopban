@@ -31,7 +31,7 @@ function formatInternalMusicSearchItem(
 
 function formatMyMusicItem(music: Partial<MyMusic>): MyMusicItemType {
   const musicItem = formatMusicItem(music);
-  return { ...musicItem, rating: music.rating };
+  return { ...musicItem, rating: music.rating, updatedat: music.updatedat.toISOString().split('T')[0] };
 }
 
 export { formatMusicItem, formatInternalMusicSearchItem, formatMyMusicItem };

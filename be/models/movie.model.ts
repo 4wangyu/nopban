@@ -12,6 +12,7 @@ export interface MovieSearchItemType extends MovieItemType {
 export interface MyMovieItemType extends MovieItemType {
   img: string;
   rating: number;
+  updatedat: string;
 }
 
 export interface MovieSearchPagination {
@@ -54,4 +55,5 @@ export interface Movie {
 export interface MyMovie extends Movie {
   img: string;
   rating: number;
+  updatedat: Date;
 }

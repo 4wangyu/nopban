@@ -31,7 +31,7 @@ function formatInternalBookSearchItem(book: Partial<Book>): BookSearchItemType {
 
 function formatMyBookItem(book: Partial<MyBook>): MyBookItemType {
   const bookItem = formatBookItem(book);
-  return { ...bookItem, rating: book.rating };
+  return { ...bookItem, rating: book.rating, updatedat: book.updatedat.toISOString().split('T')[0] };
 }
 
 export { formatBookItem, formatInternalBookSearchItem, formatMyBookItem };
