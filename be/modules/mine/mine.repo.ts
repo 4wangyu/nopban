@@ -46,18 +46,16 @@ async function selectMyList(
   category: string,
   count: string,
   offset: string,
-  sort: string,
+  sortBy: string,
   email: string
 ): Promise<MyType[]> {
   const userCategory = `user_${category}`;
   const categoryId = `${category}_id`;
-  let sortColumn;
-  switch (sort) {
-    case 'time':
-      sortColumn = 'updatedat';
-      break;
-    case 'rating':
-      sortColumn = 'rating';
+  let sortByColumn;
+  if (sortBy === 'time') {
+    sortByColumn = 'updatedat'
+  } else if (sortBy === 'rating') {
+    sortByColumn = 'rating'
   }
 
   const data = await database.raw(
@@ -68,7 +66,7 @@ async function selectMyList(
     ORDER BY uc.?? DESC, uc.updatedat DESC
     LIMIT ?
     OFFSET ?`,
-    [userCategory, category, categoryId, email, sortColumn, count, offset]
+    [userCategory, category, categoryId, email, sortByColumn, count, offset]
   );
 
   if (category == 'movie') {

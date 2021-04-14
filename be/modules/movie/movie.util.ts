@@ -1,4 +1,4 @@
-import { arrToStr, getName } from '../../lib/util';
+import { arrToStr, dateToString, getName } from '../../lib/util';
 import {
   Movie,
   MovieItemType,
@@ -35,7 +35,12 @@ function formatInternalMovieSearchItem(
 
 function formatMyMovieItem(movie: Partial<MyMovie>): MyMovieItemType {
   const movieItem = formatMovieItem(movie);
-  return { ...movieItem, img: movie.img, rating: movie.rating, updatedat: movie.updatedat.toISOString().split('T')[0] };
+  return {
+    ...movieItem,
+    img: movie.img,
+    rating: movie.rating,
+    updatedat: dateToString(movie.updatedat),
+  };
 }
 
 export { formatMovieItem, formatInternalMovieSearchItem, formatMyMovieItem };

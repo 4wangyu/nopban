@@ -26,4 +26,7 @@ function getUuidFromUrl(url: string): string {
   return url.split('/').reverse()[1];
 }
 
-export { getBase64, arrToStr, getName, getUuidFromUrl };
+function dateToString(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+export { getBase64, arrToStr, getName, getUuidFromUrl, dateToString };

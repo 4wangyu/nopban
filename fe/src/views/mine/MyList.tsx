@@ -65,7 +65,7 @@ const MyList = () => {
   });
   const pathname = useLocation().pathname;
   const category = pathname.substring(pathname.lastIndexOf('/') + 1);
-  const sort = useSortParam();
+  const sortBy = useSortbyParam();
 
   const lastPage = Math.ceil((result?.total * 1.0) / ITEM_PER_PAGE);
   const currentPage = usePageParam(lastPage);
@@ -84,9 +84,9 @@ const MyList = () => {
     }
   }
 
-  function useSortParam() {
-    const sort = useQuery().get('sort') || 'time';
-    return SORT_TYPES.includes(sort) ? sort : 'time';
+  function useSortbyParam() {
+    const sortBy = useQuery().get('sortby') || 'time';
+    return SORT_TYPES.includes(sortBy) ? sortBy : 'time';
   }
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const MyList = () => {
             category: category,
             count: ITEM_PER_PAGE,
             offset: ITEM_PER_PAGE * (currentPage - 1),
-            sort: sort,
+            sortBy: sortBy,
           },
           headers: {
             Authorization: 'Bearer ' + token,
@@ -109,7 +109,7 @@ const MyList = () => {
         })
         .catch(handleError);
     }
-  }, [category, currentPage, sort, token]);
+  }, [category, currentPage, sortBy, token]);
 
   return CATEGORIES.includes(category) ? (
     <MyListPage>
@@ -119,15 +119,15 @@ const MyList = () => {
       <Info>
         <div>
           <StyledLink
-            to={`${pathname}?sort=time`}
-            isActive={() => sort !== 'time'}
+            to={`${pathname}?sortby=time`}
+            isActive={() => sortBy !== 'time'}
           >
             按时间排序
           </StyledLink>
           <span>·</span>
           <StyledLink
-            to={`${pathname}?sort=rating`}
-            isActive={() => sort !== 'rating'}
+            to={`${pathname}?sortby=rating`}
+            isActive={() => sortBy !== 'rating'}
           >
             按评价排序
           </StyledLink>

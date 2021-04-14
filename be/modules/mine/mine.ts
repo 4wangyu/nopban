@@ -34,11 +34,11 @@ async function getMyList(req: Request, res: Response) {
   const category = req.query.category as string;
   const count = req.query.count as string;
   const offset = req.query.offset as string;
-  const sort = req.query.sort as string;
+  const sortBy = req.query.sortBy as string;
   const email = req.body.email as string;
 
   try {
-    const selectedItems = await selectMyList(category, count, offset, sort, email);
+    const selectedItems = await selectMyList(category, count, offset, sortBy, email);
     let items;
     switch (category) {
       case 'book':
