@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Pagination from '../../components/Pagination';
 import {
@@ -38,6 +38,22 @@ const Info = styled.div`
   margin-bottom: 30px;
   border-bottom: 1px dashed #ddd;
   padding-bottom: 5px;
+
+  span {
+    margin: 5px;
+  }
+`;
+
+const StyledLink = styled(NavLink)`
+  text-decoration: none;
+  border: none;
+  color: #3377aa;
+  font-weight: normal;
+
+  &:not(.active) {
+    pointer-events: none;
+    color: #999;
+  }
 `;
 
 const MyList = () => {
@@ -93,7 +109,7 @@ const MyList = () => {
         })
         .catch(handleError);
     }
-  }, [category, currentPage, token]);
+  }, [category, currentPage, sort, token]);
 
   return CATEGORIES.includes(category) ? (
     <MyListPage>
@@ -101,10 +117,24 @@ const MyList = () => {
         我{DICT_VERB[category]}过的{DICT_NOUN[category]}({result?.total})
       </Title>
       <Info>
-        <span>按时间排序</span>
-        <span>
+        <div>
+          <StyledLink
+            to={`${pathname}?sort=time`}
+            isActive={() => sort !== 'time'}
+          >
+            按时间排序
+          </StyledLink>
+          <span>·</span>
+          <StyledLink
+            to={`${pathname}?sort=rating`}
+            isActive={() => sort !== 'rating'}
+          >
+            按评价排序
+          </StyledLink>
+        </div>
+        <div>
           {startNumber}-{endNumber} / {result?.total}
-        </span>
+        </div>
       </Info>
       <div>
         {(result.items as MyItemType[])?.map(

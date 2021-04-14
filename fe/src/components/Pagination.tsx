@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { useQuery } from '../lib/util';
 import './pagination.scss';
 
 const PAGES_TO_DISPLAY = 7;
@@ -18,6 +19,7 @@ const getPages = ({
 const Pagination = (props: { currentPage: number; lastPage: number }) => {
   const { currentPage, lastPage } = props;
   const pathname = useLocation().pathname;
+  const query = useQuery();
 
   let pages: number[];
   let displayFirstPage: boolean = false;
@@ -48,15 +50,22 @@ const Pagination = (props: { currentPage: number; lastPage: number }) => {
     displayLastPage = true;
   }
 
-  const getUrl = (p: number): string => {
-    return `${pathname}?p=${p}`;
+  const getUrl = ({
+    query,
+    p,
+  }: {
+    query: URLSearchParams;
+    p: number;
+  }): string => {
+    query.set('p', p.toString());
+    return `${pathname}?${query.toString()}`;
   };
 
   function FirstPage(props: { display: boolean }) {
     const { display } = props;
     return display ? (
       <>
-        <NavLink to={getUrl(1)} className="page">
+        <NavLink to={getUrl({ query: query, p: 1 })} className="page">
           1
         </NavLink>
         <span className="page">...</span>
@@ -71,7 +80,7 @@ const Pagination = (props: { currentPage: number; lastPage: number }) => {
     return display ? (
       <>
         <span className="page">...</span>
-        <NavLink to={getUrl(lastPage)} className="page">
+        <NavLink to={getUrl({ query: query, p: lastPage })} className="page">
           {lastPage}
         </NavLink>
       </>
@@ -82,7 +91,10 @@ const Pagination = (props: { currentPage: number; lastPage: number }) => {
 
   return (
     <nav className="pagination">
-      <NavLink to={getUrl(currentPage - 1)} isActive={() => currentPage > 1}>
+      <NavLink
+        to={getUrl({ query: query, p: currentPage - 1 })}
+        isActive={() => currentPage > 1}
+      >
         {'<'}前页
       </NavLink>
       <nav className="pages">
@@ -90,7 +102,7 @@ const Pagination = (props: { currentPage: number; lastPage: number }) => {
         {pages.map((p) => (
           <NavLink
             key={p}
-            to={getUrl(p)}
+            to={getUrl({ query: query, p: p })}
             className={classNames({ current: p === currentPage, page: true })}
           >
             {p}
@@ -99,7 +111,7 @@ const Pagination = (props: { currentPage: number; lastPage: number }) => {
         <LastPage display={displayLastPage} lastPage={lastPage}></LastPage>
       </nav>
       <NavLink
-        to={getUrl(currentPage + 1)}
+        to={getUrl({ query: query, p: currentPage + 1 })}
         isActive={() => currentPage < lastPage}
       >
         后页{'>'}
