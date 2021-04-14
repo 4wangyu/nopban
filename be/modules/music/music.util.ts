@@ -1,4 +1,4 @@
-import { arrToStr, getName } from '../../lib/util';
+import { arrToStr, dateToString, getName } from '../../lib/util';
 import {
   Music,
   MusicItemType,
@@ -31,7 +31,11 @@ function formatInternalMusicSearchItem(
 
 function formatMyMusicItem(music: Partial<MyMusic>): MyMusicItemType {
   const musicItem = formatMusicItem(music);
-  return { ...musicItem, rating: music.rating };
+  return {
+    ...musicItem,
+    rating: music.rating,
+    updatedat: dateToString(music.updatedat),
+  };
 }
 
 export { formatMusicItem, formatInternalMusicSearchItem, formatMyMusicItem };

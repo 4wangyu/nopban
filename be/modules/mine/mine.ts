@@ -2,14 +2,14 @@ import { Request, Response } from 'express';
 import { formatMyBookItem } from '../book/book.util';
 import { formatMyMovieItem } from '../movie/movie.util';
 import { formatMyMusicItem } from '../music/music.util';
-import { selectLatestFive, selectSubList, selectTotal } from './mine.repo';
+import { selectMyLatestFive, selectMyList, selectMyTotal } from './mine.repo';
 
-async function getTotal(req: Request, res: Response) {
+async function getMyTotal(req: Request, res: Response) {
   const category = req.query.category as string;
   const email = req.body.email as string;
 
   try {
-    const total = await selectTotal(category, email);
+    const total = await selectMyTotal(category, email);
     res.status(200).json(total);
   } catch (e) {
     console.warn(e);
@@ -17,12 +17,12 @@ async function getTotal(req: Request, res: Response) {
   }
 }
 
-async function getLatestFive(req: Request, res: Response) {
+async function getMyLatestFive(req: Request, res: Response) {
   const category = req.query.category as string;
   const email = req.body.email as string;
 
   try {
-    const latestFive = await selectLatestFive(category, email);
+    const latestFive = await selectMyLatestFive(category, email);
     res.status(200).json(latestFive);
   } catch (e) {
     console.warn(e);
@@ -30,14 +30,15 @@ async function getLatestFive(req: Request, res: Response) {
   }
 }
 
-async function getSubList(req: Request, res: Response) {
+async function getMyList(req: Request, res: Response) {
   const category = req.query.category as string;
   const count = req.query.count as string;
   const offset = req.query.offset as string;
+  const sortBy = req.query.sortBy as string;
   const email = req.body.email as string;
 
   try {
-    const selectedItems = await selectSubList(category, count, offset, email);
+    const selectedItems = await selectMyList(category, count, offset, sortBy, email);
     let items;
     switch (category) {
       case 'book':
@@ -49,7 +50,7 @@ async function getSubList(req: Request, res: Response) {
       case 'music':
         items = selectedItems.map((m) => formatMyMusicItem(m));
     }
-    const total = await selectTotal(category, email);
+    const total = await selectMyTotal(category, email);
     res.status(200).json({ items, total });
   } catch (e) {
     console.warn(e);
@@ -57,4 +58,4 @@ async function getSubList(req: Request, res: Response) {
   }
 }
 
-export { getTotal, getLatestFive, getSubList };
+export { getMyTotal, getMyLatestFive, getMyList };

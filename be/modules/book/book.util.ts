@@ -1,4 +1,4 @@
-import { arrToStr, getName } from '../../lib/util';
+import { arrToStr, dateToString, getName } from '../../lib/util';
 import {
   Book,
   BookItemType,
@@ -31,7 +31,11 @@ function formatInternalBookSearchItem(book: Partial<Book>): BookSearchItemType {
 
 function formatMyBookItem(book: Partial<MyBook>): MyBookItemType {
   const bookItem = formatBookItem(book);
-  return { ...bookItem, rating: book.rating };
+  return {
+    ...bookItem,
+    rating: book.rating,
+    updatedat: dateToString(book.updatedat),
+  };
 }
 
 export { formatBookItem, formatInternalBookSearchItem, formatMyBookItem };

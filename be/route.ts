@@ -42,10 +42,10 @@ router.post('/music/rating', checkToken, music.rateMusic);
 router.delete('/music/rating', checkToken, music.removeMusicRating);
 //#endregion
 
-//#region homepage
-router.get('/mine/total', checkToken, mine.getTotal);
-router.get('/mine/latestfive', checkToken, mine.getLatestFive);
-router.get('/mine/sublist', checkToken, validateCategory, mine.getSubList);
+//#region mypage
+router.get('/mine/total', checkToken, mine.getMyTotal);
+router.get('/mine/latestfive', checkToken, mine.getMyLatestFive);
+router.get('/mine/list', checkToken, validateCategory, mine.getMyList);
 //#endregion
 
 export default router;

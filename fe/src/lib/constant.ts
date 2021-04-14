@@ -1,13 +1,13 @@
-import { MyBook, MyBookItemType, MyBookSubList } from '../models/book.model';
+import { MyBook, MyBookItemType, MyBookList } from '../models/book.model';
 import {
   MyMovie,
   MyMovieItemType,
-  MyMovieSubList,
+  MyMovieList,
 } from '../models/movie.model';
 import {
   MyMusic,
   MyMusicItemType,
-  MyMusicSubList,
+  MyMusicList,
 } from '../models/music.model';
 
 export const CATEGORIES: string[] = ['book', 'movie', 'music'];
@@ -36,4 +36,4 @@ export const DICT_QUANTIFIER: { [key: string]: string } = {
 
 export type MyType = MyBook | MyMovie | MyMusic;
 export type MyItemType = MyBookItemType | MyMovieItemType | MyMusicItemType;
-export type MySubListType = MyBookSubList | MyMovieSubList | MyMusicSubList;
+export type MyListType = MyBookList | MyMovieList | MyMusicList;

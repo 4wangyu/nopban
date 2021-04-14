@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Pagination from '../../components/Pagination';
 import {
@@ -8,13 +8,14 @@ import {
   DICT_NOUN,
   DICT_VERB,
   MyItemType,
-  MySubListType,
+  MyListType,
 } from '../../lib/constant';
 import { handleError, scrollToTop, useQuery } from '../../lib/util';
 import { AuthContext } from '../../store/AuthProvider';
 import MyItem from './MyItem';
 
 const ITEM_PER_PAGE = 10;
+const SORT_TYPES = ['time', 'rating'];
 
 const MyListPage = styled.div`
   margin: auto;
@@ -37,17 +38,34 @@ const Info = styled.div`
   margin-bottom: 30px;
   border-bottom: 1px dashed #ddd;
   padding-bottom: 5px;
+
+  span {
+    margin: 5px;
+  }
+`;
+
+const StyledLink = styled(NavLink)`
+  text-decoration: none;
+  border: none;
+  color: #3377aa;
+  font-weight: normal;
+
+  &:not(.active) {
+    pointer-events: none;
+    color: #999;
+  }
 `;
 
 const MyList = () => {
   const { context } = useContext(AuthContext);
   const token = context?.token;
-  const [result, setResult] = useState<MySubListType>({
+  const [result, setResult] = useState<MyListType>({
     items: [],
     total: 0,
   });
   const pathname = useLocation().pathname;
   const category = pathname.substring(pathname.lastIndexOf('/') + 1);
+  const sortBy = useSortbyParam();
 
   const lastPage = Math.ceil((result?.total * 1.0) / ITEM_PER_PAGE);
   const currentPage = usePageParam(lastPage);
@@ -66,14 +84,20 @@ const MyList = () => {
     }
   }
 
+  function useSortbyParam() {
+    const sortBy = useQuery().get('sortby') || 'time';
+    return SORT_TYPES.includes(sortBy) ? sortBy : 'time';
+  }
+
   useEffect(() => {
     if (token) {
       axios
-        .get(`/api/mine/sublist`, {
+        .get(`/api/mine/list`, {
           params: {
             category: category,
             count: ITEM_PER_PAGE,
             offset: ITEM_PER_PAGE * (currentPage - 1),
+            sortBy: sortBy,
           },
           headers: {
             Authorization: 'Bearer ' + token,
@@ -85,7 +109,7 @@ const MyList = () => {
         })
         .catch(handleError);
     }
-  }, [category, currentPage, token]);
+  }, [category, currentPage, sortBy, token]);
 
   return CATEGORIES.includes(category) ? (
     <MyListPage>
@@ -93,10 +117,24 @@ const MyList = () => {
         我{DICT_VERB[category]}过的{DICT_NOUN[category]}({result?.total})
       </Title>
       <Info>
-        <span>按时间排序</span>
-        <span>
+        <div>
+          <StyledLink
+            to={`${pathname}?sortby=time`}
+            isActive={() => sortBy !== 'time'}
+          >
+            按时间排序
+          </StyledLink>
+          <span>·</span>
+          <StyledLink
+            to={`${pathname}?sortby=rating`}
+            isActive={() => sortBy !== 'rating'}
+          >
+            按评价排序
+          </StyledLink>
+        </div>
+        <div>
           {startNumber}-{endNumber} / {result?.total}
-        </span>
+        </div>
       </Info>
       <div>
         {(result.items as MyItemType[])?.map(

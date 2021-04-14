@@ -2,7 +2,7 @@ import { MyType } from 'be/be/lib/constant';
 import database from '../../database';
 import { Movie, MyMovie } from '../../models/movie.model';
 
-async function selectTotal(category: string, email: string): Promise<number> {
+async function selectMyTotal(category: string, email: string): Promise<number> {
   const userCategory = `user_${category}`;
   const categoryId = `${category}_id`;
 
@@ -16,7 +16,7 @@ async function selectTotal(category: string, email: string): Promise<number> {
   return +data.rows[0].total;
 }
 
-async function selectLatestFive(
+async function selectMyLatestFive(
   category: string,
   email: string
 ): Promise<MyType[]> {
@@ -42,24 +42,31 @@ async function selectLatestFive(
   }
 }
 
-async function selectSubList(
+async function selectMyList(
   category: string,
   count: string,
   offset: string,
+  sortBy: string,
   email: string
 ): Promise<MyType[]> {
   const userCategory = `user_${category}`;
   const categoryId = `${category}_id`;
+  let sortByColumn;
+  if (sortBy === 'time') {
+    sortByColumn = 'updatedat'
+  } else if (sortBy === 'rating') {
+    sortByColumn = 'rating'
+  }
 
   const data = await database.raw(
     `SELECT * FROM ?? AS uc
     INNER JOIN users ON users.id = uc.user_id
     INNER JOIN ?? AS c ON c.id = uc.??
     WHERE users.email = ?
-    ORDER BY uc.updatedat DESC
+    ORDER BY uc.?? DESC, uc.updatedat DESC
     LIMIT ?
     OFFSET ?`,
-    [userCategory, category, categoryId, email, count, offset]
+    [userCategory, category, categoryId, email, sortByColumn, count, offset]
   );
 
   if (category == 'movie') {
@@ -71,4 +78,4 @@ async function selectSubList(
   }
 }
 
-export { selectTotal, selectLatestFive, selectSubList };
+export { selectMyTotal, selectMyLatestFive, selectMyList };

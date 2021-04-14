@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MyRating } from '../../components/Rating';
-import { MyItemType } from '../../lib/constant';
+import { DICT_VERB, MyItemType } from '../../lib/constant';
 
 function MyItem(props: { category: string; item: MyItemType }) {
   const { category, item } = props;
@@ -17,6 +17,8 @@ function MyItem(props: { category: string; item: MyItemType }) {
         <div className="my-item-info">
           <div className="my-info">
             <MyRating rating={item.rating}></MyRating>
+            <span className="updatedat">{item.updatedat}</span>
+            <span>{DICT_VERB[category]}过</span>
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ export interface BookSearchItemType extends BookItemType {
 
 export interface MyBookItemType extends BookItemType {
   rating: number;
+  updatedat: string;
 }
 
 export interface BookSearchPagination {
@@ -47,4 +48,5 @@ export interface Book {
 
 export interface MyBook extends Book {
   rating: number;
+  updatedat: Date;
 }
