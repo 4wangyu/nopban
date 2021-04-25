@@ -92,10 +92,8 @@ Add authentication for new user, and log in as the new user.
     ```
 
 - Open `pg_hba.conf` file (replace file path if needed)
-    - not recommended to run vs code as root though
-    - this will create a `~/.vscode-root` folder in the current working directory
     ```
-    sudo code /etc/postgresql/13/main/pg_hba.conf --user-data-dir="~/.vscode-root"
+    sudo vim /etc/postgresql/13/main/pg_hba.conf
     ```
 
 - Add to `pg_hba.conf` file
