@@ -65,12 +65,11 @@ Drop database first if there is need to re-create the database.
 DROP DATABASE IF EXISTS name;
 ```
 
-### For Linux: Create and log in as new user
+### 3. For Linux: Create and log in as new user
 
 Switch to user postgres.
 ```
 sudo -u postgres -i
-
 ```
 
 Login to postgres.
@@ -91,12 +90,12 @@ Add authentication for new user, and log in as the new user.
     SHOW hba_file;
     ```
 
-- Open `pg_hba.conf` file (replace file path if needed)
+- Open `pg_hba.conf` file (replace file path if needed).
     ```
     sudo vim /etc/postgresql/13/main/pg_hba.conf
     ```
 
-- Add to `pg_hba.conf` file
+- Add to `pg_hba.conf` file.
     - Authenticate with password
     ```
     # Database administrative login by Unix domain socket
@@ -108,7 +107,7 @@ Add authentication for new user, and log in as the new user.
     local   all             db_user                 trust  
     ```    
 
-- Restart postgresql service
+- Restart postgresql service.
     ```
     sudo service postgresql restart
     ```
@@ -118,10 +117,10 @@ Add authentication for new user, and log in as the new user.
     psql -d postgres -U db_user
     ```
 
-(Optional) Change authentication of `postgres` user
+(Optional) Change authentication of `postgres` user.
 
-1. Change authentication to trust
-    - Change lin below in `pg_hba.conf` file
+1. Change authentication to trust.
+    - Change lin below in `pg_hba.conf` file.
         ```
         # Database administrative login by Unix domain socket
         local   all             postgres                 peer
@@ -131,28 +130,29 @@ Add authentication for new user, and log in as the new user.
         # Database administrative login by Unix domain socket
         local   all             postgres                trust
         ```
-    - Restart postgresql service
+    - Restart postgresql service.
         ```
         sudo service postgresql restart
         ```
-    - Log in to postgres db as postgres user
+    - Log in to postgres db as postgres user.
         ```
         psql -U postgres
         ```
 
-2. Change authentication to md5 with password
+2. Change authentication to md5 with password.
     - (continued from above) Change/create default postgres user's password.
         ```
         ALTER USER postgres with password ‘new-password’;
         ```
-    - Changes the authentication in `pg_hba.conf` file from `trust` to `md5` and restart postgresql.   
+    - Changes the authentication in `pg_hba.conf` file from `trust` to `md5` and restart postgresql.
 
-### 3. Bring up project
+### 4. Bring up project
 ```
 yarn dev:db
 yarn dev:be
 yarn dev:fe
 ```
+
 
 ## Testing
 
