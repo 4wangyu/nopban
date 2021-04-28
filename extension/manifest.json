@@ -6,8 +6,7 @@
   "description": "Check if item exists in nopban database and allows adding item to nopban database if not exit.",
 
   "icons": {
-    "48": "icons/nopban.svg",
-    "96": "icons/nopban.svg"
+    "48": "icons/nopban-48.png"
   },
 
   "content_scripts": [
