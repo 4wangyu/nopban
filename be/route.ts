@@ -4,6 +4,7 @@ import checkToken from './middleware/check-token';
 import checkUser from './middleware/check-user';
 import { validateCategory } from './middleware/validate';
 import * as book from './modules/book/book';
+import * as extension from './modules/extension/extension';
 import * as mine from './modules/mine/mine';
 import * as movie from './modules/movie/movie';
 import * as music from './modules/music/music';
@@ -47,5 +48,9 @@ router.get('/mine/total', checkToken, mine.getMyTotal);
 router.get('/mine/latestfive', checkToken, mine.getMyLatestFive);
 router.get('/mine/list', checkToken, validateCategory, mine.getMyList);
 //#endregion
+
+//#region extension
+router.get('/extension/exist', extension.checkItemExist);
+////#endregion
 
 export default router;

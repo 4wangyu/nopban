@@ -11,7 +11,7 @@ import {
   selectBookByTitle,
   selectBookByUuid,
   selectBookRating,
-  updateBookRating
+  updateBookRating,
 } from './book.repo';
 import { formatInternalBookSearchItem } from './book.util';
 
