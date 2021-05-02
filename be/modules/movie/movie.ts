@@ -1,4 +1,5 @@
 import axios from 'axios';
+import cheerio from 'cheerio';
 import { Request, Response } from 'express';
 import { getUuidFromUrl } from '../../lib/util';
 import { Movie } from '../../models/movie.model';
@@ -74,8 +75,9 @@ const addMovie = async (request: Request, response: Response) => {
 
   try {
     const res = await axios.get(url);
-    const movie = await parseMovie(res.data);
-    const partMovie = await insertMovie({ uuid, ...movie } as Movie);
+    const html = cheerio.load(res.data)('#wrapper').html();
+    const parsedMovie = await parseMovie(html);
+    const partMovie = await insertMovie({ uuid, ...parsedMovie } as Movie);
     const result = formatInternalMovieSearchItem(partMovie);
     response.status(200).json(result);
   } catch (e) {

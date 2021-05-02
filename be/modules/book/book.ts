@@ -1,4 +1,5 @@
 import axios from 'axios';
+import cheerio from 'cheerio';
 import { Request, Response } from 'express';
 import { getUuidFromUrl } from '../../lib/util';
 import { Book } from '../../models/book.model';
@@ -74,7 +75,8 @@ const addBook = async (request: Request, response: Response) => {
 
   try {
     const res = await axios.get(url);
-    const parsedBook = await parseBook(res.data);
+    const html = cheerio.load(res.data)('#wrapper').html();
+    const parsedBook = await parseBook(html);
     const partBook = await insertBook({ uuid, ...parsedBook } as Book);
     const result = formatInternalBookSearchItem(partBook);
     response.status(200).json(result);

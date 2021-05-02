@@ -89,7 +89,6 @@ const signin = (request: any, response: any) => {
   findUser(userReq)
     .then((foundUser: any) => {
       user = foundUser;
-
       return checkPassword(userReq.password, foundUser);
     })
     .then(() => createToken(user.email))

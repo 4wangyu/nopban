@@ -1,4 +1,5 @@
 import axios from 'axios';
+import cheerio from 'cheerio';
 import { Request, Response } from 'express';
 import { getUuidFromUrl } from '../../lib/util';
 import { Music } from '../../models/music.model';
@@ -74,7 +75,8 @@ const addMusic = async (request: Request, response: Response) => {
 
   try {
     const res = await axios.get(url);
-    const parsedMusic = await parseMusic(res.data);
+    const html = cheerio.load(res.data)('#wrapper').html();
+    const parsedMusic = await parseMusic(html);
     const partMusic = await insertMusic({ uuid, ...parsedMusic } as Music);
     const result = formatInternalMusicSearchItem(partMusic);
     response.status(200).json(result);
