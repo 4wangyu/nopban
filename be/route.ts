@@ -51,6 +51,7 @@ router.get('/mine/list', checkToken, validateCategory, mine.getMyList);
 
 //#region extension
 router.get('/extension/exist', extension.checkItemExist);
+router.post('/extension/add', extension.addItem);
 ////#endregion
 
 export default router;
