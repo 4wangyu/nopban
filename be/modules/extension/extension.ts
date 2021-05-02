@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import { selectItemByUuid } from './extension.repo';
 
 const checkItemExist = async (request: Request, response: Response) => {
-  const category = request.body.category as string;
-  const uuid = request.body.uuid as string;
+  const category = request.query.category as string;
+  const uuid = request.query.uuid as string;
 
   try {
     const item = await selectItemByUuid(category, uuid);

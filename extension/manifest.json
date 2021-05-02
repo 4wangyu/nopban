@@ -2,21 +2,19 @@
   "manifest_version": 2,
   "name": "nopban",
   "version": "1.0.0",
-
   "description": "Check if item exists in nopban database and allows adding item to nopban database if not exit.",
-
   "icons": {
     "48": "icons/nopban-48.png"
   },
-
   "content_scripts": [
     {
       "matches": [
-        "https://movie.douban.com/subject/*",
         "https://book.douban.com/subject/*",
+        "https://movie.douban.com/subject/*",
         "https://music.douban.com/subject/*"
       ],
       "js": ["nopban.js"]
     }
-  ]
+  ],
+  "permissions": ["*://localhost/*"]
 }
