@@ -7,9 +7,10 @@ import {
   NameLinkModel,
 } from '../../models/movie.model';
 
-function parseMovieSearch(
-  html: string
-): { items: MovieSearchItemType[]; pagination: MovieSearchPagination[] } {
+function parseMovieSearch(html: string): {
+  items: MovieSearchItemType[];
+  pagination: MovieSearchPagination[];
+} {
   const $ = cheerio.load(html, { normalizeWhitespace: true });
 
   // parse movie items
@@ -118,10 +119,10 @@ async function parseMovie(html: string): Promise<Partial<Movie>> {
     ? aliasesEl.nextSibling.data.split('/').map((a: string) => a.trim())
     : [];
 
-  let imdb = $('a:contains("tt")').attr('href') ?? null;
-  if (imdb && !imdb.includes('imdb')) {
-    imdb = null;
-  }
+  let imdbEl = $('span:contains("IMDb")').get(0);
+  const imdb = imdbEl
+    ? 'https://www.imdb.com/title/' + imdbEl.nextSibling.data.trim()
+    : null;
 
   return {
     title,
