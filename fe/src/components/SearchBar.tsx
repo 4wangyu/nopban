@@ -41,7 +41,7 @@ const SearchBar = (props: {
 
   useEffect(() => {
     const savedInternal = JSON.parse(
-      localStorage.getItem('internal') || 'true'
+      localStorage.getItem('internal') || 'false'
     ) as boolean;
     setInternal(savedInternal);
   }, []);
