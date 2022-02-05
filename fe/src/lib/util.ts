@@ -30,7 +30,7 @@ function getImdbIdFromUrl(url?: string): string | undefined {
 }
 
 function getInternal(): boolean {
-  return JSON.parse(localStorage.getItem('internal') || 'true') as boolean;
+  return JSON.parse(localStorage.getItem('internal') || 'false') as boolean;
 }
 
 function handleError(err: AxiosError) {
