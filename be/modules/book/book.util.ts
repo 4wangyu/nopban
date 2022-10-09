@@ -38,4 +38,13 @@ function formatMyBookItem(book: Partial<MyBook>): MyBookItemType {
   };
 }
 
-export { formatBookItem, formatInternalBookSearchItem, formatMyBookItem };
+function extractInt(s: string): number {
+  return parseInt(s.match(/\d/g).join(''), 10);
+}
+
+export {
+  formatBookItem,
+  formatInternalBookSearchItem,
+  formatMyBookItem,
+  extractInt,
+};

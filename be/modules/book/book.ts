@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../axios';
 import { Request, Response } from 'express';
 import { getUuidFromUrl } from '../../lib/util';
 import { Book } from '../../models/book.model';
@@ -11,7 +11,7 @@ import {
   selectBookByTitle,
   selectBookByUuid,
   selectBookRating,
-  updateBookRating
+  updateBookRating,
 } from './book.repo';
 import { formatInternalBookSearchItem } from './book.util';
 
