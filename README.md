@@ -1,7 +1,5 @@
 # nopban
 
-[![CircleCI](https://circleci.com/gh/4wangyu/nopban/tree/master.svg?style=svg)](https://circleci.com/gh/4wangyu/nopban/tree/master)
-
 ## Development
 
 ### 1. Install dependencies
@@ -55,6 +53,7 @@ DB_USER=db_user
 DB_PASSWORD=password
 DB_DATABASE=nopban
 SECRET=anything         # for jwt enc/dec
+COOKIE=api_cookie
 ```
 
 Create tables.
@@ -83,45 +82,15 @@ yarn dev:be
 yarn dev:fe
 ```
 
-## Testing
-
-If everything has been set up and ready to go for Heroku. You can test this by running the following command:
+### 4. Districution
 
 ```
-heroku local web
+yarn dist
 ```
 
-With this, you can go to `http://localhost:5000` and see what your app will look like on Heroku.
+### 5. Register as a service on windows
 
-## Production
-
-### Set up Heroku Postgres
-
-Add `Heroku Postgres` as addon to the app.
-
-Check to see if your add-on exists via Heroku CLI.
-
-`heroku addons`
-
-Log into the Heroku PostgreSQL instance.
-
-`heroku pg:psql postgresql-whatever-00000 --app example-node-api`
-
-From the root of the project where you have init.sql, run the following command to create your table and entries on Heroku Postgres.
-
-`cat init.sql | heroku pg:psql postgresql-whatever-00000 --app example-node-api`
-
-To reset production database:
-`heroku pg:reset DATABASE_URL`
-
-To run knex database migrations:
-`heroku run npx knex migrate:latest`
-
-## Debug heroku
-
-### Tailing logs
-
-`heroku logs -t`
+[Register PM2 as a service in the windows server](https://lakin-mohapatra.medium.com/register-pm2-as-a-service-in-the-windows-server-747f19e2ff2a)
 
 ## Backup and Restore Database
 
