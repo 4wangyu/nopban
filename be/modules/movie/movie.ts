@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../axios';
 import { Request, Response } from 'express';
 import { getUuidFromUrl } from '../../lib/util';
 import { Movie } from '../../models/movie.model';
