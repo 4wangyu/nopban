@@ -6,10 +6,12 @@ import {
   BookSearchPagination,
   NameLinkModel,
 } from '../../models/book.model';
+import { extractInt } from './book.util';
 
-function parseBookSearch(
-  html: string
-): { items: BookSearchItemType[]; pagination: BookSearchPagination[] } {
+function parseBookSearch(html: string): {
+  items: BookSearchItemType[];
+  pagination: BookSearchPagination[];
+} {
   const $ = cheerio.load(html, { normalizeWhitespace: true });
 
   // parse items
@@ -89,7 +91,9 @@ async function parseBook(html: string): Promise<Partial<Book>> {
     : null;
 
   const pageCountEl = $('#info span:contains("页数")').get(0);
-  const page_count = pageCountEl ? pageCountEl.nextSibling.data.trim() : null;
+  const page_count = pageCountEl
+    ? extractInt(pageCountEl.nextSibling.data.trim())
+    : null;
 
   const priceEl = $('#info span:contains("定价")').get(0);
   const price = priceEl ? priceEl.nextSibling.data.trim() : null;
