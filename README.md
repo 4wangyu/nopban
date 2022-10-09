@@ -53,7 +53,7 @@ DB_USER=db_user
 DB_PASSWORD=password
 DB_DATABASE=nopban
 SECRET=anything         # for jwt enc/dec
-COOKIE=api_cookie
+COOKIE=api_cookie_url
 ```
 
 Create tables.
