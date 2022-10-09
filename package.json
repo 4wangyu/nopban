@@ -12,7 +12,8 @@
     "build:fe": "cd fe && yarn --prod=false && yarn build",
     "build:db": "npx knex migrate:latest",
     "build": "yarn build:be && yarn build:fe",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "dist": "zip dist.zip build/* fe/build/* .env"
   },
   "dependencies": {
     "axios": "^0.21.1",
