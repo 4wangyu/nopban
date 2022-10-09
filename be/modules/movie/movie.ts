@@ -104,11 +104,11 @@ async function getMovie(req: Request, res: Response) {
 }
 
 async function getMovieRating(req: Request, res: Response) {
-  const movieUuid = req.query.movieUuid as string;
+  const uuid = req.query.uuid as string;
   const email = req.body.email as string;
 
   try {
-    const rating = (await selectMovieRating(movieUuid, email)) || {
+    const rating = (await selectMovieRating(uuid, email)) || {
       rating: null,
     };
     res.status(200).json(rating);
@@ -121,15 +121,15 @@ async function getMovieRating(req: Request, res: Response) {
 async function rateMovie(req: Request, res: Response) {
   const prevRating = req.body.prevRating as number;
   const nextRating = req.body.nextRating as number;
-  const movieUuid = req.body.movieUuid as string;
+  const uuid = req.body.uuid as string;
   const email = req.body.email as string;
 
   try {
     if (prevRating) {
-      const rating = await updateMovieRating(movieUuid, email, nextRating);
+      const rating = await updateMovieRating(uuid, email, nextRating);
       res.status(200).json(rating);
     } else {
-      const rating = await insertMovieRating(movieUuid, email, nextRating);
+      const rating = await insertMovieRating(uuid, email, nextRating);
       res.status(200).json(rating);
     }
   } catch (e) {
@@ -139,11 +139,11 @@ async function rateMovie(req: Request, res: Response) {
 }
 
 async function removeMovieRating(req: Request, res: Response) {
-  const movieUuid = req.body.movieUuid as string;
+  const uuid = req.body.uuid as string;
   const email = req.body.email as string;
 
   try {
-    const result = await deleteMovieRating(movieUuid, email);
+    const result = await deleteMovieRating(uuid, email);
     res.status(200).json({ success: result });
   } catch (e) {
     console.warn(e);

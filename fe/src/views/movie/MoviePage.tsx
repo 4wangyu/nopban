@@ -27,7 +27,7 @@ function MoviePage() {
     if (token) {
       axios
         .get(`/api/movie/rating`, {
-          params: { movieUuid: movieId },
+          params: { uuid: movieId },
           headers: {
             Authorization: 'Bearer ' + token,
           },
@@ -50,7 +50,7 @@ function MoviePage() {
     axios({
       method: 'post',
       url: '/api/movie/rating',
-      data: { prevRating: rating, nextRating: r, movieUuid: movieId },
+      data: { prevRating: rating, nextRating: r, uuid: movieId },
       headers: {
         Authorization: 'Bearer ' + context?.token,
       },
@@ -65,7 +65,7 @@ function MoviePage() {
     axios({
       method: 'delete',
       url: '/api/movie/rating',
-      data: { movieUuid: movieId },
+      data: { uuid: movieId },
       headers: {
         Authorization: 'Bearer ' + context?.token,
       },
