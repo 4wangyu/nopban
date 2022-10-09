@@ -14,7 +14,7 @@ exports.up = function (knex) {
     languages VARCHAR(40)[],
     releaseDates VARCHAR(40)[],
     episodes SMALLINT,
-    episodeRuntime VARCHAR(50),
+    episodeRuntime VARCHAR(60),
     runtime VARCHAR(50),
     aliases VARCHAR(100)[],
     imdb VARCHAR(100),
