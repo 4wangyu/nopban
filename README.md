@@ -74,6 +74,11 @@ Drop database first if there is need to re-create the database.
 DROP DATABASE IF EXISTS name;
 ```
 
+If there is problem bring up postgres, check the logs for debugging:
+```
+code /usr/local/var/log/postgresql@14.log
+```
+
 ### 3. Bring up project
 
 ```
