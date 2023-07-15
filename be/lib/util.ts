@@ -4,6 +4,9 @@ import { NameLinkModel } from '../models/movie.model';
 async function getBase64(url: string): Promise<string> {
   const res = await axios.get(url, {
     responseType: 'arraybuffer',
+    headers: {
+      Referer: 'https://douban.com/',
+    },
   });
 
   const imgBase64 = Buffer.from(res.data, 'binary').toString('base64');
