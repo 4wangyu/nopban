@@ -47,11 +47,15 @@ const SearchBar = (props: {
   }, []);
 
   useHotkeys('alt+n', () => {
+    toggleSearch();
+  });
+
+  function toggleSearch() {
     setInternal((internal) => {
       localStorage.setItem('internal', JSON.stringify(!internal));
       return !internal;
     });
-  });
+  }
 
   function handleClick() {
     if (props.searchKey) {
@@ -76,6 +80,9 @@ const SearchBar = (props: {
         <Button onClick={handleClick}>
           <i className={internal ? 'icon-nopban' : 'icon-douban'}></i>
         </Button>
+        <button onClick={toggleSearch} style={{ marginLeft: '2px' }}>
+          &#8645;
+        </button>
       </Search>
     </>
   );
