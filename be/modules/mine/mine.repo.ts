@@ -28,7 +28,7 @@ async function selectMyLatestFive(
     INNER JOIN users ON users.id = uc.user_id
     INNER JOIN ?? AS c ON c.id = uc.??
     WHERE users.email = ?
-    ORDER BY uc.updatedat DESC
+    ORDER BY uc.createdat DESC
     LIMIT 5`,
     [userCategory, category, categoryId, email]
   );
@@ -53,9 +53,9 @@ async function selectMyList(
   const categoryId = `${category}_id`;
   let sortByColumn;
   if (sortBy === 'time') {
-    sortByColumn = 'updatedat'
+    sortByColumn = 'createdat';
   } else if (sortBy === 'rating') {
-    sortByColumn = 'rating'
+    sortByColumn = 'rating';
   }
 
   const data = await database.raw(
