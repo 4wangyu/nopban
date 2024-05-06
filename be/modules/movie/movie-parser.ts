@@ -73,7 +73,7 @@ async function parseMovie(html: string): Promise<Partial<Movie>> {
     });
 
   const actors: NameLinkModel[] = [];
-  $('.actor a[rel="v:starring"]').each((idx, el) => {
+  $('a[rel="v:starring"]').each((idx, el) => {
     const name = $(el).text();
     const link = $(el).attr('href');
     actors.push({ name, link });
